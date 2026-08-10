@@ -447,7 +447,7 @@ section { padding: 120px 40px; }
   display: flex;
   flex-direction: column;
   padding: 0 10px;
-  animation: feedScroll 36s linear infinite;
+  animation: feedScroll 22s linear infinite;
 }
 @media (hover: hover) { .phone:hover .feed-track { animation-play-state: paused; } }
 .feed-track.paused { animation-play-state: paused; }
@@ -1284,6 +1284,10 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
   .gal { gap: 14px; }
   .gal-3, .gal-2, .gal-feature { grid-template-columns: repeat(2, 1fr); }
   .span-2 { grid-column: span 2; }
+  /* a 16:9 strip inside 20px gutters is only ~190px tall on a phone — the stage
+     shots were unreadable. Go full-bleed and taller so they carry the section. */
+  .slider-stage { margin: 0 -20px; border-radius: 0; }
+  .slide { aspect-ratio: 3/2; }
   .slide-caption { padding: 24px; }
   .sl-btn { width: 44px; height: 44px; }
   .sl-prev { left: 12px; }
@@ -1305,6 +1309,8 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
   .tool-slot { border-radius: 11px; }
   .frame.span-3 { grid-column: auto; }
   .frame.span-3 .frame-box { flex: none; aspect-ratio: 16/9; }
+  .slide { aspect-ratio: 4/3; }
+  .slide-caption { padding: 20px; }
 }
 </style>
 </head>
@@ -1499,7 +1505,7 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
 <section class="cap-section reveal">
   <div class="container">
     <span class="section-label">— 03 / Capabilities</span>
-    <h2 class="h-display">Maximum quality.<br>Minimum overhead.</h2>
+    <h2 class="h-display">Creative Range</h2>
     <div class="cap-grid">
       <div class="cap-card">
         <span class="cap-num">01</span>
@@ -1536,7 +1542,7 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
   <div class="container">
     <span class="section-label reveal">— 04 / The work</span>
     <div class="work-intro reveal">
-      <h2 class="h-display">Eight disciplines.<br>One standard.</h2>
+      <h2 class="h-display">What&rsquo;s Inside</h2>
       <p>Every category below is its own body of work — built with the same obsession over grid, type, and finish, whether it lands on a phone screen or a highway.</p>
     </div>
   </div>
