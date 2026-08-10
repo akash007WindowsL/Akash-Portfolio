@@ -2053,6 +2053,7 @@ window.PortfolioFeed = (function () {
   /* --- autoplay: page forward one spread at a time, then riffle back to the
          cover fast, the way you'd thumb a brochure back to the front --- */
   const DWELL   = 2600;   // rest between forward turns
+  const GREET   = 450;    // short beat before the cover turns on arrival
   const RIFFLE  = 110;    // gap between each leaf during the fast rewind
   const FAST_MS = 340;    // matches .rewinding transition-duration
   const wrap = book.closest('.book-wrap');
@@ -2110,10 +2111,18 @@ window.PortfolioFeed = (function () {
     schedule();
   }
 
-  new IntersectionObserver(
-    es => es.forEach(e => { visible = e.isIntersecting; }),
-    { threshold: 0.25 }
-  ).observe(wrap);
+  // the dwell timer runs from page load, so arriving mid-cycle could leave the
+  // cover sitting shut for a full DWELL. Restart the clock on the rising edge of
+  // visibility instead: the cover turns just after the brochure scrolls in, on
+  // desktop and touch alike.
+  new IntersectionObserver(es => es.forEach(e => {
+    const was = visible;
+    visible = e.isIntersecting;
+    if (visible && !was && !rewinding) {
+      clearTimeout(timer);
+      timer = setTimeout(step, cur === 0 ? GREET : DWELL);
+    }
+  }), { threshold: 0.2 }).observe(wrap);
 
   if (window.matchMedia('(hover: hover)').matches) {
     wrap.addEventListener('mouseenter', () => hovered = true);
