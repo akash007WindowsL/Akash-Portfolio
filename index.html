@@ -388,15 +388,18 @@ section { padding: 120px 40px; }
 
 /* ============ SHOWCASE — SCROLLING FEED + BROCHURE ============ */
 .showcase { border-top: 1px solid var(--border); }
+/* the reel wants the full width of the band, so the two panels stack rather
+   than sitting side by side */
 .show-row {
   --showcase-h: clamp(400px, 42vw, 620px);
   display: flex;
-  gap: 56px;
-  align-items: flex-start;
-  justify-content: center;
-  margin-top: 64px;
+  flex-direction: column;
+  gap: 64px;
+  align-items: center;
+  margin-top: 56px;
 }
 .show-panel { display: flex; flex-direction: column; gap: 18px; }
+.reel-panel { width: 100%; }
 .show-cap { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
 .show-cap b { font-family: 'Fraunces', serif; font-weight: 400; font-size: 17px; letter-spacing: -0.01em; }
 .show-cap span {
@@ -416,58 +419,45 @@ section { padding: 120px 40px; }
   .on-touch { display: inline; }
 }
 
-/* ---- phone / auto-scrolling feed ---- */
-.phone {
+/* ---- creative reel: cards fanned in 3D, drifting sideways ----
+   The rotation each card gets is decided by where it sits in the band, not by
+   which card it is, so the arc stays put while the cards travel through it.
+   That positional maths lives in JS; this only sets the stage.            */
+.reel {
   position: relative;
-  height: var(--showcase-h);
-  aspect-ratio: 9 / 16;
-  flex: none;
-  border-radius: 36px;
-  background: linear-gradient(160deg, #262220, #100f0e);
-  box-shadow: inset 0 0 0 1px rgba(244,241,234,0.14), 0 30px 70px rgba(0,0,0,0.5);
-}
-/* absolute, not height:100% — otherwise the feed's content drives the phone's
-   height and the 9/16 aspect-ratio is ignored wherever height is auto */
-.phone-screen {
-  position: absolute;
-  inset: 10px;
-  border-radius: 27px;
   overflow: hidden;
-  background: #0c0b0a;
+  perspective: 1150px;
+  margin: 0 -40px;
+  padding: 34px 0;
 }
-.phone-screen::before, .phone-screen::after {
+/* the arc carries cards past the edges of the band — fade them out rather than
+   letting them pop off a hard boundary */
+.reel::before, .reel::after {
   content: '';
   position: absolute;
-  left: 0; right: 0;
-  height: 70px;
+  top: 0; bottom: 0;
+  width: 14%;
   z-index: 3;
   pointer-events: none;
 }
-.phone-screen::before { top: 0; background: linear-gradient(180deg, #0c0b0a 10%, transparent); }
-.phone-screen::after { bottom: 0; background: linear-gradient(0deg, #0c0b0a 10%, transparent); }
-/* flex column + margin-bottom (not gap): flex stops the last margin collapsing
-   out of the track, so exactly half the track equals one full set of items */
+.reel::before { left: 0; background: linear-gradient(90deg, var(--bg) 12%, transparent); }
+.reel::after { right: 0; background: linear-gradient(270deg, var(--bg) 12%, transparent); }
 .feed-track {
   display: flex;
-  flex-direction: column;
-  padding: 0 10px;
-  animation: feedScroll 22s linear infinite;
-  /* the track is ~3900px of stacked photos. Without its own compositor layer
-     the browser repaints the whole stack every frame and phones stutter. */
+  gap: 22px;
+  transform-style: preserve-3d;
   will-change: transform;
-  backface-visibility: hidden;
 }
-@media (hover: hover) { .phone:hover .feed-track { animation-play-state: paused; } }
-.feed-track.paused { animation-play-state: paused; }
-@keyframes feedScroll { from { transform: translateY(0); } to { transform: translateY(-50%); } }
 .feed-item {
   position: relative;
   flex: none;
+  width: clamp(158px, 18vw, 260px);
   aspect-ratio: 4 / 5;
-  margin-bottom: 10px;
-  border-radius: 10px;
+  border-radius: 14px;
   overflow: hidden;
   background: #141210;
+  box-shadow: 0 26px 50px rgba(0, 0, 0, 0.55);
+  backface-visibility: hidden;
 }
 .feed-item:nth-child(4n+1) .frame-media { background: linear-gradient(135deg,#3a1810,#6b1e2a); }
 .feed-item:nth-child(4n+2) .frame-media { background: linear-gradient(135deg,#1a1832,#4a1a5c); }
@@ -683,10 +673,17 @@ section { padding: 120px 40px; }
   border-radius: 16px;
   overflow: hidden;
   background: #fff;
-  box-shadow: inset 0 0 0 1px rgba(10, 9, 8, 0.12);
+  /* --glow is set per slot in the markup so each tile drops a shadow tinted
+     with its own product colour rather than a generic grey */
+  box-shadow: inset 0 0 0 1px rgba(10, 9, 8, 0.12),
+              0 16px 30px -12px rgba(var(--glow, 10, 9, 8), 0.62);
   transition: transform 0.35s cubic-bezier(.2,.7,.2,1), box-shadow 0.35s;
 }
-.tool-slot:hover { transform: translateY(-5px); box-shadow: inset 0 0 0 1px rgba(10, 9, 8, 0.3); }
+.tool-slot:hover {
+  transform: translateY(-5px);
+  box-shadow: inset 0 0 0 1px rgba(10, 9, 8, 0.3),
+              0 26px 42px -14px rgba(var(--glow, 10, 9, 8), 0.85);
+}
 .tool-slot .frame-media { object-fit: contain; padding: 9%; background: #fff; }
 .tool-slot .frame-media[data-ph]::after { color: rgba(10, 9, 8, 0.35); }
 
@@ -1194,35 +1191,37 @@ body.edit-on [contenteditable]:focus {
 body.edit-on .frame-box, body.edit-on .slide,
 body.edit-on .feed-item, body.edit-on .page-face,
 body.edit-on .tool-slot, body.edit-on .about-photo { cursor: copy; }
-/* Edit mode unwraps the feed out of the phone. Inside the 9:16 frame only
-   ~1.5 items are visible and the track resets to item 1 when the animation
-   stops, so creatives 3-6 were impossible to reach. Laid flat, all six are
-   visible and droppable; it snaps back into the phone on exit. */
+/* Edit mode flattens the reel. Cards in the arc are rotated, part-occluded and
+   moving, so they are impossible to aim a drop at — laid out as a plain grid
+   all six sit still and square on. The clones are hidden because a drop on one
+   would be thrown away the next time the set is rebuilt. */
 body.edit-on .show-row { flex-direction: column; align-items: stretch; gap: 44px; }
-body.edit-on .phone {
-  height: auto;
-  aspect-ratio: auto;
-  width: 100%;
+body.edit-on .reel {
+  overflow: visible;
+  perspective: none;
+  margin: 0;
   padding: 14px;
   border-radius: 14px;
   box-shadow: inset 0 0 0 1px rgba(244, 241, 234, 0.14);
 }
-body.edit-on .phone-screen {
-  position: static;
-  overflow: visible;
-  border-radius: 10px;
-}
-body.edit-on .phone-screen::before,
-body.edit-on .phone-screen::after { display: none; }
+body.edit-on .reel::before,
+body.edit-on .reel::after { display: none; }
 body.edit-on .feed-track {
-  animation: none !important;
   transform: none !important;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 12px;
-  padding: 12px;
 }
-body.edit-on .feed-item { margin-bottom: 0; }
+body.edit-on .feed-track [data-clone] { display: none; }
+/* the reel writes transform/opacity straight onto the cards, so edit mode has
+   to override the inline values or you would be dropping onto a card that is
+   still turned away and faded down to a quarter strength */
+body.edit-on .feed-item {
+  width: auto;
+  transform: none !important;
+  opacity: 1 !important;
+  box-shadow: none;
+}
 body.edit-on .book-wrap { margin: 0 auto; }
 .drop-hint {
   position: absolute;
@@ -1286,14 +1285,9 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
   nav ul { display: none; }
   section { padding: 80px 20px; }
   .about-grid, .ev-head, .work-intro, .chapter-head { grid-template-columns: 1fr; gap: 32px; }
-  .show-row { flex-direction: column; align-items: center; gap: 56px; --showcase-h: auto; }
-  .phone { height: auto; width: min(300px, 78vw); }
-  /* the phone is smaller here, so the same duration covers fewer pixels per
-     second and reads as sluggish — shorten it to keep the pace consistent */
-  .feed-track { animation-duration: 14s; }
-  /* 70px of scrim top and bottom eats 28% of a 500px screen, which is what made
-     the part-visible creative look chewed up rather than simply cropped */
-  .phone-screen::before, .phone-screen::after { height: 40px; }
+  .show-row { --showcase-h: auto; gap: 56px; }
+  .reel { margin: 0 -20px; padding: 24px 0; }
+  .feed-track { gap: 14px; }
   .book-wrap { height: auto; width: 100%; }
   .show-panel { width: 100%; max-width: 560px; }
   /* touch targets — everything tappable gets to at least ~44px */
@@ -1473,18 +1467,16 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
 
     <div class="show-row">
 
-      <!-- feed -->
-      <div class="show-panel">
-        <div class="phone">
-          <div class="phone-screen">
-            <div class="feed-track" id="feedTrack">
-              <div class="feed-item"><img class="frame-media" src="images/mobile-01.jpg" alt="Social creative"></div>
-              <div class="feed-item"><img class="frame-media" src="images/mobile-02.jpg" alt="Social creative"></div>
-              <div class="feed-item"><img class="frame-media" src="images/mobile-03.jpg" alt="Social creative"></div>
-              <div class="feed-item"><img class="frame-media" src="images/mobile-04.jpg" alt="Social creative"></div>
-              <div class="feed-item"><img class="frame-media" src="images/mobile-05.jpg" alt="Social creative"></div>
-              <div class="feed-item"><img class="frame-media" src="images/mobile-06.jpg" alt="Social creative"></div>
-            </div>
+      <!-- creative reel -->
+      <div class="show-panel reel-panel">
+        <div class="reel" id="reel">
+          <div class="feed-track" id="feedTrack">
+            <div class="feed-item"><img class="frame-media" src="images/mobile-01.jpg" alt="Social creative"></div>
+            <div class="feed-item"><img class="frame-media" src="images/mobile-02.jpg" alt="Social creative"></div>
+            <div class="feed-item"><img class="frame-media" src="images/mobile-03.jpg" alt="Social creative"></div>
+            <div class="feed-item"><img class="frame-media" src="images/mobile-04.jpg" alt="Social creative"></div>
+            <div class="feed-item"><img class="frame-media" src="images/mobile-05.jpg" alt="Social creative"></div>
+            <div class="feed-item"><img class="frame-media" src="images/mobile-06.jpg" alt="Social creative"></div>
           </div>
         </div>
         <div class="show-cap"><b>Social creatives</b><span><i class="on-hover">Hover to pause</i><i class="on-touch">Tap to pause</i></span></div>
@@ -1551,11 +1543,11 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
     <div class="cap-tools">
       <span class="cap-tools-label">Built with</span>
       <div class="tool-row">
-        <div class="tool-slot"><img class="frame-media" src="images/AI.jpg" alt="Adobe Illustrator"></div>
-        <div class="tool-slot"><img class="frame-media" src="images/PS.jpg" alt="Adobe Photoshop"></div>
-        <div class="tool-slot"><img class="frame-media" src="images/PR.jpg" alt="Adobe Premiere Pro"></div>
-        <div class="tool-slot"><img class="frame-media" src="images/AE.jpg" alt="Adobe After Effects"></div>
-        <div class="tool-slot"><img class="frame-media" src="images/Corel.jpg" alt="CorelDRAW"></div>
+        <div class="tool-slot" style="--glow: 255, 154, 0;"><img class="frame-media" src="images/AI.jpg" alt="Adobe Illustrator"></div>
+        <div class="tool-slot" style="--glow: 49, 168, 255;"><img class="frame-media" src="images/PS.jpg" alt="Adobe Photoshop"></div>
+        <div class="tool-slot" style="--glow: 153, 153, 255;"><img class="frame-media" src="images/PR.jpg" alt="Adobe Premiere Pro"></div>
+        <div class="tool-slot" style="--glow: 157, 124, 255;"><img class="frame-media" src="images/AE.jpg" alt="Adobe After Effects"></div>
+        <div class="tool-slot" style="--glow: 122, 193, 66;"><img class="frame-media" src="images/Corel.jpg" alt="CorelDRAW"></div>
       </div>
     </div>
   </div>
@@ -2000,26 +1992,152 @@ document.querySelectorAll('.marquee-track').forEach(t => {
   sections.forEach(s => spy.observe(s));
 })();
 
-/* ---------- SHOWCASE: auto-scrolling feed ----------
-   The track is duplicated so translateY(-50%) loops seamlessly. Clones are
+/* ---------- SHOWCASE: creative reel ----------
+   The set is repeated so the drift can wrap without a visible seam. Two extra
+   copies, not one: the band is wider than a single set on a large screen, so
+   one copy would run out of cards before the loop point came round. Clones are
    tagged data-clone so edit mode and the exporter can strip them.          */
 window.PortfolioFeed = (function () {
   const track = document.getElementById('feedTrack');
+  const COPIES = 2;
   function clear() {
     if (track) track.querySelectorAll('[data-clone]').forEach(n => n.remove());
   }
   function duplicate() {
     if (!track) return;
     clear();
-    [...track.children].forEach(item => {
-      const c = item.cloneNode(true);
-      c.setAttribute('data-clone', '1');
-      c.setAttribute('aria-hidden', 'true');
-      track.appendChild(c);
-    });
+    const originals = [...track.children];
+    for (let i = 0; i < COPIES; i++) {
+      originals.forEach(item => {
+        const c = item.cloneNode(true);
+        c.setAttribute('data-clone', '1');
+        c.setAttribute('aria-hidden', 'true');
+        track.appendChild(c);
+      });
+    }
+    if (window.PortfolioReel) window.PortfolioReel.measure();
   }
   duplicate();
   return { clear, duplicate };
+})();
+
+/* ---------- SHOWCASE: reel motion ----------
+   One card holds the front of the band — lifted, full strength, square on —
+   while everything either side of it turns away, drops back and fades. All of
+   it keys off where a card currently sits across the band rather than which
+   card it is, so the focus point stays anchored in space and each creative
+   rises into it, holds, and falls away as the next one arrives.            */
+window.PortfolioReel = (function () {
+  const reel = document.getElementById('reel');
+  const track = document.getElementById('feedTrack');
+  if (!reel || !track) return { measure() {} };
+
+  const TRAVEL = 850;    // ms to swing the next creative into the middle
+  const HOLD   = 1400;   // ms it stays there before handing over
+
+  let cards = [], setW = 0, pitch = 0, x = 0, last = 0;
+  let hovered = false, visible = true;
+  /* the step runs on accumulated time, not wall-clock timestamps, so pausing
+     freezes the phase where it stands instead of fast-forwarding on resume */
+  let phaseT = 0, moving = false, xFrom = 0, xTo = 0;
+  /* the arc is measured against a reference span, not against half the band:
+     on a phone half the band is barely wider than one card, so normalising by
+     it would slam every card to full rotation and flatten the focus curve.
+     depth is how far back the OUTER cards sit — the centre one holds z: 0. */
+  let rot = 38, depth = 260, span = 1;
+
+  /* offsetLeft is cached rather than read per frame: it never changes while the
+     track only moves by transform, and reading it each frame risks a layout
+     flush right after we have written one. */
+  function measure() {
+    cards = [...track.children].map(el => ({
+      el, left: el.offsetLeft, w: el.offsetWidth
+    }));
+    const originals = cards.filter(c => !c.el.hasAttribute('data-clone'));
+    const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+    setW = originals.reduce((a, c) => a + c.w + gap, 0);
+    pitch = cards.length > 1 ? cards[1].left - cards[0].left : setW;
+
+    const w = reel.clientWidth;
+    const narrow = w < 700;
+    rot   = narrow ? 18 : 38;
+    depth = narrow ? 80 : 260;
+    span  = Math.max(w / 2, 330);
+
+    /* land on an exact card position rather than an arbitrary offset, or the
+       reel would rest with two cards straddling the middle and neither lit */
+    const anchor = cards[Math.min(cards.length - 1, originals.length)];
+    if (anchor) { x = w / 2 - (anchor.left + anchor.w / 2); wrap(); }
+    moving = false; phaseT = 0;
+  }
+
+  function wrap() {
+    if (!setW) return;
+    while (x >= 0) x -= setW;
+    while (x < -setW) x += setW;
+  }
+
+  // slow at both ends, quick through the middle — a card arrives and settles
+  // rather than sliding at a constant rate
+  const ease = p => p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+
+  function frame(now) {
+    const dt = last ? Math.min(now - last, 50) : 0;
+    last = now;
+    requestAnimationFrame(frame);
+
+    if (document.body.classList.contains('edit-on')) return;   // laid flat by CSS
+
+    const paused = hovered || track.classList.contains('paused');
+    if (!paused && visible && !document.hidden && setW) {
+      phaseT += dt;
+      if (moving) {
+        const p = Math.min(1, phaseT / TRAVEL);
+        x = xFrom + (xTo - xFrom) * ease(p);
+        if (p === 1) { moving = false; phaseT = 0; wrap(); }
+      } else if (phaseT >= HOLD) {
+        xFrom = x; xTo = x + pitch;           // next creative steps in from the left
+        moving = true; phaseT = 0;
+      }
+    }
+    track.style.transform = 'translate3d(' + x + 'px, 0, 0)';
+
+    const mid = reel.clientWidth / 2;
+    if (!mid) return;
+    for (const c of cards) {
+      const rel = Math.max(-1.2, Math.min(1.2, (c.left + x + c.w / 2 - mid) / span));
+      const t = Math.min(1, Math.abs(rel));     // 0 dead centre, 1 at the edge
+      /* focus falls off faster than distance does, so one card clearly holds
+         the front and its neighbours have already dropped back — a linear
+         ramp leaves three or four cards looking equally important */
+      const focus = Math.max(0, 1 - t * 1.35);
+      c.el.style.transform =
+        'rotateY(' + (-rel * rot) + 'deg) ' +
+        'translateZ(' + (-t * depth) + 'px) ' +
+        'translateY(' + (-focus * 16) + 'px) ' +
+        'scale(' + (0.9 + 0.12 * focus) + ')';
+      c.el.style.opacity = 0.26 + 0.74 * focus;
+      c.el.style.zIndex = Math.round(focus * 100);
+    }
+  }
+
+  measure();
+  requestAnimationFrame(frame);
+
+  new IntersectionObserver(
+    es => es.forEach(e => { visible = e.isIntersecting; }),
+    { threshold: 0 }
+  ).observe(reel);
+
+  if (window.matchMedia('(hover: hover)').matches) {
+    reel.addEventListener('mouseenter', () => hovered = true);
+    reel.addEventListener('mouseleave', () => hovered = false);
+  }
+
+  let rz;
+  window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(measure, 150); });
+
+  return { measure };
 })();
 
 /* ---------- SHOWCASE: brochure flipbook ---------- */
@@ -2234,12 +2352,12 @@ window.PortfolioFeed = (function () {
     document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
   }
 
-  /* feed: tap to pause. Bound on every device, not just touch — hybrids report
+  /* reel: tap to pause. Bound on every device, not just touch — hybrids report
      hover:hover but still get tapped, and on a mouse it reads as click-to-lock */
-  const phone = document.querySelector('.phone');
+  const reel = document.getElementById('reel');
   const track = document.getElementById('feedTrack');
-  if (phone && track) {
-    phone.addEventListener('click', () => {
+  if (reel && track) {
+    reel.addEventListener('click', () => {
       if (document.body.classList.contains('edit-on')) return;
       track.classList.toggle('paused');
     });
@@ -2461,6 +2579,14 @@ window.PortfolioFeed = (function () {
     const mt = clone.querySelector('#menuToggle');
     if (mt) { mt.textContent = 'MENU'; mt.setAttribute('aria-expanded', 'false'); }
     clone.querySelectorAll('.feed-track.paused').forEach(t => t.classList.remove('paused'));
+    // the reel drives transform/opacity inline — without this the export bakes
+    // in whichever frame happened to be on screen when Download was clicked
+    clone.querySelectorAll('.feed-track, .feed-item').forEach(n => {
+      n.style.removeProperty('transform');
+      n.style.removeProperty('opacity');
+      n.style.removeProperty('z-index');
+      if (!n.getAttribute('style')) n.removeAttribute('style');
+    });
     clone.querySelectorAll('.reveal.in').forEach(n => n.classList.remove('in'));
     clone.querySelectorAll('.slide.is-active').forEach(n => n.classList.remove('is-active'));
     clone.querySelectorAll('.cat-chip.on, .sl-dot.on').forEach(n => n.classList.remove('on'));
