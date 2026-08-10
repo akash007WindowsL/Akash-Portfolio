@@ -625,12 +625,12 @@ section { padding: 120px 40px; }
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1px;
-  margin-top: 60px;
+  margin-top: 30px;
   background: var(--border);
 }
 .cap-card {
   background: var(--bg);
-  padding: 52px 34px 44px;
+  padding: 34px 34px 40px;
   transition: background 0.4s;
   display: flex;
   flex-direction: column;
@@ -643,7 +643,7 @@ section { padding: 120px 40px; }
   font-size: 11px;
   opacity: 0.4;
   display: block;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
   letter-spacing: 0.15em;
 }
 /* tool strip — one row under the whole capabilities grid */
@@ -1261,6 +1261,20 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
 @media (max-width: 900px) {
   nav { padding: 18px 20px; }
   nav .logo { font-size: 19px; }
+  /* fast flick-scrolling on phones tore the bar loose and repainted it partway
+     down the screen. Both mix-blend-mode and backdrop-filter force a fixed
+     element to re-composite against the page every frame, and mobile GPUs fall
+     behind the scroll. Every section behind the nav is dark, so plain white on
+     a flat scrim reads the same without either effect — and its own layer keeps
+     it pinned to the compositor instead of being repainted. */
+  nav {
+    mix-blend-mode: normal;
+    color: #fff;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+  nav.scrolled { background: rgba(10, 9, 8, 0.95); backdrop-filter: none; }
+  .cat-rail { background: rgba(10, 9, 8, 0.96); backdrop-filter: none; }
   nav ul { display: none; }
   section { padding: 80px 20px; }
   .about-grid, .ev-head, .work-intro, .chapter-head { grid-template-columns: 1fr; gap: 32px; }
@@ -1543,7 +1557,6 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
     <span class="section-label reveal">— 04 / The work</span>
     <div class="work-intro reveal">
       <h2 class="h-display">What&rsquo;s Inside</h2>
-      <p>Every category below is its own body of work — built with the same obsession over grid, type, and finish, whether it lands on a phone screen or a highway.</p>
     </div>
   </div>
 
