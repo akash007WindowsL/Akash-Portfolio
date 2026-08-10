@@ -448,6 +448,10 @@ section { padding: 120px 40px; }
   flex-direction: column;
   padding: 0 10px;
   animation: feedScroll 22s linear infinite;
+  /* the track is ~3900px of stacked photos. Without its own compositor layer
+     the browser repaints the whole stack every frame and phones stutter. */
+  will-change: transform;
+  backface-visibility: hidden;
 }
 @media (hover: hover) { .phone:hover .feed-track { animation-play-state: paused; } }
 .feed-track.paused { animation-play-state: paused; }
@@ -1280,6 +1284,12 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
   .about-grid, .ev-head, .work-intro, .chapter-head { grid-template-columns: 1fr; gap: 32px; }
   .show-row { flex-direction: column; align-items: center; gap: 56px; --showcase-h: auto; }
   .phone { height: auto; width: min(300px, 78vw); }
+  /* the phone is smaller here, so the same duration covers fewer pixels per
+     second and reads as sluggish — shorten it to keep the pace consistent */
+  .feed-track { animation-duration: 14s; }
+  /* 70px of scrim top and bottom eats 28% of a 500px screen, which is what made
+     the part-visible creative look chewed up rather than simply cropped */
+  .phone-screen::before, .phone-screen::after { height: 40px; }
   .book-wrap { height: auto; width: 100%; }
   .show-panel { width: 100%; max-width: 560px; }
   /* touch targets — everything tappable gets to at least ~44px */
@@ -1470,7 +1480,7 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
               <div class="feed-item"><img class="frame-media" src="images/mobile-03.jpg" alt="Social creative"></div>
               <div class="feed-item"><img class="frame-media" src="images/mobile-04.jpg" alt="Social creative"></div>
               <div class="feed-item"><img class="frame-media" src="images/mobile-05.jpg" alt="Social creative"></div>
-              <div class="feed-item"><img class="frame-media" src="images/mobile-06.png" alt="Social creative"></div>
+              <div class="feed-item"><img class="frame-media" src="images/mobile-06.jpg" alt="Social creative"></div>
             </div>
           </div>
         </div>
