@@ -252,6 +252,10 @@ section { padding: 120px 40px; }
   margin-bottom: 56px;
 }
 .ev-sub { font-size: 16px; line-height: 1.65; color: var(--text-dim); max-width: 460px; }
+/* heading with no subtext beside it — the two-column split and the deep gap
+   below both existed to make room for that paragraph. Let the content that
+   follows set its own top spacing instead. */
+.ev-head:has(> :only-child) { grid-template-columns: 1fr; margin-bottom: 0; }
 
 .slider { position: relative; }
 .slider-stage {
@@ -634,13 +638,13 @@ section { padding: 120px 40px; }
 }
 .cap-card {
   background: var(--bg);
-  padding: 34px 34px 40px;
+  padding: 32px 34px 34px;
   transition: background 0.4s;
   display: flex;
   flex-direction: column;
 }
 .cap-card:hover { background: #141210; }
-.cap-card h3 { font-family: 'Fraunces', serif; font-size: 32px; font-weight: 400; margin-bottom: 14px; letter-spacing: -0.02em; }
+.cap-card h3 { font-family: 'Fraunces', serif; font-size: 32px; font-weight: 400; letter-spacing: -0.02em; }
 .cap-card > p { color: var(--text-dim); font-size: 14.5px; line-height: 1.6; }
 .cap-num {
   font-family: 'JetBrains Mono', monospace;
@@ -1465,7 +1469,6 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
     <span class="section-label">— 02 / Formats</span>
     <div class="ev-head">
       <h2 class="h-display">Featured Projects</h2>
-      <p class="ev-sub">A collection of projects that reflect my approach to design,<br>creativity, and thoughtful visual communication.</p>
     </div>
 
     <div class="show-row">
@@ -1534,17 +1537,14 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
       <div class="cap-card">
         <span class="cap-num">01</span>
         <h3>Graphic Design</h3>
-        <p>Identity systems and layouts built to scale — digital, print and outdoor, from a feed post to a 40-foot hoarding.</p>
       </div>
       <div class="cap-card">
         <span class="cap-num">02</span>
         <h3>Video Editing</h3>
-        <p>End-to-end post — cut, sound, color and finish. Brand films, ad edits and event recaps.</p>
       </div>
       <div class="cap-card">
         <span class="cap-num">03</span>
         <h3>Motion Graphics</h3>
-        <p>Design that moves — titles, logo reveals, explainers, and motion kits your team can keep reusing.</p>
       </div>
     </div>
 
