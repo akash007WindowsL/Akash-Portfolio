@@ -432,7 +432,10 @@ section { padding: 120px 40px; }
   overflow: hidden;
   perspective: 1150px;
   margin: 0 -40px;
-  padding: 34px 0;
+  /* the band clips, so the padding has to clear everything the centre creative
+     grows by: 18px of plate above the card, the 16px lift, what scale(1.02)
+     adds, and below that the reach of the glow */
+  padding: 56px 0 68px;
 }
 /* the arc carries cards past the edges of the band — fade them out rather than
    letting them pop off a hard boundary */
@@ -452,17 +455,42 @@ section { padding: 120px 40px; }
   transform-style: preserve-3d;
   will-change: transform;
 }
+/* no overflow:hidden and no background here — the glass plate below sits behind
+   the creative and has to be able to extend past its edges, which a clipping
+   parent or an opaque background would kill. The image carries the radius. */
 .feed-item {
   position: relative;
   flex: none;
   width: clamp(158px, 22vw, 330px);
   aspect-ratio: 4 / 5;
   border-radius: 14px;
-  overflow: hidden;
-  background: #141210;
   box-shadow: 0 26px 50px rgba(0, 0, 0, 0.55);
   backface-visibility: hidden;
 }
+/* the plate itself: always in the markup, but only the creative holding the
+   middle of the band shows it. --glass is written per frame by the reel. */
+.feed-item::before {
+  content: '';
+  position: absolute;
+  inset: -18px -16px -22px;
+  z-index: 0;
+  border-radius: 28px;
+  background: rgba(244, 241, 234, 0.06);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.26),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.11),
+    0 26px 56px rgba(0, 0, 0, 0.5),
+    /* glow under the plate — a neutral lift then a warm bloom from the theme.
+       Both are offset down and pulled in by a negative spread so they stay
+       beneath the plate rather than haloing it. */
+    0 18px 44px -12px rgba(255, 255, 255, 0.16),
+    0 26px 64px -20px rgba(255, 122, 74, 0.30);
+  opacity: var(--glass, 0);
+  pointer-events: none;
+}
+.feed-item .frame-media { z-index: 1; border-radius: 14px; }
 .feed-item:nth-child(4n+1) .frame-media { background: linear-gradient(135deg,#3a1810,#6b1e2a); }
 .feed-item:nth-child(4n+2) .frame-media { background: linear-gradient(135deg,#1a1832,#4a1a5c); }
 .feed-item:nth-child(4n+3) .frame-media { background: linear-gradient(135deg,#2a1f10,#5c3a14); }
@@ -624,22 +652,93 @@ section { padding: 120px 40px; }
 /* Capabilities */
 .cap-section { border-top: 1px solid var(--border); }
 .cap-grid {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  margin-top: 30px;
-  background: var(--border);
+  gap: 18px;
+  margin-top: 34px;
+}
+/* frosted glass needs something behind it to refract — over flat near-black the
+   blur has nothing to work with. This soft wash sits under the panels and is
+   what the glass actually picks up. */
+.cap-grid::before {
+  content: '';
+  position: absolute;
+  inset: -14% -4%;
+  z-index: -1;
+  background:
+    radial-gradient(40% 70% at 20% 45%, rgba(255, 107, 53, 0.20), transparent 70%),
+    radial-gradient(40% 70% at 52% 58%, rgba(214, 51, 132, 0.18), transparent 70%),
+    radial-gradient(40% 70% at 84% 45%, rgba(74, 26, 92, 0.32), transparent 70%);
+  filter: blur(34px);
+  pointer-events: none;
 }
 .cap-card {
-  background: var(--bg);
-  padding: 32px 34px 34px;
-  transition: background 0.4s;
+  position: relative;
+  isolation: isolate;          /* keeps the fill above the glass, under the text */
+  overflow: hidden;
+  border-radius: 24px;
+  padding: 30px 30px 26px;
   display: flex;
   flex-direction: column;
+  background: rgba(244, 241, 234, 0.05);
+  backdrop-filter: blur(22px) saturate(165%);
+  -webkit-backdrop-filter: blur(22px) saturate(165%);
+  /* the two insets are the glass: a bright catch along the top edge and a
+     hairline rim all the way round. The outer shadow lifts it off the page. */
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.09),
+    0 20px 44px rgba(0, 0, 0, 0.45);
+  transition: transform 0.45s cubic-bezier(.2,.7,.2,1), box-shadow 0.45s;
 }
-.cap-card:hover { background: #141210; }
+/* specular sheen raking across the top-left, the way light sits on real glass */
+.cap-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  background: linear-gradient(148deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0) 44%);
+  pointer-events: none;
+}
+.cap-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.14),
+    0 26px 54px rgba(0, 0, 0, 0.5);
+}
+/* the level itself — grows from the left edge, with a brighter meniscus at the
+   leading edge so it reads as liquid sitting in the panel rather than a bar */
+.cap-fill {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 0;
+  z-index: 0;
+  border-radius: inherit;
+  background:
+    /* light source in the top-left corner, as in the reference */
+    radial-gradient(130% 150% at 6% 0%, rgba(255, 170, 120, 0.5), transparent 58%),
+    /* the hero's own orange → pink → purple run, read left to right */
+    linear-gradient(100deg,
+      var(--accent-orange) 0%,
+      #ec4a63 30%,
+      var(--accent-pink) 58%,
+      #8e2a63 82%,
+      var(--accent-purple) 100%);
+  /* the dissolve into the dark panel is a mask, not a gradient stop — a stop
+     would leave a hard edge wherever the fill happens to end */
+  -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 60%, transparent 100%);
+  mask-image: linear-gradient(90deg, #000 0%, #000 60%, transparent 100%);
+  transition: width 1.6s cubic-bezier(.22,.9,.24,1);
+}
+.cap-card.filled .cap-fill { width: calc(var(--pct) * 1%); }
+/* :not(.cap-fill) matters — a bare `.cap-card > *` has the same specificity as
+   .cap-fill and, coming later, would reset it to position: relative, dropping
+   it back into flow as a flex item */
+.cap-card > :not(.cap-fill) { position: relative; z-index: 2; }
 .cap-card h3 { font-family: 'Fraunces', serif; font-size: 32px; font-weight: 400; letter-spacing: -0.02em; }
-.cap-card > p { color: var(--text-dim); font-size: 14.5px; line-height: 1.6; }
 .cap-num {
   font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
@@ -647,6 +746,9 @@ section { padding: 120px 40px; }
   display: block;
   margin-bottom: 12px;
   letter-spacing: 0.15em;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cap-fill { transition: none; }
 }
 /* tool strip — one row under the whole capabilities grid */
 .cap-tools {
@@ -1226,6 +1328,7 @@ body.edit-on .feed-item {
   opacity: 1 !important;
   box-shadow: none;
 }
+body.edit-on .feed-item::before { display: none; }
 body.edit-on .book-wrap { margin: 0 auto; }
 .drop-hint {
   position: absolute;
@@ -1290,7 +1393,7 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
   section { padding: 80px 20px; }
   .about-grid, .ev-head, .work-intro, .chapter-head { grid-template-columns: 1fr; gap: 32px; }
   .show-row { --showcase-h: auto; gap: 56px; }
-  .reel { margin: 0 -20px; padding: 24px 0; }
+  .reel { margin: 0 -20px; padding: 54px 0 60px; }
   .feed-track { gap: 14px; }
   .book-wrap { height: auto; width: 100%; }
   .show-panel { width: 100%; max-width: 560px; }
@@ -1530,15 +1633,18 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
     <span class="section-label">— 03 / Capabilities</span>
     <h2 class="h-display">Creative Range</h2>
     <div class="cap-grid">
-      <div class="cap-card">
+      <div class="cap-card" style="--pct: 90;">
+        <span class="cap-fill" aria-hidden="true"></span>
         <span class="cap-num">01</span>
         <h3>Graphic Design</h3>
       </div>
-      <div class="cap-card">
+      <div class="cap-card" style="--pct: 70;">
+        <span class="cap-fill" aria-hidden="true"></span>
         <span class="cap-num">02</span>
         <h3>Video Editing</h3>
       </div>
-      <div class="cap-card">
+      <div class="cap-card" style="--pct: 50;">
+        <span class="cap-fill" aria-hidden="true"></span>
         <span class="cap-num">03</span>
         <h3>Motion Graphics</h3>
       </div>
@@ -1996,6 +2102,36 @@ document.querySelectorAll('.marquee-track').forEach(t => {
   sections.forEach(s => spy.observe(s));
 })();
 
+/* ---------- CAPABILITIES: fill the glass tabs on first sight ----------
+   The panels are always there; only the level animates, and only once.   */
+(function () {
+  const grid = document.querySelector('.cap-grid');
+  if (!grid) return;
+  const cards = [...grid.querySelectorAll('.cap-card')];
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function fill(card, delay) {
+    setTimeout(() => card.classList.add('filled'), delay);
+  }
+
+  function arm() {
+    new IntersectionObserver((es, obs) => {
+      es.forEach(e => {
+        if (!e.isIntersecting) return;
+        obs.disconnect();                 // fills once, not on every pass
+        cards.forEach((c, i) => fill(c, reduce ? 0 : i * 160));
+      });
+    }, { threshold: 0.35 }).observe(grid);
+  }
+
+  /* wait for load before observing. None of the media above this section
+     reserves its height until it has decoded, so during first layout the grid
+     sits near the top of the document and the observer fires instantly —
+     the tabs would already be full by the time you scrolled down to them. */
+  if (document.readyState === 'complete') requestAnimationFrame(arm);
+  else window.addEventListener('load', () => requestAnimationFrame(arm), { once: true });
+})();
+
 /* ---------- SHOWCASE: creative reel ----------
    The set is repeated so the drift can wrap without a visible seam. Two extra
    copies, not one: the band is wider than a single set on a large screen, so
@@ -2122,6 +2258,9 @@ window.PortfolioReel = (function () {
         'scale(' + (0.9 + 0.12 * focus) + ')';
       c.el.style.opacity = 0.26 + 0.74 * focus;
       c.el.style.zIndex = Math.round(focus * 100);
+      /* the glass plate rides a steeper curve than the card does — it should
+         belong to the creative in the middle, not bleed onto its neighbours */
+      c.el.style.setProperty('--glass', Math.max(0, (focus - 0.45) / 0.55).toFixed(3));
     }
   }
 
@@ -2589,9 +2728,12 @@ window.PortfolioReel = (function () {
       n.style.removeProperty('transform');
       n.style.removeProperty('opacity');
       n.style.removeProperty('z-index');
+      n.style.removeProperty('--glass');
       if (!n.getAttribute('style')) n.removeAttribute('style');
     });
     clone.querySelectorAll('.reveal.in').forEach(n => n.classList.remove('in'));
+    // capability tabs export empty so they fill on scroll again, not pre-filled
+    clone.querySelectorAll('.cap-card.filled').forEach(n => n.classList.remove('filled'));
     clone.querySelectorAll('.slide.is-active').forEach(n => n.classList.remove('is-active'));
     clone.querySelectorAll('.cat-chip.on, .sl-dot.on').forEach(n => n.classList.remove('on'));
     clone.querySelectorAll('.marquee-track').forEach(t => {
