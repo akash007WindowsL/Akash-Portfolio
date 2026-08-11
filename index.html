@@ -773,24 +773,48 @@ section { padding: 120px 40px; }
   width: 66.666%;
   max-width: 880px;
 }
+/* Built to the supplied reference: a light face sitting on a coloured base that
+   is offset downwards so only a lip of it shows. Every number here is taken
+   from that SVG — a 183.01 x 120.06 tile, 32.94 corner radius, and the base
+   dropped 6.48 below the face. --tone carries each product's colour. */
 .tool-slot {
   position: relative;
-  aspect-ratio: 1 / 1;
-  border-radius: 16px;
-  overflow: hidden;
+  aspect-ratio: 183.01 / 126.54;   /* the tile, plus the lip below it */
+}
+/* both layers state their radius as width% / height% rather than a flat
+   percentage — on a box this shape a single value gives elliptical corners,
+   and the reference's are circular */
+.tool-slot::before,
+.tool-slot .frame-media {
+  height: 94.88%;                  /* 120.06 of the 126.54 total */
+  border-radius: 18% / 27.44%;
+}
+.tool-slot::before {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  z-index: 0;
+  /* the ramp runs the whole height of the base as it does in the reference, so
+     the sliver left visible is the saturated end of it */
+  background: linear-gradient(to top, rgb(var(--tone)) 0%, #300 26%);
+}
+.tool-slot .frame-media {
+  top: 0; bottom: auto;
+  z-index: 1;
+  object-fit: contain;
+  padding: 11%;
+  /* the reference face is #f7f7f7, but its icon is a transparent PNG. Ours are
+     JPGs carrying a pure-white background, which showed as a square against the
+     off-white. Matching the face to the icons is invisible next to the
+     reference and removes the seam; swap these for transparent PNGs and
+     #f7f7f7 can come back. */
   background: #fff;
-  /* --glow is set per slot in the markup so each tile drops a shadow tinted
-     with its own product colour rather than a generic grey */
-  box-shadow: inset 0 0 0 1px rgba(10, 9, 8, 0.12),
-              0 16px 30px -12px rgba(var(--glow, 10, 9, 8), 0.62);
-  transition: transform 0.35s cubic-bezier(.2,.7,.2,1), box-shadow 0.35s;
+  /* the face casting onto the lip is what reads as depth between the two */
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  transition: transform 0.32s cubic-bezier(.2,.7,.2,1);
 }
-.tool-slot:hover {
-  transform: translateY(-5px);
-  box-shadow: inset 0 0 0 1px rgba(10, 9, 8, 0.3),
-              0 26px 42px -14px rgba(var(--glow, 10, 9, 8), 0.85);
-}
-.tool-slot .frame-media { object-fit: contain; padding: 9%; background: #fff; }
+/* hover lifts the face off the base, showing more of the colour underneath */
+.tool-slot:hover .frame-media { transform: translateY(-3px); }
 .tool-slot .frame-media[data-ph]::after { color: rgba(10, 9, 8, 0.35); }
 
 /* ============ WORK — CATEGORY CHAPTERS ============ */
@@ -1435,7 +1459,6 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
   .gal-4, .gal-3, .gal-2, .gal-feature { grid-template-columns: 1fr; }
   .span-2, .gal-feature > .frame:first-child { grid-column: auto; }
   .tool-row { gap: 10px; }
-  .tool-slot { border-radius: 11px; }
   .frame.span-3 { grid-column: auto; }
   .frame.span-3 .frame-box { flex: none; aspect-ratio: 16/9; }
   .slide { aspect-ratio: 4/3; }
@@ -1653,11 +1676,11 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
     <div class="cap-tools">
       <span class="cap-tools-label">Built with</span>
       <div class="tool-row">
-        <div class="tool-slot" style="--glow: 255, 154, 0;"><img class="frame-media" src="images/AI.jpg" alt="Adobe Illustrator"></div>
-        <div class="tool-slot" style="--glow: 49, 168, 255;"><img class="frame-media" src="images/PS.jpg" alt="Adobe Photoshop"></div>
-        <div class="tool-slot" style="--glow: 153, 153, 255;"><img class="frame-media" src="images/PR.jpg" alt="Adobe Premiere Pro"></div>
-        <div class="tool-slot" style="--glow: 157, 124, 255;"><img class="frame-media" src="images/AE.jpg" alt="Adobe After Effects"></div>
-        <div class="tool-slot" style="--glow: 122, 193, 66;"><img class="frame-media" src="images/Corel.jpg" alt="CorelDRAW"></div>
+        <div class="tool-slot" style="--tone: 255, 154, 0;"><img class="frame-media" src="images/AI.jpg" alt="Adobe Illustrator"></div>
+        <div class="tool-slot" style="--tone: 49, 168, 255;"><img class="frame-media" src="images/PS.jpg" alt="Adobe Photoshop"></div>
+        <div class="tool-slot" style="--tone: 153, 153, 255;"><img class="frame-media" src="images/PR.jpg" alt="Adobe Premiere Pro"></div>
+        <div class="tool-slot" style="--tone: 157, 124, 255;"><img class="frame-media" src="images/AE.jpg" alt="Adobe After Effects"></div>
+        <div class="tool-slot" style="--tone: 122, 193, 66;"><img class="frame-media" src="images/Corel.jpg" alt="CorelDRAW"></div>
       </div>
     </div>
   </div>
