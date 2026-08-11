@@ -199,6 +199,10 @@ body.menu-open nav { z-index: 210; mix-blend-mode: normal; }
   line-height: 1.55;
   max-width: 820px;
   letter-spacing: -0.01em;
+  /* centred copy strands the last word of a paragraph on its own line at some
+     widths. "pretty" is the one that targets orphans specifically — "balance"
+     bails out on blocks this long and on any block containing a forced break */
+  text-wrap: pretty;
 }
 .hero-tagline em {
   font-style: italic;
@@ -1374,7 +1378,7 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
   <div class="hero-content">
     <div class="hero-mark">Akash<span>Namdev</span></div>
     <p class="hero-tagline">
-      What you'll see here isn't a highlight reel of my best work. It's a record of the chances I was given.<br>
+      What you'll see here isn't a highlight reel of my best work. It's a record of the chances I was given.
       I've worked across design, video, branding and marketing because people trusted me early and supported me through the learning. I kept saying yes, and I kept building. That cycle isn't finished.<br><br>
       Any designer can produce work. But the day you stop learning is the day you stop being an artist.
     </p>
