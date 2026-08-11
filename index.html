@@ -2096,7 +2096,7 @@ window.PortfolioReel = (function () {
         x = xFrom + (xTo - xFrom) * ease(p);
         if (p === 1) { moving = false; phaseT = 0; wrap(); }
       } else if (phaseT >= HOLD) {
-        xFrom = x; xTo = x + pitch;           // next creative steps in from the left
+        xFrom = x; xTo = x - pitch;           // next creative steps in from the right
         moving = true; phaseT = 0;
       }
     }
