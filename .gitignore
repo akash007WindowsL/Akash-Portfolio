@@ -1,1 +1,5 @@
 .claude/
+
+# original video exports — these are the masters, often 10x the size of the
+# encoded versions. Only the compressed files in videos/ get committed.
+videos/src/

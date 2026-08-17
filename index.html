@@ -933,6 +933,11 @@ section { padding: 120px 40px; }
 .r-16x9 { aspect-ratio: 16/9; }
 .r-21x9 { aspect-ratio: 21/9; }
 .r-3x2 { aspect-ratio: 3/2; }
+.r-9x16 { aspect-ratio: 9/16; }
+/* vertical cuts get a capped, centred grid — three 9:16 tiles stretched across
+   the full width would each stand about 800px tall */
+.gal-vert { grid-template-columns: repeat(3, minmax(0, 280px)); justify-content: center; }
+.gal + .gal { margin-top: 22px; }
 
 .frame-media {
   position: absolute;
@@ -975,6 +980,49 @@ section { padding: 120px 40px; }
 .gal-logo .span-3 .frame-media { padding: 2.5%; }
 .gal-logo .frame-box::after { box-shadow: inset 0 0 0 1px rgba(10, 9, 8, 0.12); }
 .gal-logo .frame:hover .frame-media { transform: scale(1.04); }
+
+/* ---- video lightbox ---- */
+.vbox {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 40px;
+  background: rgba(6, 5, 5, 0.93);
+  backdrop-filter: blur(14px);
+}
+.vbox.open { display: flex; }
+.vbox-stage { display: contents; }
+.vbox video,
+.vbox iframe {
+  max-width: min(100%, 1180px);
+  max-height: 100%;
+  border: 0;
+  border-radius: 8px;
+  background: #000;
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.6);
+}
+/* an iframe has no intrinsic size the way a <video> does, so the ratio has to
+   be declared — .portrait is set from the tile that opened it */
+.vbox iframe { width: min(100%, 1180px); aspect-ratio: 16 / 9; }
+.vbox.portrait iframe { width: auto; height: min(100%, 880px); aspect-ratio: 9 / 16; }
+.vbox-close {
+  position: absolute;
+  top: 20px; right: 24px;
+  width: 44px; height: 44px;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  color: var(--text);
+  background: rgba(244, 241, 234, 0.09);
+  border: 1px solid rgba(244, 241, 234, 0.18);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.25s;
+}
+.vbox-close:hover { background: rgba(244, 241, 234, 0.18); }
 
 .frame-cap {
   margin-top: 16px;
@@ -1436,6 +1484,8 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
   .chapter + .chapter { padding-top: 72px; }
   .gal { gap: 14px; }
   .gal-3, .gal-2, .gal-feature { grid-template-columns: repeat(2, 1fr); }
+  /* verticals are narrow enough to keep three across on a tablet */
+  .gal-vert { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .span-2 { grid-column: span 2; }
   /* a 16:9 strip inside 20px gutters is only ~190px tall on a phone — the stage
      shots were unreadable. Go full-bleed and taller so they carry the section. */
@@ -1457,6 +1507,8 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
 
 @media (max-width: 560px) {
   .gal-4, .gal-3, .gal-2, .gal-feature { grid-template-columns: 1fr; }
+  /* a 9:16 tile at full phone width is far too tall — keep two abreast */
+  .gal-vert { grid-template-columns: repeat(2, 1fr); }
   .span-2, .gal-feature > .frame:first-child { grid-column: auto; }
   .tool-row { gap: 10px; }
   .frame.span-3 { grid-column: auto; }
@@ -1830,9 +1882,34 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
           <div class="chapter-tags"><span>Brand Film</span><span>Ad Edit</span><span>Event Recap</span><span>Color Grade</span></div>
         </div>
       </div>
+      <!-- To publish a real cut, replace the placeholder div with a poster image
+           and point the link at the video. Nothing loads until the tile is
+           clicked, so none of these cost anything on page load.
+
+           Self-hosted:
+           <a class="frame is-play" href="videos/horizontal-01.mp4"
+              data-video="videos/horizontal-01.mp4">
+
+           YouTube (the video must be UNLISTED — private videos will not embed):
+           <a class="frame is-play" href="https://youtu.be/VIDEO_ID"
+              data-youtube="VIDEO_ID">
+
+           …either way the inside of the tile is the same:
+             <div class="frame-box r-16x9">
+               <img class="frame-media" src="images/poster-horizontal-01.jpg"
+                    alt="Beyond the Surface brand film" loading="lazy">
+               <i class="play-tri"></i><span class="frame-runtime">02:14</span>
+             </div>
+             <div class="frame-cap"><b>…</b><span>…</span></div>
+           </a>                                                              -->
       <div class="gal gal-2">
-        <a class="frame is-play" href="#"><div class="frame-box r-16x9"><div class="frame-media" data-ph="Video 01 — thumbnail 1920 × 1080"></div><i class="play-tri"></i><span class="frame-runtime">02:14</span></div><div class="frame-cap"><b>Beyond the Surface — brand film</b><span>Edit · Grade</span></div></a>
-        <a class="frame is-play" href="#"><div class="frame-box r-16x9"><div class="frame-media" data-ph="Video 02 — thumbnail 1920 × 1080"></div><i class="play-tri"></i><span class="frame-runtime">00:45</span></div><div class="frame-cap"><b>Power Cook — unboxing series</b><span>Edit · Sound</span></div></a>
+        <a class="frame is-play" href="videos/horizontal-01.mp4" data-video="videos/horizontal-01.mp4"><div class="frame-box r-16x9"><video class="frame-media" src="videos/horizontal-01.mp4#t=0.1" preload="metadata" muted playsinline aria-hidden="true"></video><i class="play-tri"></i><span class="frame-runtime">00:16</span></div><div class="frame-cap"><b>Beyond the Surface — brand film</b><span>Edit · Grade</span></div></a>
+        <a class="frame is-play" href="videos/horizontal-02.mp4" data-video="videos/horizontal-02.mp4"><div class="frame-box r-16x9"><video class="frame-media" src="videos/horizontal-02.mp4#t=0.1" preload="metadata" muted playsinline aria-hidden="true"></video><i class="play-tri"></i><span class="frame-runtime">00:12</span></div><div class="frame-cap"><b>Power Cook — unboxing series</b><span>Edit · Sound</span></div></a>
+      </div>
+      <div class="gal gal-vert">
+        <a class="frame is-play" href="videos/vertical-01.mp4" data-video="videos/vertical-01.mp4"><div class="frame-box r-9x16"><video class="frame-media" src="videos/vertical-01.mp4#t=0.1" preload="metadata" muted playsinline aria-hidden="true"></video><i class="play-tri"></i><span class="frame-runtime">00:32</span></div><div class="frame-cap"><b>Vertical cut — 01</b><span>Reel</span></div></a>
+        <a class="frame is-play" href="videos/vertical-02.mp4" data-video="videos/vertical-02.mp4"><div class="frame-box r-9x16"><video class="frame-media" src="videos/vertical-02.mp4#t=0.1" preload="metadata" muted playsinline aria-hidden="true"></video><i class="play-tri"></i><span class="frame-runtime">00:20</span></div><div class="frame-cap"><b>Vertical cut — 02</b><span>Reel</span></div></a>
+        <a class="frame is-play" href="videos/vertical-03.mp4" data-video="videos/vertical-03.mp4"><div class="frame-box r-9x16"><video class="frame-media" src="videos/vertical-03.mp4#t=0.1" preload="metadata" muted playsinline aria-hidden="true"></video><i class="play-tri"></i><span class="frame-runtime">00:30</span></div><div class="frame-cap"><b>Vertical cut — 03</b><span>Reel</span></div></a>
       </div>
     </div>
 
@@ -1848,15 +1925,20 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
           <div class="chapter-tags"><span>Logo Reveal</span><span>Title Sequence</span><span>Explainer</span><span>Kinetic Type</span></div>
         </div>
       </div>
-      <div class="gal gal-3">
-        <a class="frame is-play" href="#"><div class="frame-box r-16x9"><div class="frame-media" data-ph="Motion 01 — 1920 × 1080"></div><i class="play-tri"></i><span class="frame-runtime">00:08</span></div><div class="frame-cap"><b>Koncept — logo sting</b><span>Reveal</span></div></a>
-        <a class="frame is-play" href="#"><div class="frame-box r-16x9"><div class="frame-media" data-ph="Motion 02 — 1920 × 1080"></div><i class="play-tri"></i><span class="frame-runtime">00:22</span></div><div class="frame-cap"><b>Summit — LED opener</b><span>Titles</span></div></a>
-        <a class="frame is-play" href="#"><div class="frame-box r-16x9"><div class="frame-media" data-ph="Motion 03 — 1920 × 1080"></div><i class="play-tri"></i><span class="frame-runtime">01:04</span></div><div class="frame-cap"><b>Product explainer</b><span>Infographic</span></div></a>
+      <div class="gal gal-vert">
+        <a class="frame is-play" href="videos/motion-01.mp4" data-video="videos/motion-01.mp4"><div class="frame-box r-9x16"><video class="frame-media" src="videos/motion-01.mp4#t=0.1" preload="metadata" muted playsinline aria-hidden="true"></video><i class="play-tri"></i><span class="frame-runtime">00:25</span></div><div class="frame-cap"><b>Koncept — logo sting</b><span>Reveal</span></div></a>
+        <a class="frame is-play" href="videos/motion-02.mp4" data-video="videos/motion-02.mp4"><div class="frame-box r-9x16"><video class="frame-media" src="videos/motion-02.mp4#t=0.1" preload="metadata" muted playsinline aria-hidden="true"></video><i class="play-tri"></i><span class="frame-runtime">00:14</span></div><div class="frame-cap"><b>Summit — LED opener</b><span>Titles</span></div></a>
+        <a class="frame is-play" href="videos/motion-03.mp4" data-video="videos/motion-03.mp4"><div class="frame-box r-9x16"><video class="frame-media" src="videos/motion-03.mp4#t=0.1" preload="metadata" muted playsinline aria-hidden="true"></video><i class="play-tri"></i><span class="frame-runtime">00:19</span></div><div class="frame-cap"><b>Product explainer</b><span>Infographic</span></div></a>
       </div>
     </div>
 
   </div>
 </section>
+
+<div class="vbox" id="vbox" aria-hidden="true">
+  <button class="vbox-close" aria-label="Close video">✕</button>
+  <div class="vbox-stage"></div>
+</div>
 
 <!-- ABOUT / QUOTE -->
 <section class="about reveal" id="about">
@@ -2123,6 +2205,87 @@ document.querySelectorAll('.marquee-track').forEach(t => {
   }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
 
   sections.forEach(s => spy.observe(s));
+})();
+
+/* ---------- VIDEO LIGHTBOX ----------
+   Tiles ship with nothing but a poster; the player is built at click time and
+   torn down on close, so nothing costs a byte until someone asks for it. That
+   matters twice over for YouTube, whose iframe pulls roughly a megabyte of its
+   own scripts — deferring it is the whole point of the poster facade.
+
+   A tile opts in with one of:
+     data-video="videos/clip.mp4"   self-hosted file
+     data-youtube="VIDEO_ID"        unlisted YouTube video (private will NOT
+                                    embed — only you can see those)          */
+(function () {
+  const box = document.getElementById('vbox');
+  if (!box) return;
+  const stage = box.querySelector('.vbox-stage');
+  let node = null;
+
+  function close() {
+    if (node) {
+      if (node.tagName === 'VIDEO') {
+        /* pause alone leaves the download running — clearing src and calling
+           load() is what actually aborts an in-flight fetch */
+        node.pause();
+        node.removeAttribute('src');
+        node.load();
+      }
+      node.remove();          // removing the iframe is what stops YouTube
+      node = null;
+    }
+    box.classList.remove('open', 'portrait');
+    box.setAttribute('aria-hidden', 'true');
+    document.body.style.removeProperty('overflow');
+  }
+
+  function show(el, portrait) {
+    close();
+    node = el;
+    stage.appendChild(el);
+    box.classList.toggle('portrait', !!portrait);
+    box.classList.add('open');
+    box.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';   // don't scroll the page behind
+  }
+
+  function file(src, portrait) {
+    const v = document.createElement('video');
+    v.src = src;
+    v.controls = true;
+    v.autoplay = true;
+    v.playsInline = true;
+    show(v, portrait);
+  }
+
+  function youtube(id, portrait) {
+    const f = document.createElement('iframe');
+    /* -nocookie holds back YouTube's tracking cookies until playback actually
+       starts, which keeps the page clear of a consent banner */
+    f.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(id) +
+            '?autoplay=1&rel=0&playsinline=1';
+    f.allow = 'accelerometer; autoplay; encrypted-media; picture-in-picture; fullscreen';
+    f.allowFullscreen = true;
+    f.title = 'Video player';
+    show(f, portrait);
+  }
+
+  document.addEventListener('click', e => {
+    const tile = e.target.closest('[data-video], [data-youtube]');
+    if (tile) {
+      if (document.body.classList.contains('edit-on')) return;
+      e.preventDefault();
+      const portrait = !!tile.querySelector('.r-9x16');
+      const yt = tile.getAttribute('data-youtube');
+      if (yt) youtube(yt, portrait);
+      else file(tile.getAttribute('data-video'), portrait);
+      return;
+    }
+    // backdrop or the close button
+    if (e.target === box || e.target.closest('.vbox-close')) close();
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
 })();
 
 /* ---------- CAPABILITIES: fill the glass tabs on first sight ----------
@@ -2757,6 +2920,13 @@ window.PortfolioReel = (function () {
     clone.querySelectorAll('.reveal.in').forEach(n => n.classList.remove('in'));
     // capability tabs export empty so they fill on scroll again, not pre-filled
     clone.querySelectorAll('.cap-card.filled').forEach(n => n.classList.remove('filled'));
+    // never export an open lightbox, or a <video> baked into the markup
+    clone.querySelectorAll('.vbox').forEach(n => {
+      n.classList.remove('open');
+      n.setAttribute('aria-hidden', 'true');
+      const s = n.querySelector('.vbox-stage');
+      if (s) s.innerHTML = '';
+    });
     clone.querySelectorAll('.slide.is-active').forEach(n => n.classList.remove('is-active'));
     clone.querySelectorAll('.cat-chip.on, .sl-dot.on').forEach(n => n.classList.remove('on'));
     clone.querySelectorAll('.marquee-track').forEach(t => {

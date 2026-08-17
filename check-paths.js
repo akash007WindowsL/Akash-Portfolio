@@ -2,7 +2,10 @@ const fs = require('fs');
 const path = require('path');
 
 const base = __dirname;
-const html = fs.readFileSync(path.join(base, 'index.html'), 'utf8');
+// strip HTML comments first — the markup carries commented-out examples whose
+// placeholder paths are not meant to resolve
+const html = fs.readFileSync(path.join(base, 'index.html'), 'utf8')
+  .replace(/<!--[\s\S]*?-->/g, '');
 const matches = [...html.matchAll(/src="(images\/[^"]+)"/g)].map(m => m[1]);
 const unique = [...new Set(matches)];
 
