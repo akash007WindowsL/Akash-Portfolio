@@ -33,7 +33,7 @@
       '.events .section-label', '.events .h-display', '.events .slider',
       '.showcase .section-label', '.showcase .h-display', '.show-panel',
       '.cap-section .section-label', '.cap-section .h-display', '.cap-card', '.cap-tools',
-      '.chapter-title', '.gal > .frame',
+      '.chapter-title', '.gal > .frame', '#print-media .brochure-card',
       '.about .section-label', '.about .h-display', '.about-photo', '.about-quote',
       '.clients .section-label', '.clients .h-display', '.client-cell',
       '.cta h2', '.cta-btn', '.contact-form',
@@ -41,7 +41,7 @@
     ];
 
     const targets = Array.from(new Set(document.querySelectorAll(selectors.join(','))));
-    const staggerGroups = document.querySelectorAll('.cap-grid, .gal, .client-grid, .foot-grid, .foot-bottom, .cat-rail-inner');
+    const staggerGroups = document.querySelectorAll('.cap-grid, .gal, .brochure-stack, .client-grid, .foot-grid, .foot-bottom, .cat-rail-inner');
 
     targets.forEach(function (element) {
       element.classList.add('scroll-reveal');
@@ -136,4 +136,99 @@ document.addEventListener('DOMContentLoaded', function () {
   reduced.addEventListener('change', function (event) {
     if (event.matches) showcase.classList.remove('inside-ready');
   });
+});
+
+/* Show the category rail only after the index has been passed. When the
+   Meadow jumps directly to a chapter, wait for the visitor's first scroll. */
+document.addEventListener('DOMContentLoaded', function () {
+  const rail = document.getElementById('catRail');
+  const inside = document.getElementById('whats-inside');
+  if (!rail || !inside) return;
+
+  let entered = document.body.classList.contains('portfolio-entered');
+  let entryGate = entered;
+  let entryY = window.scrollY;
+  let frame = 0;
+
+  function updateRail() {
+    frame = 0;
+    if (entryGate && Math.abs(window.scrollY - entryY) > 3) entryGate = false;
+    const navClearance = window.innerWidth <= 900 ? 96 : 104;
+    const insideEnd = inside.offsetTop + inside.offsetHeight;
+    const pastInside = window.scrollY + navClearance >= insideEnd;
+    const visible = !document.body.classList.contains('meadow-open') && pastInside && !entryGate;
+    rail.classList.toggle('rail-visible', visible);
+    rail.setAttribute('aria-hidden', String(!visible));
+  }
+
+  function queueRailUpdate() {
+    if (!frame) frame = requestAnimationFrame(updateRail);
+  }
+
+  const bodyObserver = new MutationObserver(function () {
+    const isEntered = document.body.classList.contains('portfolio-entered');
+    if (isEntered && !entered) {
+      entryGate = true;
+      entryY = window.scrollY;
+    }
+    entered = isEntered;
+    queueRailUpdate();
+  });
+
+  bodyObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+  window.addEventListener('scroll', queueRailUpdate, { passive: true });
+  window.addEventListener('resize', queueRailUpdate, { passive: true });
+  updateRail();
+});
+
+/* Mark the brochure spread currently at the front of the sticky stack. */
+document.addEventListener('DOMContentLoaded', function () {
+  const stack = document.querySelector('#print-media .brochure-stack');
+  if (!stack) return;
+
+  const chapter = stack.closest('#print-media');
+  const cards = Array.from(stack.querySelectorAll('.brochure-card'));
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let frame = 0;
+  let activeIndex = -1;
+
+  function updateStack() {
+    frame = 0;
+    if (reduced.matches) {
+      cards.forEach(function (card) { card.classList.remove('is-active', 'is-past'); });
+      chapter.classList.remove('brochure-title-released');
+      activeIndex = -1;
+      return;
+    }
+
+    let nextIndex = 0;
+    cards.forEach(function (card, index) {
+      const stickyTop = parseFloat(window.getComputedStyle(card).top) || 0;
+      if (card.getBoundingClientRect().top <= stickyTop + 2) nextIndex = index;
+    });
+
+    const lastCard = cards[cards.length - 1];
+    const lastStickyTop = parseFloat(window.getComputedStyle(lastCard).top) || 0;
+    const releaseBoundary = lastStickyTop + lastCard.offsetHeight;
+    chapter.classList.toggle(
+      'brochure-title-released',
+      stack.getBoundingClientRect().bottom <= releaseBoundary + 2
+    );
+
+    if (nextIndex === activeIndex) return;
+    activeIndex = nextIndex;
+    cards.forEach(function (card, index) {
+      card.classList.toggle('is-active', index === activeIndex);
+      card.classList.toggle('is-past', index < activeIndex);
+    });
+  }
+
+  function queueStackUpdate() {
+    if (!frame) frame = requestAnimationFrame(updateStack);
+  }
+
+  window.addEventListener('scroll', queueStackUpdate, { passive: true });
+  window.addEventListener('resize', queueStackUpdate, { passive: true });
+  reduced.addEventListener('change', updateStack);
+  updateStack();
 });
