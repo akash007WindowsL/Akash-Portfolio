@@ -1,0 +1,67 @@
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: #72a13c; }
+
+/* One shared cover surface keeps every plant tied to a landscape coordinate.
+   Resize changes layout only; neither the surface nor background is animated.
+   Wide screens preserve the complete reference. Narrow screens crop the sides. */
+.meadow {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 6264 / 2688;
+  min-height: 340px;
+  overflow: hidden;
+  isolation: isolate;
+  container-type: size;
+}
+.meadow-scene {
+  position: absolute;
+  width: max(100cqw, calc(100cqh * 6264 / 2688));
+  height: max(100cqh, calc(100cqw * 2688 / 6264));
+  left: 50%;
+  bottom: 0;
+  translate: -50% 0;
+}
+.meadow-background { display: block; width: 100%; height: 100%; }
+.cloud {
+  position: absolute;
+  display: block;
+  height: auto;
+  opacity: .72;
+  transform-origin: center;
+  animation: cloud-drift var(--cloud-duration) ease-in-out var(--cloud-delay) infinite;
+  pointer-events: none;
+}
+/* Positions map directly to the updated source composition. */
+.cloud-top { left: 40.29228%; top: 0; width: 26.61795%; --cloud-drift: 7px; --cloud-lift: .7px; --cloud-duration: 15.4s; --cloud-delay: -4.9s; }
+.cloud-1 { left: 21.71190%; top: 24.81752%; width: 21.39875%; --cloud-drift: 9px; --cloud-lift: .9px; --cloud-duration: 12.8s; --cloud-delay: -8.1s; }
+.cloud-3 { left: 57.72443%; top: 18.97810%; width: 18.05846%; --cloud-drift: 7px; --cloud-lift: .6px; --cloud-duration: 14.2s; --cloud-delay: -2.6s; }
+.flower {
+  position: absolute;
+  display: block;
+  height: auto;
+  bottom: 0;
+  transform-origin: 50% 100%;
+  animation: meadow-breeze var(--duration) ease-in-out var(--delay) infinite;
+  pointer-events: none;
+}
+.depth-left { left: 2.29645%; width: 21.39875%; --angle: .35deg; --drift: .55px; --duration: 8.7s; --delay: -3.1s; }
+.depth-middle { left: 24.42589%; width: 30.74113%; --angle: .4deg; --drift: .65px; --duration: 7.9s; --delay: -6.2s; }
+.depth-right { left: 59.44676%; width: 21.97286%; --angle: .3deg; --drift: .5px; --duration: 8.3s; --delay: -1.7s; }
+.foreground-left { left: 0; width: 22.86013%; --angle: .7deg; --drift: 1px; --duration: 6.7s; --delay: -2.8s; }
+.foreground-middle { left: 19.57203%; width: 51.67015%; --angle: .5deg; --drift: 1.2px; --duration: 7.3s; --delay: -5.4s; }
+.foreground-right { left: 70.66806%; width: 29.33194%; --angle: .65deg; --drift: 1px; --duration: 6.1s; --delay: -.8s; }
+/* Foreground exports are 60 reference pixels above their final placement. */
+.foreground-left, .foreground-middle, .foreground-right { bottom: -7.30816%; }
+@keyframes meadow-breeze {
+  0%, 100% { transform: translateX(calc(var(--drift) * -.65)) rotate(calc(var(--angle) * -.7)); }
+  32% { transform: translateX(var(--drift)) rotate(var(--angle)); }
+  68% { transform: translateX(calc(var(--drift) * -.2)) rotate(calc(var(--angle) * -.15)); }
+}
+@keyframes cloud-drift {
+  0%, 100% { transform: translate3d(calc(var(--cloud-drift) * -.6), calc(var(--cloud-lift) * .3), 0); }
+  48% { transform: translate3d(var(--cloud-drift), calc(var(--cloud-lift) * -.8), 0); }
+  76% { transform: translate3d(calc(var(--cloud-drift) * .25), var(--cloud-lift), 0); }
+}
+@media (max-width: 600px) { .meadow { min-height: 360px; } }
+@media (prefers-reduced-motion: reduce) { .flower, .cloud { animation: none; transform: none; } }

@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="meadow.css">
 <style>
 :root {
   --bg: #0a0908;
@@ -25,24 +26,9 @@ body {
   color: var(--text);
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
-  cursor: none;
 }
 a { color: inherit; text-decoration: none; }
 img { display: block; max-width: 100%; }
-
-/* Custom cursor */
-.cursor {
-  position: fixed;
-  width: 12px; height: 12px;
-  background: var(--text);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: width 0.25s, height 0.25s, background 0.25s;
-  mix-blend-mode: difference;
-}
-.cursor.hover { width: 48px; height: 48px; background: var(--accent-orange); }
 
 /* Nav */
 nav {
@@ -55,7 +41,7 @@ nav {
   z-index: 100;
   mix-blend-mode: difference;
 }
-nav .logo { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 500; letter-spacing: -0.02em; white-space: nowrap; }
+nav .logo { font-family: 'Inter', sans-serif; font-size: 24px; font-weight: 500; letter-spacing: -0.02em; white-space: nowrap; }
 /* once scrolling starts: drop the blend trick, pin everything to solid white
    on a dark scrim so the bar stays legible over any section */
 nav.scrolled {
@@ -70,7 +56,7 @@ nav ul { display: flex; gap: 32px; list-style: none; font-size: 13px; text-trans
 nav ul li a { transition: opacity 0.3s; }
 nav ul li a:hover { opacity: 0.5; }
 .menu-toggle {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   font-size: 11px;
   letter-spacing: 0.15em;
   cursor: pointer;
@@ -96,7 +82,7 @@ nav ul li a:hover { opacity: 0.5; }
 }
 .mobile-menu.open { opacity: 1; pointer-events: auto; }
 .mobile-menu a {
-  font-family: 'Fraunces', serif;
+  font-family: 'Inter', sans-serif;
   font-style: italic;
   font-weight: 300;
   font-size: clamp(30px, 8.5vw, 48px);
@@ -117,7 +103,7 @@ nav ul li a:hover { opacity: 0.5; }
 .mm-close {
   position: absolute;
   top: 16px; right: 18px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   font-size: 11px;
   letter-spacing: 0.15em;
   color: var(--text);
@@ -130,7 +116,7 @@ nav ul li a:hover { opacity: 0.5; }
 .mm-foot {
   position: absolute;
   bottom: 28px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   font-size: 10px;
   letter-spacing: 0.16em;
   color: var(--text-dim);
@@ -146,7 +132,7 @@ body.menu-open nav { z-index: 210; mix-blend-mode: normal; }
   overflow: hidden;
   white-space: nowrap;
   padding: 14px 0;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   font-size: 11px;
   letter-spacing: 0.08em;
   border-top: 1px solid var(--border);
@@ -183,7 +169,7 @@ body.menu-open nav { z-index: 210; mix-blend-mode: normal; }
   padding: 40px 24px;
 }
 .hero-mark {
-  font-family: 'Fraunces', serif;
+  font-family: 'Inter', sans-serif;
   font-size: clamp(72px, 13vw, 210px);
   font-weight: 300;
   line-height: 0.86;
@@ -193,7 +179,7 @@ body.menu-open nav { z-index: 210; mix-blend-mode: normal; }
 .hero-mark span { display: block; }
 .hero-tagline {
   margin-top: 48px;
-  font-family: 'Fraunces', serif;
+  font-family: 'Inter', sans-serif;
   font-size: clamp(14px, 1.5vw, 20px);
   font-weight: 400;
   line-height: 1.55;
@@ -217,7 +203,7 @@ body.menu-open nav { z-index: 210; mix-blend-mode: normal; }
   align-items: center;
   gap: 10px;
   padding: 24px 0;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   font-size: 10px;
   letter-spacing: 0.25em;
   opacity: 0.75;
@@ -229,7 +215,7 @@ body.menu-open nav { z-index: 210; mix-blend-mode: normal; }
 section { padding: 120px 40px; }
 .container { max-width: 1400px; margin: 0 auto; }
 .section-label {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   font-size: 11px;
   letter-spacing: 0.25em;
   text-transform: uppercase;
@@ -238,7 +224,7 @@ section { padding: 120px 40px; }
   display: block;
 }
 .h-display {
-  font-family: 'Fraunces', serif;
+  font-family: 'Inter', sans-serif;
   font-size: clamp(48px, 7vw, 110px);
   font-weight: 300;
   line-height: 0.92;
@@ -299,7 +285,7 @@ section { padding: 120px 40px; }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   font-size: 12px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -323,7 +309,7 @@ section { padding: 120px 40px; }
   pointer-events: none;
 }
 .slide-kicker {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   font-size: 10px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -331,7 +317,7 @@ section { padding: 120px 40px; }
   margin-bottom: 14px;
 }
 .slide-caption h3 {
-  font-family: 'Fraunces', serif;
+  font-family: 'Inter', sans-serif;
   font-style: italic;
   font-weight: 300;
   font-size: clamp(17px, 2vw, 28px);
@@ -340,7 +326,7 @@ section { padding: 120px 40px; }
 }
 .slide-caption p {
   margin-top: 12px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   font-size: 11px;
   letter-spacing: 0.12em;
   color: rgba(244,241,234,0.72);
@@ -359,7 +345,7 @@ section { padding: 120px 40px; }
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: none;
+  cursor: pointer;
   z-index: 3;
   transition: background 0.3s, border-color 0.3s, opacity 0.3s;
 }
@@ -375,7 +361,7 @@ section { padding: 120px 40px; }
   gap: 28px;
   align-items: center;
 }
-.sl-count { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: var(--text-dim); }
+.sl-count { font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.16em; color: var(--text-dim); }
 .sl-count b { color: var(--text); font-weight: 500; }
 .sl-progress { height: 1px; background: var(--border); position: relative; overflow: hidden; }
 .sl-progress i { position: absolute; inset: 0 auto 0 0; width: 0%; background: var(--accent-orange); }
@@ -385,7 +371,7 @@ section { padding: 120px 40px; }
   background: var(--border);
   border: none;
   padding: 0;
-  cursor: none;
+  cursor: pointer;
   transition: background 0.3s, width 0.3s;
 }
 .sl-dot.on { background: var(--text); width: 42px; }
@@ -405,9 +391,9 @@ section { padding: 120px 40px; }
 .show-panel { display: flex; flex-direction: column; gap: 18px; }
 .reel-panel { width: 100%; }
 .show-cap { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
-.show-cap b { font-family: 'Fraunces', serif; font-weight: 400; font-size: 17px; letter-spacing: -0.01em; }
+.show-cap b { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 17px; letter-spacing: -0.01em; }
 .show-cap span {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   font-size: 10px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -634,14 +620,14 @@ section { padding: 120px 40px; }
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: none;
+  cursor: pointer;
   transition: background 0.3s, color 0.3s, opacity 0.3s;
 }
 .bk-btn:hover:not(:disabled) { background: var(--text); color: var(--bg); }
 .bk-btn:disabled { opacity: 0.25; }
 .bk-btn svg { width: 15px; height: 15px; }
 .bk-count {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   font-size: 11px;
   letter-spacing: 0.16em;
   color: var(--text-dim);
@@ -738,9 +724,9 @@ section { padding: 120px 40px; }
    .cap-fill and, coming later, would reset it to position: relative, dropping
    it back into flow as a flex item */
 .cap-card > :not(.cap-fill) { position: relative; z-index: 2; }
-.cap-card h3 { font-family: 'Fraunces', serif; font-size: 32px; font-weight: 400; letter-spacing: -0.02em; }
+.cap-card h3 { font-family: 'Inter', sans-serif; font-size: 32px; font-weight: 400; letter-spacing: -0.02em; }
 .cap-num {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   font-size: 11px;
   opacity: 0.4;
   display: block;
@@ -758,7 +744,7 @@ section { padding: 120px 40px; }
 }
 .cap-tools-label {
   display: block;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   font-size: 9.5px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -839,7 +825,7 @@ section { padding: 120px 40px; }
 .cat-rail::-webkit-scrollbar { display: none; }
 .cat-rail-inner { display: flex; gap: 8px; max-width: 1400px; margin: 0 auto; width: max-content; }
 .cat-chip {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   font-size: 10.5px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -863,7 +849,7 @@ section { padding: 120px 40px; }
   margin-bottom: 52px;
 }
 .chapter-index {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   font-size: 11px;
   letter-spacing: 0.24em;
   color: var(--accent-orange);
@@ -874,7 +860,7 @@ section { padding: 120px 40px; }
 }
 .chapter-index::after { content: ''; flex: 1; height: 1px; background: var(--hairline); max-width: 120px; }
 .chapter-title {
-  font-family: 'Fraunces', serif;
+  font-family: 'Inter', sans-serif;
   font-style: italic;
   font-weight: 300;
   font-size: clamp(38px, 5.2vw, 82px);
@@ -885,7 +871,7 @@ section { padding: 120px 40px; }
 .chapter-aside p { font-size: 15.5px; line-height: 1.7; color: var(--text-dim); }
 .chapter-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
 .chapter-tags span {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   font-size: 9.5px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -939,6 +925,78 @@ section { padding: 120px 40px; }
 .gal-vert { grid-template-columns: repeat(3, minmax(0, 280px)); justify-content: center; }
 .gal + .gal { margin-top: 22px; }
 
+/* Video Editing reels only — the supplied 9:16 SVG sits above the media
+   without taking input. */
+#video-editing .video-reels {
+  grid-template-columns: repeat(4, minmax(0, 240px));
+  justify-content: center;
+  gap: 44px;
+  padding: 34px 40px 38px;
+  background: #fff;
+}
+#video-editing .video-reels .frame-box {
+  border-radius: 8.333333% / 4.6875%;
+  background: #0d0d0d;
+  box-shadow: 0 12px 24px rgba(10, 8, 6, 0.20);
+  transition: box-shadow 280ms cubic-bezier(.2, .7, .2, 1);
+}
+#video-editing .video-reels .frame-box::after { box-shadow: none; }
+#video-editing .video-reels .frame-media,
+#motion-graphics .motion-reels .frame-media {
+  z-index: 1;
+  border-radius: 28px;
+  transform: scale(1.04);
+}
+#video-editing .video-reels .frame-runtime { display: none; }
+#video-editing .video-reels .reel-frame-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: inherit;
+  pointer-events: none;
+  user-select: none;
+}
+#video-editing .video-reels .reel-empty-surface {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: 20px;
+  background: linear-gradient(145deg, #171513, #0d0c0b 58%, #151311);
+}
+#video-editing .video-reels .reel-empty { cursor: default; }
+#video-editing .video-reels > .frame {
+  transition: transform 280ms cubic-bezier(.2, .7, .2, 1);
+}
+#video-editing .video-reels .frame:hover .frame-media { transform: scale(1.04); }
+#video-editing .video-reels .frame-cap b { color: #171513; }
+#video-editing .video-reels .frame-cap span { color: rgba(23, 21, 19, 0.62); }
+
+/* Motion Graphics now has the same four-slot desktop rhythm. Its fourth slot
+   is intentionally blank and keeps its native video-card treatment. */
+#motion-graphics .motion-reels {
+  grid-template-columns: repeat(4, minmax(0, 280px));
+  justify-content: center;
+}
+#motion-graphics .motion-reels .frame-box { border-radius: 20px; }
+#motion-graphics .motion-empty-surface {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background: linear-gradient(145deg, #171513, #0d0c0b 58%, #151311);
+}
+#motion-graphics .motion-empty { cursor: default; }
+
+@media (hover: hover) {
+  #video-editing .video-reels > a.frame:hover { transform: translateY(-5px); }
+  #video-editing .video-reels > a.frame:hover .frame-box {
+    box-shadow: 0 18px 32px rgba(10, 8, 6, 0.30);
+  }
+}
+
 .frame-media {
   position: absolute;
   inset: 0;
@@ -956,7 +1014,7 @@ section { padding: 120px 40px; }
   justify-content: center;
   text-align: center;
   padding: 12px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   font-size: 10px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -1008,6 +1066,7 @@ section { padding: 120px 40px; }
    be declared — .portrait is set from the tile that opened it */
 .vbox iframe { width: min(100%, 1180px); aspect-ratio: 16 / 9; }
 .vbox.portrait iframe { width: auto; height: min(100%, 880px); aspect-ratio: 9 / 16; }
+.vbox.portrait video { border-radius: 28px; }
 .vbox-close {
   position: absolute;
   top: 20px; right: 24px;
@@ -1031,9 +1090,9 @@ section { padding: 120px 40px; }
   align-items: baseline;
   gap: 16px;
 }
-.frame-cap b { font-family: 'Fraunces', serif; font-weight: 400; font-size: 17px; letter-spacing: -0.01em; }
+.frame-cap b { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 17px; letter-spacing: -0.01em; }
 .frame-cap span {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   font-size: 10px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -1071,7 +1130,7 @@ section { padding: 120px 40px; }
   position: absolute;
   right: 14px; bottom: 14px;
   z-index: 3;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   font-size: 10px;
   letter-spacing: 0.1em;
   padding: 5px 9px;
@@ -1083,7 +1142,7 @@ section { padding: 120px 40px; }
 .btn-line {
   display: inline-block;
   margin-top: 50px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   font-size: 12px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -1113,7 +1172,7 @@ section { padding: 120px 40px; }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Fraunces', serif;
+  font-family: 'Inter', sans-serif;
   font-size: 140px;
   font-style: italic;
   color: rgba(255,255,255,0.3);
@@ -1127,10 +1186,10 @@ section { padding: 120px 40px; }
 }
 /* once a real photo is dropped, hide the "AN" placeholder monogram */
 .about-photo:has(.about-img)::after { display: none; }
-.about-quote { font-family: 'Fraunces', serif; font-size: clamp(22px, 2.2vw, 30px); font-weight: 300; line-height: 1.45; letter-spacing: -0.01em; }
+.about-quote { font-family: 'Inter', sans-serif; font-size: clamp(22px, 2.2vw, 30px); font-weight: 300; line-height: 1.45; letter-spacing: -0.01em; }
 .about-quote p { margin-bottom: 22px; }
 .about-quote p:first-child { font-style: italic; }
-.about-sign { margin-top: 32px; font-size: 13px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.12em; color: var(--text-dim); }
+.about-sign { margin-top: 32px; font-size: 13px; font-family: 'Inter', sans-serif; letter-spacing: 0.12em; color: var(--text-dim); }
 
 /* Clients */
 .clients { border-top: 1px solid var(--border); text-align: center; }
@@ -1147,7 +1206,7 @@ section { padding: 120px 40px; }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Fraunces', serif;
+  font-family: 'Inter', sans-serif;
   font-style: italic;
   font-size: 20px;
   color: var(--text-dim);
@@ -1163,7 +1222,7 @@ section { padding: 120px 40px; }
   padding: 180px 40px;
 }
 .cta h2 {
-  font-family: 'Fraunces', serif;
+  font-family: 'Inter', sans-serif;
   font-size: clamp(56px, 9vw, 160px);
   font-weight: 300;
   font-style: italic;
@@ -1172,7 +1231,7 @@ section { padding: 120px 40px; }
   margin-bottom: 56px;
 }
 .cta-sub {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   font-size: 12px;
   letter-spacing: 0.14em;
   color: var(--text-dim);
@@ -1196,7 +1255,7 @@ section { padding: 120px 40px; }
   margin-bottom: 20px;
 }
 .cf-field label {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   font-size: 10px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -1231,7 +1290,7 @@ section { padding: 120px 40px; }
   margin-top: 8px;
 }
 .cf-email-note {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   font-size: 11px;
   letter-spacing: 0.1em;
   color: var(--text-dim);
@@ -1247,7 +1306,7 @@ section { padding: 120px 40px; }
   padding: 20px 40px;
   border: 1px solid var(--text);
   border-radius: 100px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   font-size: 12px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -1265,7 +1324,7 @@ section { padding: 120px 40px; }
 /* Footer */
 footer { padding: 80px 40px 32px; border-top: 1px solid var(--border); }
 .foot-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px; max-width: 1400px; margin: 0 auto 60px; align-items: start; }
-.foot-logo { font-family: 'Fraunces', serif; font-size: 32px; font-style: italic; }
+.foot-logo { font-family: 'Inter', sans-serif; font-size: 32px; font-style: italic; }
 .foot-contact { font-size: 14px; line-height: 1.8; color: var(--text-dim); }
 .foot-contact a { color: var(--text); border-bottom: 1px solid var(--border); }
 .foot-nav { display: flex; flex-direction: column; gap: 14px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; }
@@ -1278,7 +1337,7 @@ footer { padding: 80px 40px 32px; border-top: 1px solid var(--border); }
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 12px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   font-size: 11px;
   color: var(--text-dim);
   letter-spacing: 0.1em;
@@ -1305,7 +1364,7 @@ footer { padding: 80px 40px 32px; border-top: 1px solid var(--border); }
   backdrop-filter: blur(16px);
   border: 1px solid rgba(244, 241, 234, 0.18);
   box-shadow: 0 18px 50px rgba(0,0,0,0.55);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   font-size: 10.5px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -1407,7 +1466,7 @@ body.edit-on .book-wrap { margin: 0 auto; }
   left: 50%; top: 50%;
   transform: translate(-50%, -50%);
   z-index: 6;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   font-style: normal;
   font-size: 9px;
   letter-spacing: 0.16em;
@@ -1442,6 +1501,8 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
   /* no square tile left beside it to set the row height, so pin a ratio */
   .frame.span-3 { grid-column: span 2; }
   .frame.span-3 .frame-box { flex: none; aspect-ratio: 2.1/1; }
+  #video-editing .video-reels,
+  #motion-graphics .motion-reels { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 
 @media (max-width: 900px) {
@@ -1486,6 +1547,16 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
   .gal-3, .gal-2, .gal-feature { grid-template-columns: repeat(2, 1fr); }
   /* verticals are narrow enough to keep three across on a tablet */
   .gal-vert { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  #video-editing .video-reels {
+    grid-template-columns: repeat(2, minmax(0, 260px));
+    gap: 14px;
+    padding: 0;
+    background: transparent;
+  }
+  #motion-graphics .motion-reels { grid-template-columns: repeat(2, minmax(0, 260px)); }
+  #video-editing .video-reels .frame-box { box-shadow: none; }
+  #video-editing .video-reels .frame-cap b { color: var(--text); }
+  #video-editing .video-reels .frame-cap span { color: var(--text-dim); }
   .span-2 { grid-column: span 2; }
   /* a 16:9 strip inside 20px gutters is only ~190px tall on a phone — the stage
      shots were unreadable. Go full-bleed and taller so they carry the section. */
@@ -1509,6 +1580,8 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
   .gal-4, .gal-3, .gal-2, .gal-feature { grid-template-columns: 1fr; }
   /* a 9:16 tile at full phone width is far too tall — keep two abreast */
   .gal-vert { grid-template-columns: repeat(2, 1fr); }
+  #video-editing .video-reels,
+  #motion-graphics .motion-reels { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
   .span-2, .gal-feature > .frame:first-child { grid-column: auto; }
   .tool-row { gap: 10px; }
   .frame.span-3 { grid-column: auto; }
@@ -1516,19 +1589,152 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
   .slide { aspect-ratio: 4/3; }
   .slide-caption { padding: 20px; }
 }
-</style>
-</head>
-<body>
 
-<div class="cursor"></div>
+/* ============ MEADOW ENTRANCE ============ */
+body.meadow-open { overflow: hidden; }
+body.meadow-open nav,
+body.meadow-open nav.scrolled {
+  color: #fff;
+  background: transparent;
+  border-bottom-color: transparent;
+  backdrop-filter: none;
+  mix-blend-mode: normal;
+  text-shadow: 0 2px 18px rgba(8, 28, 32, 0.48);
+}
+.meadow-entry {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #6d9d3b;
+  transform: translate3d(0, 0, 0);
+  transition: transform 880ms cubic-bezier(.76, 0, .24, 1);
+  will-change: transform;
+}
+.meadow-entry.is-leaving { transform: translate3d(0, -100%, 0); }
+.meadow-entry .meadow {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  padding: 0;
+  aspect-ratio: auto;
+}
+.meadow-entry::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(5, 22, 32, 0.12), transparent 34%, rgba(7, 18, 13, 0.25));
+}
+.meadow-welcome {
+  position: relative;
+  z-index: 2;
+  width: min(880px, calc(100% - 40px));
+  height: 100%;
+  margin: 0 auto;
+  padding: clamp(104px, 15vh, 156px) 0 max(38px, env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+}
+.meadow-eyebrow {
+  margin-bottom: 15px;
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-shadow: 0 2px 16px rgba(4, 27, 25, 0.55);
+}
+.meadow-title {
+  max-width: 760px;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(48px, 7vw, 98px);
+  font-style: italic;
+  font-weight: 350;
+  line-height: 0.94;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+  text-shadow: 0 4px 28px rgba(4, 31, 31, 0.42);
+}
+.entry-choices {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  width: min(640px, 100%);
+  margin-top: clamp(34px, 6vh, 62px);
+}
+.entry-choice {
+  min-height: 104px;
+  padding: 20px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.58);
+  border-radius: 16px;
+  background: rgba(10, 31, 26, 0.20);
+  color: #fff;
+  box-shadow: 0 14px 34px rgba(8, 29, 22, 0.14);
+  backdrop-filter: blur(10px) saturate(112%);
+  -webkit-backdrop-filter: blur(10px) saturate(112%);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  transition: transform 320ms cubic-bezier(.2,.7,.2,1), background 320ms ease, box-shadow 320ms ease, border-color 320ms ease;
+}
+.entry-choice span {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(22px, 2.1vw, 29px);
+  font-weight: 450;
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+}
+.entry-choice svg { width: 21px; flex: 0 0 auto; transition: transform 320ms cubic-bezier(.2,.7,.2,1); }
+.entry-choice:hover {
+  transform: translateY(-4px) scale(1.012);
+  border-color: rgba(255, 255, 255, 0.86);
+  background: rgba(10, 31, 26, 0.29);
+  box-shadow: 0 20px 42px rgba(8, 29, 22, 0.22);
+}
+.entry-choice:hover svg { transform: translate(2px, -2px); }
+.entry-choice:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
+
+@media (max-width: 620px) {
+  .meadow-welcome { width: min(100% - 32px, 480px); padding-top: 92px; }
+  .meadow-title { font-size: clamp(43px, 13.2vw, 64px); }
+  .entry-choices { grid-template-columns: 1fr; width: min(100%, 370px); margin-top: 30px; }
+  .entry-choice { min-height: 78px; padding: 15px 18px; border-radius: 14px; }
+  .entry-choice span { font-size: 22px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .meadow-entry { transition-duration: 140ms; }
+  .entry-choice, .entry-choice svg { transition: none; }
+  .entry-choice:hover { transform: none; }
+}
+</style>
+<link rel="stylesheet" href="portfolio-theme.css"><script src="portfolio-theme.js"></script></head>
+<body class="meadow-open">
 
 <nav>
-  <a href="#" class="logo" aria-label="Back to top">Akash Namdev<span style="font-style:italic;">.</span></a>
+  <a href="#" class="logo" aria-label="Back to top">Akash Namdev<span>.</span></a>
   <ul>
     <li><a href="#work">Work</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+  <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">Dark mode</button>
   <div class="menu-toggle" id="menuToggle" role="button" tabindex="0" aria-controls="mobileMenu" aria-expanded="false">MENU</div>
 </nav>
 
@@ -1542,8 +1748,40 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
   <span class="mm-foot">Bhopal · Open for collaboration</span>
 </div>
 
+<!-- MEADOW ENTRANCE -->
+<section class="meadow-entry" id="meadowEntry" aria-labelledby="meadowTitle">
+  <div class="meadow" aria-hidden="true">
+    <div class="meadow-scene">
+      <img class="meadow-background" src="images/meadow/background.jpg" width="6264" height="2688" alt="" fetchpriority="high" draggable="false">
+      <img class="cloud cloud-top" src="images/meadow/cloud-top.png" width="255" height="49" alt="" draggable="false">
+      <img class="cloud cloud-1" src="images/meadow/cloud-1.png" width="205" height="79" alt="" draggable="false">
+      <img class="cloud cloud-3" src="images/meadow/cloud-3.png" width="173" height="84" alt="" draggable="false">
+      <img class="flower depth-left" src="images/meadow/depth-left.png" width="410" height="281" alt="" draggable="false">
+      <img class="flower depth-middle" src="images/meadow/depth-middle.png" width="589" height="218" alt="" draggable="false">
+      <img class="flower depth-right" src="images/meadow/depth-right.png" width="421" height="212" alt="" draggable="false">
+      <img class="flower foreground-left" src="images/meadow/left.png" width="438" height="260" alt="" draggable="false">
+      <img class="flower foreground-middle" src="images/meadow/middle.png" width="990" height="245" alt="" draggable="false">
+      <img class="flower foreground-right" src="images/meadow/right.png" width="562" height="257" alt="" draggable="false">
+    </div>
+  </div>
+  <div class="meadow-welcome">
+    <p class="meadow-eyebrow"><span class="person-name">Akash Namdev</span> · Independent Creative Practice</p>
+    <h1 class="meadow-title" id="meadowTitle">Welcome to my <span class="heading-accent">Portfolio</span></h1>
+    <div class="entry-choices" aria-label="Choose which work to explore first">
+      <button class="entry-choice" type="button" data-entry="video">
+        <span>Video Editing<br>&amp; Motion Graphics</span>
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 19 19 5M9 5h10v10"/></svg>
+      </button>
+      <button class="entry-choice" type="button" data-entry="graphic">
+        <span>Graphic Designing</span>
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 19 19 5M9 5h10v10"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
 <!-- HERO -->
-<section class="hero" style="padding-left:0; padding-right:0;">
+<section class="hero" style="padding-left:0; padding-right:0;" hidden>
   <div class="marquee" style="border:none; background: rgba(0,0,0,0.18);">
     <div class="marquee-track">
       <span>23° 15′ 35.6″ N &nbsp; 77° 24′ 45.3″ E &nbsp;—&nbsp; BHOPAL, MADHYA PRADESH</span>
@@ -1582,10 +1820,9 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
 <!-- EVENT SLIDER -->
 <section class="events reveal" id="moments">
   <div class="container">
-    <span class="section-label">— 01 / On ground</span>
+
     <div class="ev-head">
-      <h2 class="h-display">Moments from<br>the big rooms.</h2>
-      <p class="ev-sub">Stage backdrops, signage, standees, and full brand collateral produced for large-format events — designed on screen, judged in person.</p>
+      <h2 class="h-display">Moments from<br>the big <span class="heading-accent">rooms.</span></h2>
     </div>
 
     <div class="slider" id="eventSlider">
@@ -1642,9 +1879,9 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
 <!-- SHOWCASE: SCROLLING FEED + BROCHURE -->
 <section class="showcase reveal" id="showcase">
   <div class="container">
-    <span class="section-label">— 02 / Formats</span>
+
     <div class="ev-head">
-      <h2 class="h-display">Featured Projects</h2>
+      <h2 class="h-display">Featured <span class="heading-accent">Projects</span></h2>
     </div>
 
     <div class="show-row">
@@ -1705,8 +1942,8 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
 <!-- CAPABILITIES -->
 <section class="cap-section reveal">
   <div class="container">
-    <span class="section-label">— 03 / Capabilities</span>
-    <h2 class="h-display">Creative Range</h2>
+
+    <h2 class="h-display">Creative <span class="heading-accent">Range</span></h2>
     <div class="cap-grid">
       <div class="cap-card" style="--pct: 90;">
         <span class="cap-fill" aria-hidden="true"></span>
@@ -1740,10 +1977,18 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
 
 <!-- WORK — CATEGORY CHAPTERS -->
 <section class="work" id="work">
-  <div class="container">
-    <span class="section-label reveal">— 04 / The work</span>
-    <div class="work-intro reveal">
-      <h2 class="h-display">What&rsquo;s Inside</h2>
+  <div class="container inside-showcase" id="whats-inside">
+    <div class="work-intro">
+      <h2 class="h-display">What&rsquo;s <span class="heading-accent">Inside</span></h2>
+    </div>
+    <div class="inside-deck" aria-label="Explore portfolio categories">
+      <a class="inside-card" href="#logo-design" style="--slot:-3;--angle:-10deg;--drop:32px;--stack:-6deg;--order:3"><span class="inside-card-face"><img src="images/koncept-smashers-logo.jpg" alt="" loading="lazy"><span>Logo Design</span></span></a>
+      <a class="inside-card" href="#social-campaigns" style="--slot:-2;--angle:-7deg;--drop:14px;--stack:5deg;--order:2"><span class="inside-card-face"><img src="images/bts-creative-01.jpg" alt="" loading="lazy"><span>Social Media</span></span></a>
+      <a class="inside-card" href="#print-media" style="--slot:-1;--angle:-3deg;--drop:3px;--stack:-3deg;--order:1"><span class="inside-card-face"><img src="images/print-sbs-brochure.jpg" alt="" loading="lazy"><span>Print Media</span></span></a>
+      <a class="inside-card" href="#video-editing" style="--slot:0;--angle:0deg;--drop:0px;--stack:0deg;--order:0"><span class="inside-card-face"><video src="videos/vertical-01.mp4#t=0.1" preload="metadata" muted playsinline aria-hidden="true"></video><span>Video Editing</span></span></a>
+      <a class="inside-card" href="#motion-graphics" style="--slot:1;--angle:3deg;--drop:3px;--stack:4deg;--order:1"><span class="inside-card-face"><video src="videos/motion-01.mp4#t=0.1" preload="metadata" muted playsinline aria-hidden="true"></video><span>Motion Graphics</span></span></a>
+      <a class="inside-card" href="#packaging-label" style="--slot:2;--angle:7deg;--drop:14px;--stack:-4deg;--order:2"><span class="inside-card-face"><img src="images/Box-AV.jpg" alt="" loading="lazy"><span>Packaging &amp; Labels</span></span></a>
+      <a class="inside-card" href="#outdoor-media" style="--slot:3;--angle:10deg;--drop:32px;--stack:6deg;--order:3"><span class="inside-card-face"><img src="images/outdoor-hoarding.jpg" alt="" loading="lazy"><span>Outdoor Media</span></span></a>
     </div>
   </div>
 
@@ -1766,12 +2011,8 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
     <div class="chapter reveal" id="logo-design">
       <div class="chapter-head">
         <div>
-          <div class="chapter-index">01 / 07 &nbsp;·&nbsp; Graphic Design</div>
-          <h3 class="chapter-title">Logo Design</h3>
-        </div>
-        <div class="chapter-aside">
-          <p>Marks built from the inside out — a single idea, drawn tight enough to survive an embroidery patch and an LED wall.</p>
-          <div class="chapter-tags"><span>Wordmark</span><span>Monogram</span><span>Pictorial</span><span>Logo Suite</span></div>
+
+          <h3 class="chapter-title">Logo <span class="heading-accent">Design</span></h3>
         </div>
       </div>
       <div class="gal gal-4 gal-logo">
@@ -1790,12 +2031,8 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
     <div class="chapter reveal" id="social-campaigns">
       <div class="chapter-head">
         <div>
-          <div class="chapter-index">02 / 07 &nbsp;·&nbsp; Digital</div>
-          <h3 class="chapter-title">Social Media<br>Campaigns</h3>
-        </div>
-        <div class="chapter-aside">
-          <p>Feed systems, not one-off posts — grids, carousels, and ad creative designed to stay recognisable at thumbnail size.</p>
-          <div class="chapter-tags"><span>Grid System</span><span>Carousel</span><span>Ad Creative</span><span>Reels Cover</span></div>
+
+          <h3 class="chapter-title">Social Media<br><span class="heading-accent">Campaigns</span></h3>
         </div>
       </div>
       <div class="gal gal-3">
@@ -1812,12 +2049,8 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
     <div class="chapter reveal" id="print-media">
       <div class="chapter-head">
         <div>
-          <div class="chapter-index">03 / 07 &nbsp;·&nbsp; Print</div>
-          <h3 class="chapter-title">Print Media</h3>
-        </div>
-        <div class="chapter-aside">
-          <p>Brochures, catalogues, and stationery set on a real grid and delivered press-ready — CMYK, bleed, marks, the lot.</p>
-          <div class="chapter-tags"><span>Brochure</span><span>Catalogue</span><span>Stationery</span><span>Editorial</span></div>
+
+          <h3 class="chapter-title">Print <span class="heading-accent">Media</span></h3>
         </div>
       </div>
       <div class="gal gal-feature">
@@ -1831,12 +2064,8 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
     <div class="chapter reveal" id="outdoor-media">
       <div class="chapter-head">
         <div>
-          <div class="chapter-index">04 / 07 &nbsp;·&nbsp; Outdoor</div>
-          <h3 class="chapter-title">Outdoor Media</h3>
-        </div>
-        <div class="chapter-aside">
-          <p>Work that has to land in three seconds at eighty kilometres an hour. Scaled artwork, legible type, colour that survives sunlight.</p>
-          <div class="chapter-tags"><span>Hoarding</span><span>Billboard</span><span>Standee</span><span>Vehicle Branding</span></div>
+
+          <h3 class="chapter-title">Outdoor <span class="heading-accent">Media</span></h3>
         </div>
       </div>
       <div class="gal gal-1">
@@ -1854,12 +2083,8 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
     <div class="chapter reveal" id="packaging-label">
       <div class="chapter-head">
         <div>
-          <div class="chapter-index">05 / 07 &nbsp;·&nbsp; Print</div>
-          <h3 class="chapter-title">Packaging &amp;<br>Label Design</h3>
-        </div>
-        <div class="chapter-aside">
-          <p>Shelf-first thinking — dielines that actually fold, mandatory copy that still looks composed, and finishes worth touching.</p>
-          <div class="chapter-tags"><span>Dieline</span><span>Label</span><span>Carton</span><span>Pouch</span></div>
+
+          <h3 class="chapter-title">Packaging &amp;<br>Label <span class="heading-accent">Design</span></h3>
         </div>
       </div>
       <div class="gal gal-4">
@@ -1874,12 +2099,8 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
     <div class="chapter reveal" id="video-editing">
       <div class="chapter-head">
         <div>
-          <div class="chapter-index">06 / 07 &nbsp;·&nbsp; Post-production</div>
-          <h3 class="chapter-title">Video Editing</h3>
-        </div>
-        <div class="chapter-aside">
-          <p>Cut for rhythm, graded for mood, mixed to be heard on a phone speaker. Brand films, ad edits, event recaps and long-form.</p>
-          <div class="chapter-tags"><span>Brand Film</span><span>Ad Edit</span><span>Event Recap</span><span>Color Grade</span></div>
+
+          <h3 class="chapter-title">Video <span class="heading-accent">Editing</span></h3>
         </div>
       </div>
       <!-- To publish a real cut, replace the placeholder div with a poster image
@@ -1906,10 +2127,11 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
         <a class="frame is-play" href="videos/horizontal-01.mp4" data-video="videos/horizontal-01.mp4"><div class="frame-box r-16x9"><video class="frame-media" src="videos/horizontal-01.mp4#t=0.1" preload="metadata" muted playsinline aria-hidden="true"></video><i class="play-tri"></i><span class="frame-runtime">00:16</span></div><div class="frame-cap"><b>Beyond the Surface — brand film</b><span>Edit · Grade</span></div></a>
         <a class="frame is-play" href="videos/horizontal-02.mp4" data-video="videos/horizontal-02.mp4"><div class="frame-box r-16x9"><video class="frame-media" src="videos/horizontal-02.mp4#t=0.1" preload="metadata" muted playsinline aria-hidden="true"></video><i class="play-tri"></i><span class="frame-runtime">00:12</span></div><div class="frame-cap"><b>Power Cook — unboxing series</b><span>Edit · Sound</span></div></a>
       </div>
-      <div class="gal gal-vert">
-        <a class="frame is-play" href="videos/vertical-01.mp4" data-video="videos/vertical-01.mp4"><div class="frame-box r-9x16"><video class="frame-media" src="videos/vertical-01.mp4#t=0.1" preload="metadata" muted playsinline aria-hidden="true"></video><i class="play-tri"></i><span class="frame-runtime">00:32</span></div><div class="frame-cap"><b>Vertical cut — 01</b><span>Reel</span></div></a>
-        <a class="frame is-play" href="videos/vertical-02.mp4" data-video="videos/vertical-02.mp4"><div class="frame-box r-9x16"><video class="frame-media" src="videos/vertical-02.mp4#t=0.1" preload="metadata" muted playsinline aria-hidden="true"></video><i class="play-tri"></i><span class="frame-runtime">00:20</span></div><div class="frame-cap"><b>Vertical cut — 02</b><span>Reel</span></div></a>
-        <a class="frame is-play" href="videos/vertical-03.mp4" data-video="videos/vertical-03.mp4"><div class="frame-box r-9x16"><video class="frame-media" src="videos/vertical-03.mp4#t=0.1" preload="metadata" muted playsinline aria-hidden="true"></video><i class="play-tri"></i><span class="frame-runtime">00:30</span></div><div class="frame-cap"><b>Vertical cut — 03</b><span>Reel</span></div></a>
+      <div class="gal gal-vert video-reels">
+        <a class="frame is-play" href="videos/vertical-01.mp4" data-video="videos/vertical-01.mp4"><div class="frame-box r-9x16"><video class="frame-media" src="videos/vertical-01.mp4#t=0.1" preload="metadata" muted playsinline aria-hidden="true"></video><i class="play-tri"></i><span class="frame-runtime">00:32</span><img class="reel-frame-overlay" src="images/reel-frame.svg?v=rounded-2" alt="" aria-hidden="true" draggable="false"></div></a>
+        <a class="frame is-play" href="videos/vertical-02.mp4" data-video="videos/vertical-02.mp4"><div class="frame-box r-9x16"><video class="frame-media" src="videos/vertical-02.mp4#t=0.1" preload="metadata" muted playsinline aria-hidden="true"></video><i class="play-tri"></i><span class="frame-runtime">00:20</span><img class="reel-frame-overlay" src="images/reel-frame.svg?v=rounded-2" alt="" aria-hidden="true" draggable="false"></div></a>
+        <a class="frame is-play" href="videos/vertical-03.mp4" data-video="videos/vertical-03.mp4"><div class="frame-box r-9x16"><video class="frame-media" src="videos/vertical-03.mp4#t=0.1" preload="metadata" muted playsinline aria-hidden="true"></video><i class="play-tri"></i><span class="frame-runtime">00:30</span><img class="reel-frame-overlay" src="images/reel-frame.svg?v=rounded-2" alt="" aria-hidden="true" draggable="false"></div></a>
+        <div class="frame reel-empty" role="img" aria-label="Empty fourth vertical reel slot"><div class="frame-box r-9x16"><span class="reel-empty-surface" aria-hidden="true"></span><img class="reel-frame-overlay" src="images/reel-frame.svg?v=rounded-2" alt="" aria-hidden="true" draggable="false"></div></div>
       </div>
     </div>
 
@@ -1917,18 +2139,15 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
     <div class="chapter reveal" id="motion-graphics">
       <div class="chapter-head">
         <div>
-          <div class="chapter-index">07 / 07 &nbsp;·&nbsp; Animation</div>
-          <h3 class="chapter-title">Motion Graphics</h3>
-        </div>
-        <div class="chapter-aside">
-          <p>Identity extended into time — logo reveals, titles, animated infographics, and motion kits a team can keep reusing.</p>
-          <div class="chapter-tags"><span>Logo Reveal</span><span>Title Sequence</span><span>Explainer</span><span>Kinetic Type</span></div>
+
+          <h3 class="chapter-title">Motion <span class="heading-accent">Graphics</span></h3>
         </div>
       </div>
-      <div class="gal gal-vert">
+      <div class="gal gal-vert motion-reels">
         <a class="frame is-play" href="videos/motion-01.mp4" data-video="videos/motion-01.mp4"><div class="frame-box r-9x16"><video class="frame-media" src="videos/motion-01.mp4#t=0.1" preload="metadata" muted playsinline aria-hidden="true"></video><i class="play-tri"></i><span class="frame-runtime">00:25</span></div><div class="frame-cap"><b>Koncept — logo sting</b><span>Reveal</span></div></a>
         <a class="frame is-play" href="videos/motion-02.mp4" data-video="videos/motion-02.mp4"><div class="frame-box r-9x16"><video class="frame-media" src="videos/motion-02.mp4#t=0.1" preload="metadata" muted playsinline aria-hidden="true"></video><i class="play-tri"></i><span class="frame-runtime">00:14</span></div><div class="frame-cap"><b>Summit — LED opener</b><span>Titles</span></div></a>
         <a class="frame is-play" href="videos/motion-03.mp4" data-video="videos/motion-03.mp4"><div class="frame-box r-9x16"><video class="frame-media" src="videos/motion-03.mp4#t=0.1" preload="metadata" muted playsinline aria-hidden="true"></video><i class="play-tri"></i><span class="frame-runtime">00:19</span></div><div class="frame-cap"><b>Product explainer</b><span>Infographic</span></div></a>
+        <div class="frame motion-empty" role="img" aria-label="Empty fourth motion graphics slot"><div class="frame-box r-9x16"><span class="motion-empty-surface" aria-hidden="true"></span></div></div>
       </div>
     </div>
 
@@ -1943,7 +2162,7 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
 <!-- ABOUT / QUOTE -->
 <section class="about reveal" id="about">
   <div class="container">
-    <span class="section-label">— 05 / The founder</span>
+
     <div class="about-grid">
       <div class="about-photo" id="aboutPhoto">
         <img class="about-img" src="images/akash-namdev.png" alt="Akash Namdev">
@@ -1974,8 +2193,8 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
 <!-- CLIENTS -->
 <section class="clients reveal">
   <div class="container">
-    <span class="section-label">— 06 / Trusted by</span>
-    <h2 class="h-display" style="font-size: clamp(36px, 5vw, 72px);">Selected clients.</h2>
+
+    <h2 class="h-display" style="font-size: clamp(36px, 5vw, 72px);">Selected <span class="heading-accent">clients.</span></h2>
     <div class="client-grid">
       <div class="client-cell">Beyond the Surface</div>
       <div class="client-cell">Power Cook</div>
@@ -1989,8 +2208,7 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
 <!-- CTA -->
 <section class="cta" id="contact">
   <div class="container">
-    <h2>Let's make<br><em>the extraordinary.</em></h2>
-    <p class="cta-sub">Have a project in mind? Send a message and I'll get back to you.</p>
+    <h2>Let's make<br>the <span class="heading-accent">extraordinary.</span></h2>
 
     <form class="contact-form" action="https://formsubmit.co/namdev.akash909@gmail.com" method="POST">
       <!-- FormSubmit config — no captcha, redirect back to same page -->
@@ -2027,7 +2245,7 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
 <!-- FOOTER -->
 <footer>
   <div class="foot-grid">
-    <div class="foot-logo">Akash Namdev<span style="font-style:italic;">.</span></div>
+    <div class="foot-logo">Akash Namdev<span>.</span></div>
     <div class="foot-contact">
       <a href="mailto:namdev.akash909@gmail.com">namdev.akash909@gmail.com</a><br>
       Bhopal, Madhya Pradesh<br>
@@ -2040,34 +2258,108 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
     </div>
   </div>
   <div class="foot-bottom">
-    <span>© 2026 AKASH NAMDEV — INDEPENDENT CREATIVE PRACTICE</span>
+    <span>© 2026 <span class="person-name">AKASH NAMDEV</span> — INDEPENDENT CREATIVE PRACTICE</span>
     <span>DESIGNED &amp; BUILT IN-HOUSE</span>
   </div>
 </footer>
 
 <script>
-// Custom cursor with smooth lag
-const cursor = document.querySelector('.cursor');
-let mx = 0, my = 0, cx = 0, cy = 0;
-document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-function tick() {
-  cx += (mx - cx) * 0.18;
-  cy += (my - cy) * 0.18;
-  cursor.style.left = cx + 'px';
-  cursor.style.top = cy + 'px';
-  requestAnimationFrame(tick);
-}
-tick();
+/* ---------- MEADOW ENTRANCE ----------
+   The opening scene is a fixed cover. The selected chapter is reordered and
+   positioned underneath it before the cover moves, so no long page scroll is
+   ever visible to the visitor. */
+(function () {
+  const entry = document.getElementById('meadowEntry');
+  const work = document.getElementById('work');
+  const legacyHero = document.querySelector('.hero');
+  const firstPortfolioSection = document.getElementById('moments');
+  if (!entry || !work) return;
 
-function bindCursor(root) {
-  root.querySelectorAll('a, .frame, .cap-card, .client-cell, .cta-btn, .sl-btn, .sl-dot, .cat-chip, .bk-btn, .page-face').forEach(el => {
-    if (el.dataset.cur) return;
-    el.dataset.cur = '1';
-    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
+
+  // Work is the first portfolio content beneath the fixed Meadow. The other
+  // existing feature sections remain intact and follow it in their old order.
+  if (firstPortfolioSection) firstPortfolioSection.before(work);
+  if (legacyHero) legacyHero.hidden = true;
+
+  const chapterHost = document.getElementById('logo-design').parentElement;
+  const railHost = document.querySelector('#catRail .cat-rail-inner');
+  const chapters = Object.fromEntries(
+    [...chapterHost.querySelectorAll(':scope > .chapter')].map(chapter => [chapter.id, chapter])
+  );
+  const chips = Object.fromEntries(
+    [...railHost.querySelectorAll('.cat-chip')].map(chip => [chip.hash.slice(1), chip])
+  );
+  const graphicOrder = ['logo-design', 'social-campaigns', 'print-media', 'outdoor-media', 'packaging-label', 'video-editing', 'motion-graphics'];
+  const videoOrder = ['video-editing', 'motion-graphics', 'logo-design', 'social-campaigns', 'print-media', 'outdoor-media', 'packaging-label'];
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let entering = false;
+
+  function arrange(ids) {
+    ids.forEach(id => {
+      chapterHost.appendChild(chapters[id]);
+      railHost.appendChild(chips[id]);
+    });
+  }
+
+  function positionUnderCover(target) {
+    const oldBehavior = document.documentElement.style.scrollBehavior;
+    document.documentElement.style.scrollBehavior = 'auto';
+    // Clear both the fixed navigation and the sticky category rail. Reveal
+    // elements begin 40px lower and settle upward, so the extra room also
+    // prevents their final position from slipping beneath the rail.
+    const navOffset = window.innerWidth <= 900 ? 158 : 176;
+    window.scrollTo(0, Math.max(0, target.getBoundingClientRect().top + window.scrollY - navOffset));
+    document.documentElement.style.scrollBehavior = oldBehavior;
+  }
+
+  function finish(target) {
+    entry.hidden = true;
+    entry.classList.remove('is-leaving');
+    document.body.classList.remove('meadow-open');
+    document.body.classList.add('portfolio-entered');
+    target.setAttribute('tabindex', '-1');
+    target.focus({ preventScroll: true });
+  }
+
+  function enter(mode, targetId) {
+    if (entering) return;
+    entering = true;
+    const ids = mode === 'video' ? videoOrder : graphicOrder;
+    arrange(ids);
+    const target = document.getElementById(targetId || ids[0]);
+    positionUnderCover(target);
+    requestAnimationFrame(() => entry.classList.add('is-leaving'));
+
+    let done = false;
+    const complete = () => {
+      if (done) return;
+      done = true;
+      finish(target);
+    };
+    entry.addEventListener('transitionend', e => {
+      if (e.target === entry && e.propertyName === 'transform') complete();
+    }, { once: true });
+    setTimeout(complete, reduceMotion ? 180 : 980);
+  }
+
+  entry.querySelectorAll('[data-entry]').forEach(button => {
+    button.addEventListener('click', () => enter(button.dataset.entry));
   });
-}
-bindCursor(document);
+
+  // Navigation remains useful while the Meadow is open. Work opens the
+  // graphic route; About/Contact/feature links reveal their exact section.
+  document.querySelectorAll('nav a[href^="#"], .mobile-menu a[href^="#"]').forEach(link => {
+    link.addEventListener('click', e => {
+      if (!document.body.classList.contains('meadow-open')) return;
+      const id = link.hash.slice(1);
+      if (!id) return;
+      e.preventDefault();
+      enter('graphic', id === 'work' ? 'logo-design' : id);
+    });
+  });
+})();
 
 // Scroll reveal — rootMargin so very tall chapters still trigger
 const io = new IntersectionObserver(entries => {
@@ -2109,8 +2401,6 @@ document.querySelectorAll('.marquee-track').forEach(t => {
     dotsEl.appendChild(b);
   });
   const dots = Array.from(dotsEl.children);
-  bindCursor(dotsEl);
-
   function render() {
     track.style.transform = 'translateX(' + (-index * 100) + '%)';
     slides.forEach((s, i) => s.classList.toggle('is-active', i === index));
@@ -2699,7 +2989,7 @@ window.PortfolioReel = (function () {
    "Download HTML" writes a clean copy with your changes baked in.        */
 (function () {
   const EDITABLE = [
-    'nav .logo', '.hero-mark', '.hero-tagline',
+    'nav .logo', '.hero-mark', '.hero-tagline', '.meadow-title', '.meadow-eyebrow', '.entry-choice span',
     '.section-label', '.h-display', '.ev-sub', '.show-cap b', '.show-cap span',
     '.slide-kicker', '.slide-caption h3', '.slide-caption p',
     '.cap-card h3', '.cap-card > p', '.cap-tools-label',
@@ -2902,7 +3192,9 @@ window.PortfolioReel = (function () {
     });
 
     // reset anything the scripts wrote at runtime
-    clone.querySelector('body').className = '';
+    clone.querySelector('body').className = 'meadow-open';
+    const entrance = clone.querySelector('#meadowEntry');
+    if (entrance) { entrance.hidden = false; entrance.classList.remove('is-leaving'); }
     const mm = clone.querySelector('#mobileMenu');
     if (mm) { mm.classList.remove('open'); mm.setAttribute('aria-hidden', 'true'); }
     const mt = clone.querySelector('#menuToggle');
