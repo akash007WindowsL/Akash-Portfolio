@@ -640,7 +640,7 @@ section { padding: 120px 40px; }
 .cap-grid {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 18px;
   margin-top: 34px;
 }
@@ -741,6 +741,7 @@ section { padding: 120px 40px; }
   margin-top: 52px;
   padding-top: 32px;
   border-top: 1px solid var(--border);
+  text-align: center;
 }
 .cap-tools-label {
   display: block;
@@ -754,10 +755,11 @@ section { padding: 120px 40px; }
 /* 66.666% lines the last icon up with the right edge of the middle card */
 .tool-row {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 18px;
-  width: 66.666%;
-  max-width: 880px;
+  width: 80%;
+  max-width: 820px;
+  margin: 0 auto;
 }
 /* Built to the supplied reference: a light face sitting on a coloured base that
    is offset downwards so only a lip of it shows. Every number here is taken
@@ -1491,7 +1493,8 @@ body.edit-on .drop-hot { outline: 2px solid var(--accent-orange); outline-offset
 body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orange); }
 
 @media (max-width: 1100px) {
-  .cap-grid { grid-template-columns: 1fr; }
+  .cap-grid { grid-template-columns: repeat(2, 1fr); }
+  .tool-row { width: 100%; max-width: 560px; }
   .gal-4 { grid-template-columns: repeat(2, 1fr); }
   .gal-feature { grid-template-columns: repeat(2, 1fr); }
   .gal-feature > .frame:first-child { grid-column: span 2; grid-row: auto; }
@@ -1578,6 +1581,8 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
 
 @media (max-width: 560px) {
   .gal-4, .gal-3, .gal-2, .gal-feature { grid-template-columns: 1fr; }
+  .cap-grid { grid-template-columns: 1fr; }
+  .tool-row { grid-template-columns: repeat(3, 1fr); }
   /* a 9:16 tile at full phone width is far too tall — keep two abreast */
   .gal-vert { grid-template-columns: repeat(2, 1fr); }
   #video-editing .video-reels,
@@ -1637,10 +1642,11 @@ body.meadow-open nav.scrolled {
 .meadow-welcome {
   position: relative;
   z-index: 2;
-  width: min(880px, calc(100% - 40px));
+  width: min(1120px, calc(100% - 40px));
   height: 100%;
   margin: 0 auto;
   padding: clamp(104px, 15vh, 156px) 0 max(38px, env(safe-area-inset-bottom));
+  transform: translateY(-9vh);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1666,25 +1672,35 @@ body.meadow-open nav.scrolled {
   line-height: 0.94;
   letter-spacing: -0.045em;
   text-wrap: balance;
-  text-shadow: 0 4px 28px rgba(4, 31, 31, 0.42);
+  text-shadow: 0 2px 4px rgba(4, 22, 36, 0.35), 0 4px 28px rgba(4, 31, 31, 0.6);
+}
+.meadow-brief {
+  max-width: 700px;
+  margin-top: 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(18px, calc(1.25vw + 4px), 21px);
+  font-weight: 500;
+  line-height: 1.5;
+  text-wrap: balance;
+  text-shadow: 0 1px 3px rgba(4, 22, 36, 0.55), 0 2px 18px rgba(4, 27, 25, 0.7);
 }
 .entry-choices {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 14px;
-  width: min(640px, 100%);
+  width: min(1080px, 100%);
   margin-top: clamp(34px, 6vh, 62px);
 }
 .entry-choice {
   min-height: 104px;
-  padding: 20px 24px;
-  border: 1px solid rgba(255, 255, 255, 0.58);
+  padding: 20px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.78);
   border-radius: 16px;
-  background: rgba(10, 31, 26, 0.20);
+  background: rgba(10, 31, 26, 0.38);
   color: #fff;
-  box-shadow: 0 14px 34px rgba(8, 29, 22, 0.14);
-  backdrop-filter: blur(10px) saturate(112%);
-  -webkit-backdrop-filter: blur(10px) saturate(112%);
+  box-shadow: 0 14px 34px rgba(8, 29, 22, 0.24);
+  backdrop-filter: blur(12px) saturate(115%);
+  -webkit-backdrop-filter: blur(12px) saturate(115%);
   font: inherit;
   text-align: left;
   cursor: pointer;
@@ -1696,27 +1712,43 @@ body.meadow-open nav.scrolled {
 }
 .entry-choice span {
   font-family: 'Inter', sans-serif;
-  font-size: clamp(22px, 2.1vw, 29px);
-  font-weight: 450;
+  font-size: clamp(20px, 1.8vw, 26px);
+  font-weight: 500;
+  text-wrap: balance;
+  text-shadow: 0 2px 12px rgba(4, 27, 25, 0.45);
   line-height: 1.02;
   letter-spacing: -0.025em;
 }
 .entry-choice svg { width: 21px; flex: 0 0 auto; transition: transform 320ms cubic-bezier(.2,.7,.2,1); }
 .entry-choice:hover {
   transform: translateY(-4px) scale(1.012);
-  border-color: rgba(255, 255, 255, 0.86);
-  background: rgba(10, 31, 26, 0.29);
+  border-color: #fff;
+  background: rgba(10, 31, 26, 0.50);
   box-shadow: 0 20px 42px rgba(8, 29, 22, 0.22);
 }
 .entry-choice:hover svg { transform: translate(2px, -2px); }
 .entry-choice:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
 
+@media (max-width: 960px) {
+  .entry-choices { grid-template-columns: repeat(2, minmax(0, 1fr)); width: min(100%, 640px); }
+}
 @media (max-width: 620px) {
-  .meadow-welcome { width: min(100% - 32px, 480px); padding-top: 92px; }
-  .meadow-title { font-size: clamp(43px, 13.2vw, 64px); }
-  .entry-choices { grid-template-columns: 1fr; width: min(100%, 370px); margin-top: 30px; }
-  .entry-choice { min-height: 78px; padding: 15px 18px; border-radius: 14px; }
-  .entry-choice span { font-size: 22px; }
+  /* everything has to fit one phone screen below the nav bar */
+  .meadow-welcome { width: min(100% - 32px, 480px); padding-top: 84px; padding-bottom: 28px; transform: none; justify-content: center; }
+  .meadow-title { font-size: clamp(40px, 12vw, 56px); }
+  .meadow-brief { margin-top: 14px; font-size: 15.5px; line-height: 1.5; }
+  .entry-choices { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; width: 100%; margin-top: 24px; }
+  .entry-choice { min-height: 64px; padding: 12px 10px; border-radius: 14px; }
+  .entry-choice span { font-size: 16.5px; line-height: 1.15; }
+}
+@media (max-height: 520px) {
+  /* landscape phones */
+  .meadow-welcome { padding-top: 72px; padding-bottom: 16px; transform: none; }
+  .meadow-title { font-size: 36px; }
+  .meadow-brief { margin-top: 8px; font-size: 14px; max-width: 640px; }
+  .entry-choices { grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 16px; }
+  .entry-choice { min-height: 52px; padding: 10px; }
+  .entry-choice span { font-size: 15px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .meadow-entry { transition-duration: 140ms; }
@@ -1724,7 +1756,7 @@ body.meadow-open nav.scrolled {
   .entry-choice:hover { transform: none; }
 }
 </style>
-<link rel="stylesheet" href="portfolio-theme.css"><script src="portfolio-theme.js"></script></head>
+<link rel="stylesheet" href="portfolio-theme.css?v=resp3"><link rel="stylesheet" href="featured.css?v=10"><script src="featured.js?v=9" defer></script><script src="portfolio-theme.js?v=resp1"></script></head>
 <body class="meadow-open">
 
 <nav>
@@ -1741,7 +1773,7 @@ body.meadow-open nav.scrolled {
 <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
   <button class="mm-close" id="mmClose" aria-label="Close menu">CLOSE ✕</button>
   <a href="#moments">Moments</a>
-  <a href="#showcase">Formats</a>
+  <a href="#showcase">Featured</a>
   <a href="#work">Work</a>
   <a href="#about">About</a>
   <a href="#contact">Contact</a>
@@ -1754,8 +1786,6 @@ body.meadow-open nav.scrolled {
     <div class="meadow-scene">
       <img class="meadow-background" src="images/meadow/background.jpg" width="6264" height="2688" alt="" fetchpriority="high" draggable="false">
       <img class="cloud cloud-top" src="images/meadow/cloud-top.png" width="255" height="49" alt="" draggable="false">
-      <img class="cloud cloud-1" src="images/meadow/cloud-1.png" width="205" height="79" alt="" draggable="false">
-      <img class="cloud cloud-3" src="images/meadow/cloud-3.png" width="173" height="84" alt="" draggable="false">
       <img class="flower depth-left" src="images/meadow/depth-left.png" width="410" height="281" alt="" draggable="false">
       <img class="flower depth-middle" src="images/meadow/depth-middle.png" width="589" height="218" alt="" draggable="false">
       <img class="flower depth-right" src="images/meadow/depth-right.png" width="421" height="212" alt="" draggable="false">
@@ -1765,55 +1795,57 @@ body.meadow-open nav.scrolled {
     </div>
   </div>
   <div class="meadow-welcome">
-    <p class="meadow-eyebrow"><span class="person-name">Akash Namdev</span> · Independent Creative Practice</p>
-    <h1 class="meadow-title" id="meadowTitle">Welcome to my <span class="heading-accent">Portfolio</span></h1>
+    <h1 class="meadow-title" id="meadowTitle">Akash <span class="heading-accent">Namdev</span></h1>
+    <p class="meadow-brief">Hi, I’m Akash — a multidisciplinary designer who moves fluidly between brand design, digital and print media, video editing, motion graphics, and UI. My toolkit includes Illustrator, Photoshop, Premiere Pro, After Effects, and Figma.</p>
     <div class="entry-choices" aria-label="Choose which work to explore first">
-      <button class="entry-choice" type="button" data-entry="video">
-        <span>Video Editing<br>&amp; Motion Graphics</span>
-        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 19 19 5M9 5h10v10"/></svg>
+      <button class="entry-choice" type="button" data-entry="featured">
+        <span>Featured Projects</span>
       </button>
       <button class="entry-choice" type="button" data-entry="graphic">
         <span>Graphic Designing</span>
-        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 19 19 5M9 5h10v10"/></svg>
+      </button>
+      <button class="entry-choice" type="button" data-entry="video">
+        <span>Video Editing</span>
+      </button>
+      <button class="entry-choice" type="button" data-entry="websites">
+        <span>Websites</span>
       </button>
     </div>
   </div>
 </section>
 
-<!-- HERO -->
-<section class="hero" style="padding-left:0; padding-right:0;" hidden>
-  <div class="marquee" style="border:none; background: rgba(0,0,0,0.18);">
-    <div class="marquee-track">
-      <span>23° 15′ 35.6″ N &nbsp; 77° 24′ 45.3″ E &nbsp;—&nbsp; BHOPAL, MADHYA PRADESH</span>
-      <span>★</span>
-      <span>GRAPHIC DESIGN / VIDEO EDITING / MOTION GRAPHICS</span>
-      <span>★</span>
+<!-- MEADOW HERO — the entrance scene again, in the page, above Must read -->
+<section class="meadow-hero" id="home" aria-labelledby="meadowHeroTitle">
+  <div class="meadow" aria-hidden="true">
+    <div class="meadow-scene">
+      <img class="meadow-background" src="images/meadow/background.jpg" width="6264" height="2688" alt="" loading="lazy" draggable="false">
+      <img class="cloud cloud-top" src="images/meadow/cloud-top.png" width="255" height="49" alt="" draggable="false">
+      <img class="flower depth-left" src="images/meadow/depth-left.png" width="410" height="281" alt="" draggable="false">
+      <img class="flower depth-middle" src="images/meadow/depth-middle.png" width="589" height="218" alt="" draggable="false">
+      <img class="flower depth-right" src="images/meadow/depth-right.png" width="421" height="212" alt="" draggable="false">
+      <img class="flower foreground-left" src="images/meadow/left.png" width="438" height="260" alt="" draggable="false">
+      <img class="flower foreground-middle" src="images/meadow/middle.png" width="990" height="245" alt="" draggable="false">
+      <img class="flower foreground-right" src="images/meadow/right.png" width="562" height="257" alt="" draggable="false">
     </div>
   </div>
-
-  <div class="hero-content">
-    <div class="hero-mark">Akash<span>Namdev</span></div>
-    <p class="hero-tagline">
-      What you'll see here isn't a highlight reel of my best work. It's a record of the chances I was given.
-      I've worked across design, video, branding and marketing because people trusted me early and supported me through the learning. I kept saying yes, and I kept building. That cycle isn't finished.<br><br>
-      Any designer can produce work. But the day you stop learning is the day you stop being an artist.
-    </p>
-  </div>
-
-  <div class="scroll-indicator">
-    <span>SCROLL</span>
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
-  </div>
-
-  <div class="marquee" style="border:none; background: rgba(0,0,0,0.18);">
-    <div class="marquee-track">
-      <span>EST. 2020</span>
-      <span>★</span>
-      <span>SELECT COMMISSIONS — 2026</span>
-      <span>★</span>
-      <span>OPEN FOR COLLABORATION</span>
-      <span>★</span>
+  <div class="meadow-welcome">
+    <h2 class="meadow-title" id="meadowHeroTitle">Akash <span class="heading-accent">Namdev</span></h2>
+    <p class="meadow-brief">Hi, I’m Akash — a multidisciplinary designer who moves fluidly between brand design, digital and print media, video editing, motion graphics, and UI. My toolkit includes Illustrator, Photoshop, Premiere Pro, After Effects, and Figma.</p>
+    <div class="entry-choices" aria-label="Jump to work">
+      <button class="entry-choice" type="button" data-hero-go="featured"><span>Featured Projects</span></button>
+      <button class="entry-choice" type="button" data-hero-go="graphic"><span>Graphic Designing</span></button>
+      <button class="entry-choice" type="button" data-hero-go="video"><span>Video Editing</span></button>
+      <button class="entry-choice" type="button" data-hero-go="websites"><span>Websites</span></button>
     </div>
+  </div>
+</section>
+
+<!-- MUST READ -->
+<section class="must-read-band">
+  <div class="must-read reveal">
+    <p class="must-read-label">Must read</p>
+    <p class="must-read-text">What you&rsquo;ll see here isn&rsquo;t a highlight reel of my best work. It&rsquo;s a record of the chances I was given. I&rsquo;ve worked across design, video, branding and marketing because people trusted me early and supported me through the learning. I kept saying yes, and I kept building. That cycle isn&rsquo;t finished.</p>
+    <p class="must-read-text">Any designer can produce work. <em>But the day you stop learning is the day you stop being an artist.</em></p>
   </div>
 </section>
 
@@ -1876,66 +1908,234 @@ body.meadow-open nav.scrolled {
   </div>
 </section>
 
-<!-- SHOWCASE: SCROLLING FEED + BROCHURE -->
-<section class="showcase reveal" id="showcase">
-  <div class="container">
+<!-- FEATURED PROJECTS: brief → process → outcome -->
+<section class="fp" id="showcase" aria-labelledby="fpTitle">
 
-    <div class="ev-head">
-      <h2 class="h-display">Featured <span class="heading-accent">Projects</span></h2>
+  <header class="fp-intro">
+    <p class="fp-eyebrow fp-rise">Featured Projects</p>
+    <h2 class="fp-title fp-rise" id="fpTitle" style="--d:1">Anyone can make it look good.<br><span class="fp-dim">The work is solving the problem.</span></h2>
+  </header>
+
+  <div class="fp-index" role="navigation" aria-label="Featured projects">
+    <div class="fp-index-track">
+      <i class="fp-index-pill" aria-hidden="true"></i>
+      <a href="#fp-identity"><span>01</span>Brand Identity</a>
+      <a href="#fp-print"><span>02</span>Print</a>
+      <a href="#fp-social"><span>03</span>Social Campaign</a>
+      <a href="#fp-video"><span>04</span>Video</a>
+    </div>
+  </div>
+
+  <!-- 01 — BRAND IDENTITY -->
+  <article class="fp-case" id="fp-identity">
+    <div class="fp-cover" data-cover>
+      <div class="fp-cover-media"><img src="images/featured/potdar-signage.jpg" alt="Potdar Glazetech logo on building signage"></div>
+      <div class="fp-cover-text">
+        <p class="fp-cover-label">01 · Brand Identity</p>
+        <h3 class="fp-cover-title">Potdar Glazetech</h3>
+      </div>
+      <span class="fp-tag">Identity</span>
+      <figure class="fp-sticker" style="--r:-6deg">
+        <img src="images/featured/potdar-mark-sticker.jpg" alt="Potdar Glazetech mark">
+        <figcaption>One mark, three Vastu rules</figcaption>
+      </figure>
+    </div>
+    <p class="fp-case-line fp-rise">A façade company needed a logo that satisfied their Vastu consultant without looking like a compromise.</p>
+
+    <div class="fp-block">
+      <div class="fp-block-head fp-rise"><span class="fp-step-no">01</span><h4>The brief</h4></div>
+      <div class="fp-brief">
+        <figure class="fp-statement fp-rise">
+          <blockquote class="fp-words"><span class="fp-quiet">“We build building fronts. Our Vastu consultant says the</span> <mark class="fp-mark">logo must have a rectangle or a hexagon, with an arrow moving upward.”</mark></blockquote>
+          <figcaption>Client brief, paraphrased</figcaption>
+        </figure>
+        <aside class="fp-needs fp-rise" style="--d:1">
+          <h5>Non-negotiables</h5>
+          <ul>
+            <li>Hexagon <em>Vastu</em></li>
+            <li>Rectangle <em>Vastu</em></li>
+            <li>Upward arrow <em>Vastu · growth</em></li>
+            <li>Reads as architecture <em>My constraint</em></li>
+          </ul>
+        </aside>
+      </div>
     </div>
 
-    <div class="show-row">
-
-      <!-- creative reel -->
-      <div class="show-panel reel-panel">
-        <div class="reel" id="reel">
-          <div class="feed-track" id="feedTrack">
-            <div class="feed-item"><img class="frame-media" src="images/bts-creative-01.jpg" alt="Social creative"></div>
-            <div class="feed-item"><img class="frame-media" src="images/mobile-06.jpg" alt="Social creative"></div>
-            <div class="feed-item"><img class="frame-media" src="images/mobile-03.jpg" alt="Social creative"></div>
-            <div class="feed-item"><img class="frame-media" src="images/Label-NITUI.jpg" alt="Social creative"></div>
-            <div class="feed-item"><img class="frame-media" src="images/Label-AV.jpg" alt="Social creative"></div>
-            <div class="feed-item"><img class="frame-media" src="images/sistec-creative.jpg" alt="Social creative"></div>
-          </div>
+    <div class="fp-block">
+      <div class="fp-block-head fp-rise"><span class="fp-step-no">02</span><h4>The process</h4></div>
+      <div class="fp-steps">
+        <div class="fp-rise">
+          <figure class="fp-tile"><img src="images/featured/potdar-tower.jpg" alt="Al Bahar Towers façade" loading="lazy"></figure>
+          <p class="fp-cap"><b>Started with real façades.</b> The hexagonal shading screen of Abu Dhabi’s Al Bahar Towers gave the shapes a source in the client’s own industry.</p>
         </div>
-        <div class="show-cap"><b>Social creatives</b><span><i class="on-hover">Hover to pause</i><i class="on-touch">Tap to pause</i></span></div>
+        <div class="fp-rise" style="--d:1">
+          <figure class="fp-tile"><img src="images/featured/potdar-grid.jpg" alt="Logo construction grid" loading="lazy"></figure>
+          <p class="fp-cap"><b>Built on a grid.</b> Every angle snaps to the hexagon, so the mark stays crisp from a visiting card to a three-metre sign.</p>
+        </div>
+        <div class="fp-rise" style="--d:2">
+          <figure class="fp-tile fp-ph"><span>Process image</span></figure>
+          <p class="fp-cap"><b>[Step title.]</b> [One line on this step.]</p>
+        </div>
+        <div class="fp-wide fp-rise">
+          <figure class="fp-tile fp-contain"><img src="images/featured/potdar-concept.jpg" alt="Hexagon plus upward arrow equals the final mark" loading="lazy"></figure>
+          <p class="fp-cap"><b>Fused, not stacked.</b> Hexagon + upward arrow became one shape, so the Vastu brief reads as a single idea instead of three symbols.</p>
+        </div>
       </div>
-
-      <!-- brochure -->
-      <div class="show-panel">
-        <div class="book-wrap">
-          <div class="book-spread" id="brochure">
-            <div class="book-page">
-              <div class="page-face page-front"><img class="frame-media" src="images/BP1.jpg" alt="Brochure page 1"></div>
-              <div class="page-face page-back"><img class="frame-media" src="images/BP2.jpg" alt="Brochure page 2"></div>
-            </div>
-            <div class="book-page">
-              <div class="page-face page-front"><img class="frame-media" src="images/BP3.jpg" alt="Brochure page 3"></div>
-              <div class="page-face page-back"><img class="frame-media" src="images/BP4.jpg" alt="Brochure page 4"></div>
-            </div>
-            <div class="book-page">
-              <div class="page-face page-front"><img class="frame-media" src="images/BP5.jpg" alt="Brochure page 5"></div>
-              <div class="page-face page-back"><img class="frame-media" src="images/BP6.jpg" alt="Brochure page 6"></div>
-            </div>
-            <div class="book-page">
-              <div class="page-face page-front"><img class="frame-media" src="images/BP7.jpg" alt="Brochure page 7"></div>
-              <div class="page-face page-back"><img class="frame-media" src="images/BP8.jpg" alt="Brochure page 8"></div>
-            </div>
-          </div>
-        </div>
-        <div class="book-foot">
-          <div class="bk-count">SPREAD <b id="bkCur">01</b> / <span id="bkTot">06</span></div>
-          <button class="bk-btn" id="bkPrev" aria-label="Previous page">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 5l-7 7 7 7"/></svg>
-          </button>
-          <button class="bk-btn" id="bkNext" aria-label="Next page">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5l7 7-7 7"/></svg>
-          </button>
-        </div>
-        <div class="show-cap"><b>Brochure</b><span><i class="on-hover">Turns itself · hover to pause</i><i class="on-touch">Swipe or tap to turn</i></span></div>
-      </div>
-
     </div>
+
+    <div class="fp-block">
+      <div class="fp-block-head fp-rise"><span class="fp-step-no">03</span><h4>The outcome</h4></div>
+      <div class="fp-mosaic fp-rise">
+        <figure class="fp-tile"><img src="images/featured/potdar-lockup.jpg" alt="Potdar Glazetech primary lockup" loading="lazy"></figure>
+        <figure class="fp-tile"><img src="images/featured/potdar-stationery.jpg" alt="Letterhead and visiting cards" loading="lazy"></figure>
+        <figure class="fp-tile"><img src="images/featured/potdar-brochure.jpg" alt="Company brochure spread" loading="lazy"></figure>
+      </div>
+    </div>
+  </article>
+
+  <!-- 02 — PRINT -->
+  <article class="fp-case" id="fp-print">
+    <div class="fp-cover" data-cover>
+      <div class="fp-cover-media"><div class="fp-stage fp-stage--green"><img class="fp-float fp-float--back" src="images/featured/greendeck-aura.jpg" alt=""><img class="fp-float" src="images/featured/greendeck-nova.jpg" alt="Nova collection spread from the deco by Greendeck catalogue"></div></div>
+      <div class="fp-cover-text">
+        <p class="fp-cover-label">02 · Print Media</p>
+        <h3 class="fp-cover-title">deco by Greendeck</h3>
+      </div>
+      <span class="fp-tag">Catalogue</span>
+      <figure class="fp-sticker" style="--r:5deg">
+        <img src="images/featured/greendeck-sticker.jpg" alt="Nova planter product shot">
+        <figcaption>Cut-out in, living room out</figcaption>
+      </figure>
+    </div>
+    <p class="fp-case-line fp-rise">A planter catalogue that sells the setting, not just the pot: every collection shown in a real room, then broken down into sizes, codes and where it belongs.</p>
+
+    <div class="fp-block">
+      <div class="fp-block-head fp-rise"><span class="fp-step-no">01</span><h4>Read the catalogue</h4></div>
+      <div class="fp-book fp-rise" data-book>
+        <div class="fp-book-track" tabindex="0" aria-label="Catalogue spreads, scroll sideways">
+          <figure class="fp-spread" id="fp-spread-aura" aria-label="Aura collection, pages 01–02">
+            <img src="images/featured/greendeck-aura.jpg" alt="Aura collection catalogue spread" loading="lazy">
+          </figure>
+          <figure class="fp-spread" id="fp-spread-orchid" aria-label="Orchid collection, pages 03–04">
+            <img src="images/featured/greendeck-orchid.jpg" alt="Orchid collection catalogue spread" loading="lazy">
+          </figure>
+          <figure class="fp-spread" id="fp-spread-lotus" aria-label="Lotus collection, pages 05–06">
+            <img src="images/featured/greendeck-lotus.jpg" alt="Lotus collection catalogue spread" loading="lazy">
+          </figure>
+          <figure class="fp-spread" id="fp-spread-nova" aria-label="Nova collection, pages 09–10">
+            <img src="images/featured/greendeck-nova.jpg" alt="Nova collection catalogue spread" loading="lazy">
+          </figure>
+        </div>
+        <div class="fp-book-bar">
+          <div class="fp-book-tabs" role="tablist" aria-label="Collections">
+          <button type="button" data-go="0" class="is-active">Aura<span>01–02</span></button>
+          <button type="button" data-go="1">Orchid<span>03–04</span></button>
+          <button type="button" data-go="2">Lotus<span>05–06</span></button>
+          <button type="button" data-go="3">Nova<span>09–10</span></button>
+          </div>
+          <div class="fp-book-nav">
+            <button type="button" data-step="-1" aria-label="Previous spread"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 5l-7 7 7 7"/></svg></button>
+            <button type="button" data-step="1" aria-label="Next spread"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 5l7 7-7 7"/></svg></button>
+          </div>
+        </div>
+        <div class="fp-book-progress" aria-hidden="true"><i></i></div>
+      </div>
+      <p class="fp-cap fp-rise"><b>One system, every collection.</b> A colour field and display name on the left, the planter living in a real room in the middle, and sizes, codes and ideal placement on the right.</p>
+    </div>
+
+    <div class="fp-block">
+      <div class="fp-block-head fp-rise"><span class="fp-step-no">02</span><h4>In print</h4></div>
+      <div class="fp-pair">
+        <figure class="fp-tile fp-ph fp-rise"><span>Catalogue mockup 1</span></figure>
+        <figure class="fp-tile fp-ph fp-rise" style="--d:1"><span>Catalogue mockup 2</span></figure>
+      </div>
+    </div>
+  </article>
+
+  <!-- 03 — SOCIAL CAMPAIGN -->
+  <article class="fp-case" id="fp-social">
+    <div class="fp-cover fp-cover--soft" data-cover>
+      <div class="fp-cover-media"><div class="fp-ph"><span>Campaign hero image</span></div></div>
+      <div class="fp-cover-text">
+        <p class="fp-cover-label">03 · Social Campaign</p>
+        <h3 class="fp-cover-title">[Campaign name]</h3>
+      </div>
+      <span class="fp-tag">Campaign</span>
+      <figure class="fp-sticker fp-sticker--note" style="--r:-4deg">
+        <b>[N] posts</b>
+        <figcaption>One brand system</figcaption>
+      </figure>
+    </div>
+    <p class="fp-case-line fp-rise">A month of posts that look like one brand, because they start from the brand’s own rules.</p>
+
+    <div class="fp-block">
+      <div class="fp-block-head fp-rise"><span class="fp-step-no">01</span><h4>Guidelines first</h4></div>
+      <div class="fp-system">
+        <div class="fp-tile fp-rise"><h5>Colour</h5><div class="fp-swatches"><i style="--c:#1d1d1f"></i><i style="--c:#c84b3f"></i><i style="--c:#f0e6d8"></i><i style="--c:#ffffff"></i></div></div>
+        <div class="fp-tile fp-rise" style="--d:1"><h5>Type</h5><div class="fp-type">Aa</div></div>
+        <div class="fp-tile fp-rise" style="--d:2"><h5>Grid</h5><div class="fp-gridmark"></div></div>
+        <div class="fp-tile fp-ph fp-rise" style="--d:3"><span>Logo &amp; clear space</span></div>
+      </div>
+      <p class="fp-cap fp-rise"><b>The rules came first.</b> Palette, type, grid and logo use were set before a single post was designed.</p>
+    </div>
+
+    <div class="fp-block">
+      <div class="fp-block-head fp-rise"><span class="fp-step-no">02</span><h4>The campaign</h4></div>
+      <div class="fp-feed fp-rise">
+        <figure class="fp-tile fp-ph"><span>Post 1</span></figure>
+        <figure class="fp-tile fp-ph"><span>Post 2</span></figure>
+        <figure class="fp-tile fp-ph"><span>Post 3</span></figure>
+        <figure class="fp-tile fp-ph"><span>Post 4</span></figure>
+        <figure class="fp-tile fp-ph"><span>Post 5</span></figure>
+        <figure class="fp-tile fp-ph"><span>Post 6</span></figure>
+      </div>
+    </div>
+  </article>
+
+  <!-- 04 — VIDEO -->
+  <article class="fp-case" id="fp-video">
+    <div class="fp-cover fp-cover--dark" data-cover>
+      <div class="fp-cover-media"><div class="fp-stage"><div class="fp-phone fp-ph"><span>Final reel</span></div></div></div>
+      <div class="fp-cover-text">
+        <p class="fp-cover-label">04 · Video Editing</p>
+        <h3 class="fp-cover-title">[Reel name]</h3>
+      </div>
+      <span class="fp-tag">Reel</span>
+      <figure class="fp-sticker fp-sticker--note" style="--r:6deg">
+        <b>00K</b>
+        <figcaption>Views on the final cut</figcaption>
+      </figure>
+    </div>
+    <p class="fp-case-line fp-rise">Hours of raw footage in, a reel built to stop the scroll out, and the numbers to prove it.</p>
+
+    <div class="fp-block">
+      <div class="fp-block-head fp-rise"><span class="fp-step-no">01</span><h4>Raw to final</h4></div>
+      <div class="fp-rawfinal">
+        <div class="fp-raw fp-rise">
+          <figure class="fp-tile fp-ph"><span>Raw clip 1</span></figure>
+          <figure class="fp-tile fp-ph"><span>Raw clip 2</span></figure>
+          <figure class="fp-tile fp-ph"><span>Raw clip 3</span></figure>
+        </div>
+        <svg class="fp-arrow fp-rise" style="--d:1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg>
+        <figure class="fp-tile fp-final fp-ph fp-rise" style="--d:2"><span>Final reel</span></figure>
+      </div>
+    </div>
+
+    <div class="fp-block">
+      <div class="fp-block-head fp-rise"><span class="fp-step-no">02</span><h4>The reach</h4></div>
+      <div class="fp-results fp-rise">
+        <div class="fp-result"><strong>00K</strong><span>Views</span></div>
+        <div class="fp-result"><strong>00K</strong><span>Accounts reached</span></div>
+        <div class="fp-result"><strong>000</strong><span>Shares &amp; saves</span></div>
+      </div>
+    </div>
+  </article>
+
+  <div class="fp-outro fp-rise">
+    <p>That’s the short version. <span>Every discipline has more.</span></p>
+    <a class="fp-link" href="#work">Browse all work
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
   </div>
 </section>
 
@@ -1960,6 +2160,11 @@ body.meadow-open nav.scrolled {
         <span class="cap-num">03</span>
         <h3>Motion Graphics</h3>
       </div>
+      <div class="cap-card" style="--pct: 65;">
+        <span class="cap-fill" aria-hidden="true"></span>
+        <span class="cap-num">04</span>
+        <h3>User Interface</h3>
+      </div>
     </div>
 
     <div class="cap-tools">
@@ -1970,6 +2175,7 @@ body.meadow-open nav.scrolled {
         <div class="tool-slot" style="--tone: 153, 153, 255;"><img class="frame-media" src="images/PR.jpg" alt="Adobe Premiere Pro"></div>
         <div class="tool-slot" style="--tone: 157, 124, 255;"><img class="frame-media" src="images/AE.jpg" alt="Adobe After Effects"></div>
         <div class="tool-slot" style="--tone: 122, 193, 66;"><img class="frame-media" src="images/Corel.jpg" alt="CorelDRAW"></div>
+        <div class="tool-slot" style="--tone: 162, 89, 255;"><img class="frame-media" src="images/Figma.jpg" alt="Figma"></div>
       </div>
     </div>
   </div>
@@ -1983,11 +2189,11 @@ body.meadow-open nav.scrolled {
     </div>
     <div class="inside-deck" aria-label="Explore portfolio categories">
       <a class="inside-card" href="#logo-design" style="--slot:-3;--angle:-10deg;--drop:32px;--stack:-6deg;--order:3"><span class="inside-card-face"><img src="images/koncept-smashers-logo.jpg" alt="" loading="lazy"><span>Logo Design</span></span></a>
-      <a class="inside-card" href="#social-campaigns" style="--slot:-2;--angle:-7deg;--drop:14px;--stack:5deg;--order:2"><span class="inside-card-face"><img src="images/bts-creative-01.jpg" alt="" loading="lazy"><span>Social Media</span></span></a>
+      <a class="inside-card" href="#social-campaigns" style="--slot:-2;--angle:-7deg;--drop:14px;--stack:5deg;--order:2"><span class="inside-card-face"><img src="images/bts-creative-01.jpg" alt="" loading="lazy"><span>Social Media Creatives</span></span></a>
       <a class="inside-card" href="#print-media" style="--slot:-1;--angle:-3deg;--drop:3px;--stack:-3deg;--order:1"><span class="inside-card-face"><img src="images/print-sbs-brochure.jpg" alt="" loading="lazy"><span>Print Media</span></span></a>
       <a class="inside-card" href="#video-editing" style="--slot:0;--angle:0deg;--drop:0px;--stack:0deg;--order:0"><span class="inside-card-face"><video src="videos/vertical-01.mp4#t=0.1" preload="metadata" muted playsinline aria-hidden="true"></video><span>Video Editing</span></span></a>
       <a class="inside-card" href="#motion-graphics" style="--slot:1;--angle:3deg;--drop:3px;--stack:4deg;--order:1"><span class="inside-card-face"><video src="videos/motion-01.mp4#t=0.1" preload="metadata" muted playsinline aria-hidden="true"></video><span>Motion Graphics</span></span></a>
-      <a class="inside-card" href="#packaging-label" style="--slot:2;--angle:7deg;--drop:14px;--stack:-4deg;--order:2"><span class="inside-card-face"><img src="images/Box-AV.jpg" alt="" loading="lazy"><span>Packaging &amp; Labels</span></span></a>
+      <a class="inside-card" href="#packaging-label" style="--slot:2;--angle:7deg;--drop:14px;--stack:-4deg;--order:2"><span class="inside-card-face"><img src="images/Box-AV.jpg" alt="" loading="lazy"><span>Packaging Design</span></span></a>
       <a class="inside-card" href="#outdoor-media" style="--slot:3;--angle:10deg;--drop:32px;--stack:6deg;--order:3"><span class="inside-card-face"><img src="images/outdoor-hoarding.jpg" alt="" loading="lazy"><span>Outdoor Media</span></span></a>
     </div>
   </div>
@@ -1996,12 +2202,13 @@ body.meadow-open nav.scrolled {
   <div class="cat-rail" id="catRail">
     <div class="cat-rail-inner">
       <a class="cat-chip" href="#logo-design">Logo Design</a>
-      <a class="cat-chip" href="#social-campaigns">Social Media Campaigns</a>
+      <a class="cat-chip" href="#social-campaigns">Social Media Creatives</a>
       <a class="cat-chip" href="#print-media">Print Media</a>
+      <a class="cat-chip" href="#packaging-label">Packaging Design</a>
       <a class="cat-chip" href="#outdoor-media">Outdoor Media</a>
-      <a class="cat-chip" href="#packaging-label">Packaging &amp; Label Design</a>
       <a class="cat-chip" href="#video-editing">Video Editing</a>
       <a class="cat-chip" href="#motion-graphics">Motion Graphics</a>
+      <a class="cat-chip" href="#vibe-coded-websites">Websites</a>
     </div>
   </div>
 
@@ -2009,30 +2216,34 @@ body.meadow-open nav.scrolled {
 
     <!-- 01 — LOGO DESIGN -->
     <div class="chapter reveal" id="logo-design">
-      <div class="chapter-head">
-        <div>
-
-          <h3 class="chapter-title">Logo <span class="heading-accent">Design</span></h3>
+      <div class="logo-scroll-stage">
+        <div class="logo-pinned-pane">
+          <div class="chapter-head">
+            <div>
+              <h3 class="chapter-title">Logo <span class="heading-accent">Design</span></h3>
+            </div>
+          </div>
+          <div class="logo-slider-viewport" aria-label="Logo Design showcase">
+            <div class="logo-slider-track">
+              <a class="logo-slide" href="#" aria-label="Koncept Smashers logo"><div class="frame-box r-3x4"><img class="frame-media" src="images/koncept-smashers-logo.jpg" alt="Koncept Smashers badminton team logo"></div></a>
+              <a class="logo-slide" href="#" aria-label="Koncept Philosophy logo"><div class="frame-box r-3x4"><img class="frame-media" src="images/KP-Logo.jpg" alt="Koncept Philosophy logo"></div></a>
+              <a class="logo-slide" href="#" aria-label="Samsara Studio logo"><div class="frame-box r-3x4"><img class="frame-media" src="images/Samsara-Logo.jpg" alt="Samsara Studio logo"></div></a>
+              <a class="logo-slide" href="#" aria-label="Achaar Vichar logo"><div class="frame-box r-3x4"><img class="frame-media" src="images/AV-Logo.jpg" alt="Achaar Vichar logo"></div></a>
+              <a class="logo-slide" href="#" aria-label="Soul Mitra logo"><div class="frame-box r-3x4"><img class="frame-media" src="images/SM-Logo.jpg" alt="Soul Mitra logo"></div></a>
+              <a class="logo-slide" href="#" aria-label="Nitui Naturalss logo rationale"><div class="frame-box r-3x4"><img class="frame-media" src="images/concept-process-logo.jpg" alt="Nitui Naturalss logo rationale — the N, the seed, the flow"></div></a>
+              <span class="logo-slide logo-slide-loop" aria-hidden="true"><span class="frame-box r-3x4"><img class="frame-media" src="images/koncept-smashers-logo.jpg" alt=""></span></span>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="gal gal-4 gal-logo">
-        <!-- live logos -->
-        <a class="frame" href="#"><div class="frame-box r-1x1"><img class="frame-media" src="images/koncept-smashers-logo.jpg" alt="Koncept Smashers badminton team logo"></div><div class="frame-cap"><b>Koncept Smashers</b><span>Sports</span></div></a>
-        <a class="frame" href="#"><div class="frame-box r-1x1"><img class="frame-media" src="images/KP-Logo.jpg" alt="Koncept Philosophy logo"></div><div class="frame-cap"><b>Koncept Philosophy</b><span>Advisory</span></div></a>
-        <a class="frame" href="#"><div class="frame-box r-1x1"><img class="frame-media" src="images/Samsara-Logo.jpg" alt="Samsara Studio logo"></div><div class="frame-cap"><b>Samsara Studio</b><span>Lifestyle</span></div></a>
-        <a class="frame" href="#"><div class="frame-box r-1x1"><img class="frame-media" src="images/AV-Logo.jpg" alt="Achaar Vichar logo"></div><div class="frame-cap"><b>Achaar Vichar</b><span>F&amp;B</span></div></a>
-        <a class="frame" href="#"><div class="frame-box r-1x1"><img class="frame-media" src="images/SM-Logo.jpg" alt="Soul Mitra logo"></div><div class="frame-cap"><b>Soul Mitra</b><span>Wellness</span></div></a>
-        <!-- wide slot — still a placeholder, drop a photo on it in edit mode -->
-        <a class="frame span-3" href="#"><div class="frame-box"><img class="frame-media" src="images/concept-process-logo.jpg" alt="Nitui Naturalss logo rationale — the N, the seed, the flow"></div><div class="frame-cap"><b>Nitui Naturalss — mark rationale</b><span>Concept &amp; process</span></div></a>
       </div>
     </div>
 
-    <!-- 02 — SOCIAL MEDIA CAMPAIGNS -->
+    <!-- 02 — SOCIAL MEDIA CREATIVES -->
     <div class="chapter reveal" id="social-campaigns">
       <div class="chapter-head">
         <div>
 
-          <h3 class="chapter-title">Social Media<br><span class="heading-accent">Campaigns</span></h3>
+          <h3 class="chapter-title">Social Media<br><span class="heading-accent">Creatives</span></h3>
         </div>
       </div>
       <div class="gal gal-3">
@@ -2053,8 +2264,8 @@ body.meadow-open nav.scrolled {
           <h3 class="chapter-title">Print <span class="heading-accent">Media</span></h3>
         </div>
       </div>
-      <div class="brochure-stack" aria-label="Brochure spread placeholders">
-        <article class="brochure-card" role="img" aria-label="Brochure spread placeholder 1 of 6"><div class="brochure-card-media" aria-hidden="true"></div></article>
+      <div class="brochure-stack" aria-label="Brochure spreads">
+        <article class="brochure-card"><div class="brochure-card-media"><img src="images/B1.jpg" alt="Sawariya Global Exports brochure spread" loading="lazy"></div></article>
         <article class="brochure-card" role="img" aria-label="Brochure spread placeholder 2 of 6"><div class="brochure-card-media" aria-hidden="true"></div></article>
         <article class="brochure-card" role="img" aria-label="Brochure spread placeholder 3 of 6"><div class="brochure-card-media" aria-hidden="true"></div></article>
         <article class="brochure-card" role="img" aria-label="Brochure spread placeholder 4 of 6"><div class="brochure-card-media" aria-hidden="true"></div></article>
@@ -2063,14 +2274,119 @@ body.meadow-open nav.scrolled {
       </div>
     </div>
 
-    <!-- 04 — OUTDOOR MEDIA -->
-    <div class="chapter reveal" id="outdoor-media">
+    <!-- 04 — PACKAGING DESIGN -->
+    <div class="chapter reveal" id="packaging-label">
       <div class="chapter-head">
         <div>
 
+          <h3 class="chapter-title">Packaging <span class="heading-accent">Design</span></h3>
+        </div>
+      </div>
+      <div class="pk-list">
+        <article class="pk-sheet">
+          <header class="pk-meta"><span>(Carton)</span><span>([Year])</span><span>(Achaar Vichar)</span></header>
+          <figure class="pk-shot pk-design">
+            <div class="pk-paper"><img src="images/packaging/av-box-design.jpg" alt="Flat artwork for the long and short faces of the Achaar Vichar box with dimensions" loading="lazy"></div>
+            <figcaption><span class="pk-tag">Design</span></figcaption>
+          </figure>
+          <figure class="pk-shot pk-final">
+            <div class="pk-photo pk-contain" style="--pk-bg:#dcdcdc"><img src="images/packaging/av-box-final.jpg" alt="Achaar Vichar assorted pickle box, final render" loading="lazy"></div>
+            <figcaption><span class="pk-tag pk-tag--dark">Final</span></figcaption>
+          </figure>
+          <div class="pk-info">
+            <span class="pk-no">01</span>
+            <h4>Assorted pickle box</h4>
+            <p>A trial pack of eight pickles that had to read as one range: skyline and mascot on the long face, the full flavour grid on the short face.</p>
+            <dl><div><dt>Long face</dt><dd>300 × 105 mm</dd></div><div><dt>Short face</dt><dd>150 × 105 mm</dd></div><div><dt>Contents</dt><dd>Trial pack of 8</dd></div></dl>
+            <div class="pk-swatches" aria-hidden="true"><i style="--c:#1e9a48" title="#1e9a48"></i><i style="--c:#d8262c" title="#d8262c"></i><i style="--c:#e8a33d" title="#e8a33d"></i><i style="--c:#9b9b9b" title="#9b9b9b"></i><i style="--c:#ffffff" title="#ffffff"></i></div>
+          </div>
+        </article>
+        <article class="pk-sheet pk-flip">
+          <header class="pk-meta"><span>(Labels)</span><span>([Year])</span><span>(Achaar Vichar)</span></header>
+          <figure class="pk-shot pk-design">
+            <div class="pk-paper"><span class="pk-slot">Drop flat label artwork + dieline</span></div>
+            <figcaption><span class="pk-tag">Design</span></figcaption>
+          </figure>
+          <figure class="pk-shot pk-final">
+            <div class="pk-photo"><img src="images/Label-AV.jpg" alt="Achaar Vichar Lasoda pickle and Dream Dust jar labels" loading="lazy"></div>
+            <figcaption><span class="pk-tag pk-tag--dark">Final</span></figcaption>
+          </figure>
+          <div class="pk-info">
+            <span class="pk-no">02</span>
+            <h4>Jar label system</h4>
+            <p>One label structure across very different products, so Lasoda Pickle and Dream Dust feel like siblings on the same shelf.</p>
+            <dl><div><dt>Format</dt><dd>Wrap-around jar label</dd></div><div><dt>Net content</dt><dd>350 g</dd></div><div><dt>Label size</dt><dd>[W × H mm]</dd></div></dl>
+            <div class="pk-swatches" aria-hidden="true"><i style="--c:#1f7a3a" title="#1f7a3a"></i><i style="--c:#9fd18b" title="#9fd18b"></i><i style="--c:#3b2a8f" title="#3b2a8f"></i><i style="--c:#e79bc4" title="#e79bc4"></i><i style="--c:#ffffff" title="#ffffff"></i></div>
+          </div>
+        </article>
+        <article class="pk-sheet">
+          <header class="pk-meta"><span>(Pouch)</span><span>([Year])</span><span>(Nitui Naturalss)</span></header>
+          <figure class="pk-shot pk-design">
+            <div class="pk-paper"><span class="pk-slot">Drop pouch flat artwork + dieline</span></div>
+            <figcaption><span class="pk-tag">Design</span></figcaption>
+          </figure>
+          <figure class="pk-shot pk-final">
+            <div class="pk-photo"><img src="images/Label-NITUI.jpg" alt="Nitui Naturalss Kara Paker rasgulla stand-up pouch" loading="lazy"></div>
+            <figcaption><span class="pk-tag pk-tag--dark">Final</span></figcaption>
+          </figure>
+          <div class="pk-info">
+            <span class="pk-no">03</span>
+            <h4>Kara Paker rasgulla</h4>
+            <p>A stand-up pouch with a window-style arch that frames the sweet like it sits in a temple doorway, in Nitui’s royal purple.</p>
+            <dl><div><dt>Format</dt><dd>Stand-up zip pouch</dd></div><div><dt>Finish</dt><dd>[Matte / gloss]</dd></div><div><dt>Size</dt><dd>[W × H mm]</dd></div></dl>
+            <div class="pk-swatches" aria-hidden="true"><i style="--c:#5b2d91" title="#5b2d91"></i><i style="--c:#c9b6e8" title="#c9b6e8"></i><i style="--c:#d4a843" title="#d4a843"></i><i style="--c:#f5efe0" title="#f5efe0"></i></div>
+          </div>
+        </article>
+        <article class="pk-sheet pk-flip">
+          <header class="pk-meta"><span>(Labels)</span><span>([Year])</span><span>(Nitui Naturalss)</span></header>
+          <figure class="pk-shot pk-design">
+            <div class="pk-paper"><span class="pk-slot">Drop bottle label flat artwork</span></div>
+            <figcaption><span class="pk-tag">Design</span></figcaption>
+          </figure>
+          <figure class="pk-shot pk-final">
+            <div class="pk-photo"><img src="images/Label-DRINKS.jpg" alt="Nitui Naturalss juice range bottle labels" loading="lazy"></div>
+            <figcaption><span class="pk-tag pk-tag--dark">Final</span></figcaption>
+          </figure>
+          <div class="pk-info">
+            <span class="pk-no">04</span>
+            <h4>Juice range</h4>
+            <p>Three flavours, one system: the fruit carries the colour, the type and layout stay fixed so the range reads together.</p>
+            <dl><div><dt>Format</dt><dd>Shrink sleeve label</dd></div><div><dt>Flavours</dt><dd>Black Grapes, Orange, Pineapple</dd></div><div><dt>Size</dt><dd>[W × H mm]</dd></div></dl>
+            <div class="pk-swatches" aria-hidden="true"><i style="--c:#4a2a73" title="#4a2a73"></i><i style="--c:#f08a1c" title="#f08a1c"></i><i style="--c:#f2c41b" title="#f2c41b"></i><i style="--c:#ffffff" title="#ffffff"></i></div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- 05 — OUTDOOR MEDIA -->
+    <div class="chapter reveal" id="outdoor-media">
+      <div class="chapter-head">
+        <div>
           <h3 class="chapter-title">Outdoor <span class="heading-accent">Media</span></h3>
         </div>
       </div>
+      <!-- 3D billboard street: scroll drives the camera down the road.
+           Swap each <img> for a transparent PNG mockup and drop "ob-flat"
+           (that class only adds a frame and legs for flat artwork). -->
+      <div class="ob-stage" data-billboards style="--n:5">
+        <div class="ob-sticky">
+          <div class="ob-view">
+            <div class="ob-world">
+              <div class="ob-floor" aria-hidden="true"></div>
+            <figure class="ob-board ob-flat" style="--i:0;--side:-1" data-title="SISTec — admissions hoarding" data-sub="Sagar Group"><img src="images/outdoor-hoarding.jpg" alt="SISTec — admissions hoarding" loading="lazy"></figure>
+            <figure class="ob-board ob-flat" style="--i:1;--side:1" data-title="Emerald Heights — launch hoarding" data-sub="Real estate"><img src="images/ssh-hoarding.jpg" alt="Emerald Heights — launch hoarding" loading="lazy"></figure>
+            <figure class="ob-board ob-flat" style="--i:2;--side:-1" data-title="Koncept Smashers — team hoarding" data-sub="Sponsorship"><img src="images/koncept-smashers-hoarding.jpg" alt="Koncept Smashers — team hoarding" loading="lazy"></figure>
+            <figure class="ob-board ob-flat" style="--i:3;--side:1" data-title="Sagar Group — Silver Jubilee welcome" data-sub="Welcome board"><img src="images/outdoor-hoarding-05.jpg" alt="Sagar Group — Silver Jubilee welcome" loading="lazy"></figure>
+            <figure class="ob-board ob-plain" style="--i:4;--side:-1" data-title="Sagar Group — corporate wall branding" data-sub="Environment"><img src="images/outdoor-wall-branding.jpg" alt="Sagar Group — corporate wall branding" loading="lazy"></figure>
+            </div>
+          </div>
+          <div class="ob-hud">
+            <div class="ob-now"><span class="ob-count">01 / 05</span><b class="ob-title">SISTec — admissions hoarding</b><span class="ob-sub">Sagar Group</span></div>
+            <span class="ob-hint">Scroll to drive</span>
+          </div>
+        </div>
+      </div>
+      <div class="ob-fallback">
       <div class="gal gal-1">
         <a class="frame" href="#"><div class="frame-box r-21x9"><img class="frame-media" src="images/outdoor-hoarding.jpg" alt="SISTec admissions hoarding for Sagar Group of Institutions"></div><div class="frame-cap"><b>SISTec — admissions hoarding</b><span>Sagar Group</span></div></a>
       </div>
@@ -2080,21 +2396,6 @@ body.meadow-open nav.scrolled {
         <a class="frame" href="#"><div class="frame-box r-16x9"><img class="frame-media" src="images/outdoor-hoarding-05.jpg" alt="Sagar Group of Institutions Silver Jubilee welcome hoarding"></div><div class="frame-cap"><b>Sagar Group — Silver Jubilee welcome</b><span>Welcome board</span></div></a>
         <a class="frame" href="#"><div class="frame-box r-16x9"><img class="frame-media" src="images/outdoor-wall-branding.jpg" alt="Sagar Group corporate wall branding panels"></div><div class="frame-cap"><b>Sagar Group — corporate wall branding</b><span>Environment</span></div></a>
       </div>
-    </div>
-
-    <!-- 05 — PACKAGING & LABEL -->
-    <div class="chapter reveal" id="packaging-label">
-      <div class="chapter-head">
-        <div>
-
-          <h3 class="chapter-title">Packaging &amp;<br>Label <span class="heading-accent">Design</span></h3>
-        </div>
-      </div>
-      <div class="gal gal-4">
-        <a class="frame" href="#"><div class="frame-box r-3x4"><img class="frame-media" src="images/Box-AV.jpg" alt="Achaar Vichar assorted pickle box with dielines"></div><div class="frame-cap"><b>Achaar Vichar — assorted pickle box</b><span>Carton &amp; dieline</span></div></a>
-        <a class="frame" href="#"><div class="frame-box r-3x4"><img class="frame-media" src="images/Label-AV.jpg" alt="Achaar Vichar Lasoda pickle and Dream Dust jar labels"></div><div class="frame-cap"><b>Achaar Vichar — jar label system</b><span>Jar labels</span></div></a>
-        <a class="frame" href="#"><div class="frame-box r-3x4"><img class="frame-media" src="images/Label-NITUI.jpg" alt="Nitui Naturalss Kara Paker rasgulla stand-up pouch"></div><div class="frame-cap"><b>Nitui Naturalss — Kara Paker pouch</b><span>Pouch</span></div></a>
-        <a class="frame" href="#"><div class="frame-box r-3x4"><img class="frame-media" src="images/Label-DRINKS.jpg" alt="Nitui Naturalss juice range bottle labels"></div><div class="frame-cap"><b>Nitui Naturalss — juice range</b><span>Bottle labels</span></div></a>
       </div>
     </div>
 
@@ -2154,6 +2455,12 @@ body.meadow-open nav.scrolled {
       </div>
     </div>
 
+    <div class="chapter reveal" id="vibe-coded-websites">
+      <div class="chapter-head">
+        <div><h3 class="chapter-title"><span class="heading-accent">Websites</span></h3></div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -2192,21 +2499,6 @@ body.meadow-open nav.scrolled {
     <span>—</span>
   </div>
 </div>
-
-<!-- CLIENTS -->
-<section class="clients reveal">
-  <div class="container">
-
-    <h2 class="h-display" style="font-size: clamp(36px, 5vw, 72px);">Selected <span class="heading-accent">clients.</span></h2>
-    <div class="client-grid">
-      <div class="client-cell">Beyond the Surface</div>
-      <div class="client-cell">Power Cook</div>
-      <div class="client-cell">Koncept Philosophy</div>
-      <div class="client-cell">Varsha Delicacy</div>
-      <div class="client-cell">Color Angle</div>
-    </div>
-  </div>
-</section>
 
 <!-- CTA -->
 <section class="cta" id="contact">
@@ -2294,8 +2586,9 @@ body.meadow-open nav.scrolled {
   const chips = Object.fromEntries(
     [...railHost.querySelectorAll('.cat-chip')].map(chip => [chip.hash.slice(1), chip])
   );
-  const graphicOrder = ['logo-design', 'social-campaigns', 'print-media', 'outdoor-media', 'packaging-label', 'video-editing', 'motion-graphics'];
-  const videoOrder = ['video-editing', 'motion-graphics', 'logo-design', 'social-campaigns', 'print-media', 'outdoor-media', 'packaging-label'];
+  const graphicOrder = ['logo-design', 'social-campaigns', 'print-media', 'packaging-label', 'outdoor-media', 'video-editing', 'motion-graphics', 'vibe-coded-websites'];
+  const videoOrder = ['video-editing', 'motion-graphics', 'logo-design', 'social-campaigns', 'print-media', 'packaging-label', 'outdoor-media', 'vibe-coded-websites'];
+  const websiteOrder = ['vibe-coded-websites', 'logo-design', 'social-campaigns', 'print-media', 'packaging-label', 'outdoor-media', 'video-editing', 'motion-graphics'];
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let entering = false;
 
@@ -2329,9 +2622,9 @@ body.meadow-open nav.scrolled {
   function enter(mode, targetId) {
     if (entering) return;
     entering = true;
-    const ids = mode === 'video' ? videoOrder : graphicOrder;
+    const ids = mode === 'video' ? videoOrder : mode === 'websites' ? websiteOrder : graphicOrder;
     arrange(ids);
-    const target = document.getElementById(targetId || ids[0]);
+    const target = document.getElementById(targetId || (mode === 'featured' ? 'showcase' : ids[0]));
     positionUnderCover(target);
     requestAnimationFrame(() => entry.classList.add('is-leaving'));
 
@@ -2362,6 +2655,33 @@ body.meadow-open nav.scrolled {
       enter('graphic', id === 'work' ? 'logo-design' : id);
     });
   });
+
+  // The in-page meadow hero repeats the entrance choices once inside.
+  document.querySelectorAll('[data-hero-go]').forEach(button => {
+    button.addEventListener('click', () => {
+      const mode = button.dataset.heroGo;
+      const ids = mode === 'video' ? videoOrder : mode === 'websites' ? websiteOrder : graphicOrder;
+      arrange(ids);
+      const target = document.getElementById(mode === 'featured' ? 'showcase' : ids[0]);
+      const navOffset = window.innerWidth <= 900 ? 158 : 176;
+      window.scrollTo({ top: Math.max(0, target.getBoundingClientRect().top + window.scrollY - navOffset), behavior: reduceMotion ? 'auto' : 'smooth' });
+    });
+  });
+
+  // Clicking the name reopens the Meadow entrance instead of jumping to top.
+  function reopen() {
+    entering = false;
+    entry.hidden = false;
+    entry.classList.remove('is-leaving');
+    document.body.classList.remove('portfolio-entered');
+    document.body.classList.add('meadow-open');
+    const prev = document.documentElement.style.scrollBehavior;
+    document.documentElement.style.scrollBehavior = 'auto';
+    window.scrollTo(0, 0);
+    document.documentElement.style.scrollBehavior = prev;
+  }
+  const logo = document.querySelector('nav a.logo');
+  if (logo) logo.addEventListener('click', e => { e.preventDefault(); reopen(); });
 })();
 
 // Scroll reveal — rootMargin so very tall chapters still trigger
@@ -3270,5 +3590,55 @@ window.PortfolioReel = (function () {
 })();
 </script>
 
+<script>
+// Random wind: smooth value-noise with random knots, so the sway never settles
+// into a repeating pattern. One shared gust field plus a private one per flower.
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const rnd = (a, b) => a + Math.random() * (b - a);
+  const noise = rate => {
+    const knots = [rnd(-1, 1)];
+    const off = rnd(0, 50);
+    return t => {
+      const x = (t + off) * rate;
+      const i = Math.floor(x), f = x - i;
+      while (knots.length <= i + 1) knots.push(rnd(-1, 1));
+      const s = f * f * (3 - 2 * f);
+      return knots[i] + (knots[i + 1] - knots[i]) * s;
+    };
+  };
+  const wind = noise(.16), swell = noise(.05);
+  const flowers = [...document.querySelectorAll('.meadow .flower')].map(el => {
+    const cs = getComputedStyle(el);
+    el.style.animation = 'none';
+    const speed = 1.4 / parseFloat(cs.getPropertyValue('--duration')) * rnd(.8, 1.2);
+    return {
+      el,
+      angle: parseFloat(cs.getPropertyValue('--angle')),
+      drift: parseFloat(cs.getPropertyValue('--drift')),
+      own: noise(speed), fine: noise(speed * 2.3)
+    };
+  });
+  // only sway a scene while it is on screen
+  const onScreen = new Set();
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? onScreen.add(e.target) : onScreen.delete(e.target)));
+    document.querySelectorAll('.meadow').forEach(m => io.observe(m));
+    flowers.forEach(f => { f.scene = f.el.closest('.meadow'); });
+  }
+  const start = performance.now();
+  (function frame(now) {
+    const t = (now - start) / 1000;
+    const gust = .55 + .45 * (swell(t) * .5 + .5);
+    const shared = wind(t);
+    flowers.forEach(f => {
+      if (f.scene && !onScreen.has(f.scene)) return;
+      const w = (shared * .45 + f.own(t) * .45 + f.fine(t) * .1) * gust;
+      f.el.style.transform = 'translateX(' + (f.drift * .8 * w).toFixed(3) + 'px) rotate(' + (f.angle * .8 * w).toFixed(3) + 'deg)';
+    });
+    requestAnimationFrame(frame);
+  })(start);
+})();
+</script>
 </body>
 </html>

@@ -45,12 +45,12 @@ body { background: #72a13c; }
   animation: meadow-breeze var(--duration) ease-in-out var(--delay) infinite;
   pointer-events: none;
 }
-.depth-left { left: 2.29645%; width: 21.39875%; --angle: .35deg; --drift: .55px; --duration: 8.7s; --delay: -3.1s; }
-.depth-middle { left: 24.42589%; width: 30.74113%; --angle: .4deg; --drift: .65px; --duration: 7.9s; --delay: -6.2s; }
-.depth-right { left: 59.44676%; width: 21.97286%; --angle: .3deg; --drift: .5px; --duration: 8.3s; --delay: -1.7s; }
-.foreground-left { left: 0; width: 22.86013%; --angle: .7deg; --drift: 1px; --duration: 6.7s; --delay: -2.8s; }
-.foreground-middle { left: 19.57203%; width: 51.67015%; --angle: .5deg; --drift: 1.2px; --duration: 7.3s; --delay: -5.4s; }
-.foreground-right { left: 70.66806%; width: 29.33194%; --angle: .65deg; --drift: 1px; --duration: 6.1s; --delay: -.8s; }
+.depth-left { left: 2.29645%; width: 21.39875%; --angle: 0.77deg; --drift: 1.32px; --duration: 4.5s; --delay: -3.1s; }
+.depth-middle { left: 24.42589%; width: 30.74113%; --angle: 0.88deg; --drift: 1.56px; --duration: 4.1s; --delay: -6.2s; }
+.depth-right { left: 59.44676%; width: 21.97286%; --angle: 0.66deg; --drift: 1.20px; --duration: 4.3s; --delay: -1.7s; }
+.foreground-left { left: 0; width: 22.86013%; --angle: 1.54deg; --drift: 2.40px; --duration: 3.4s; --delay: -2.8s; }
+.foreground-middle { left: 19.57203%; width: 51.67015%; --angle: 1.10deg; --drift: 2.88px; --duration: 3.8s; --delay: -5.4s; }
+.foreground-right { left: 70.66806%; width: 29.33194%; --angle: 1.43deg; --drift: 2.40px; --duration: 3.1s; --delay: -.8s; }
 /* Foreground exports are 60 reference pixels above their final placement. */
 .foreground-left, .foreground-middle, .foreground-right { bottom: -7.30816%; }
 @keyframes meadow-breeze {
