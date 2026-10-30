@@ -792,3 +792,52 @@ body .meadow-hero .meadow-welcome { color: #fff; }
   #packaging-label .pk-final:hover .pk-photo img { transform: none; }
   #packaging-label .pk-photo img { transition: none; }
 }
+
+/* What's Inside — the Logo Design thumbnail is the mark itself: white into
+   coral, like the Featured headings, on a dark panel in both themes so the
+   white end never disappears on a light page. */
+.inside-card-face > .inside-thumb {
+  display: block; width: 100%; aspect-ratio: 3 / 4;
+  /* flat black; on hover a coral glow rises from the bottom edge */
+  background:
+    radial-gradient(85% 60% at 50% 100%, rgb(255 139 124 / calc(var(--glow) * .55)), transparent 72%),
+    var(--tile, #141416);
+  transition: --glow 480ms ease;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .10);
+}
+@media (max-width: 650px) {
+  .inside-card-face > .inside-thumb { aspect-ratio: 4 / 3; }
+  /* the artboard has a lot of air around the mark; fill the wider tile */
+  /* the full-width last tile is wider still */
+  .inside-card:last-child .inside-card-face > .inside-thumb { aspect-ratio: 2.75 / 1; }
+}
+
+/* every icon is scaled so its larger side matches the Logo Design mark, about
+   its own centre (--s, --cx, --cy are set on each svg) */
+.inside-thumb > g { transform: scale(var(--s, 1)); transform-origin: var(--cx, 205px) var(--cy, 270px); }
+@media (max-width: 650px) {
+  .inside-thumb > g { transform: scale(calc(var(--s, 1) * 1.5)); }
+}
+
+/* Overlapping row (web): the tiles are all dark, so give each card its own
+   tint (set per svg), a clear edge and a soft shadow onto its neighbour, and
+   move each label into the part of its card that stays uncovered. */
+@media (min-width: 651px) {
+  body .inside-showcase { --overlap: calc(var(--card-width) - var(--card-step)); }
+  .inside-card-face {
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, .18), 0 0 30px rgba(0, 0, 0, .55);
+  }
+  .inside-card:hover .inside-card-face,
+  .inside-card:focus-visible .inside-card-face {
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, .30), 0 22px 40px rgba(0, 0, 0, .55);
+  }
+  .inside-card-face > span {
+    padding-left: calc(clamp(0, var(--slot), 1) * var(--overlap));
+    padding-right: calc(clamp(0, var(--slot) * -1, 1) * var(--overlap));
+  }
+}
+
+@property --glow { syntax: '<number>'; inherits: false; initial-value: 0; }
+.inside-card:hover .inside-thumb,
+.inside-card:focus-visible .inside-thumb { --glow: 1; }
+@media (prefers-reduced-motion: reduce) { .inside-card-face > .inside-thumb { transition: none; } }
