@@ -61,9 +61,9 @@
   function openCovers() {
     const vh = window.innerHeight;
     covers.forEach(c => {
-      const top = c.getBoundingClientRect().top;
-      const p = reduced ? 1 : Math.max(0, Math.min(1, (vh - top) / (vh * 0.7)));
-      c.style.setProperty('--p', p.toFixed(3));
+      // phones show the covers fully open: set once, then leave them alone
+      const p = reduced ? '1.000' : Math.max(0, Math.min(1, (vh - c.getBoundingClientRect().top) / (vh * 0.7))).toFixed(3);
+      if (c.dataset.p !== p) { c.dataset.p = p; c.style.setProperty('--p', p); }
     });
   }
   let coverQueued = false;

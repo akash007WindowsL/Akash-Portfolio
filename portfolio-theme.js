@@ -87,6 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce), (max-width: 650px), (max-height: 520px)');
   let frame = 0;
   let handoffLocked = false;
+  let wasReduced = false;
 
   if (nextSection) nextSection.classList.add('logo-handoff-target');
 
@@ -116,11 +117,16 @@ document.addEventListener('DOMContentLoaded', function () {
   function update() {
     frame = 0;
     if (reduced.matches) {
-      chapter.classList.remove('logo-handoff-active');
-      if (nextSection) nextSection.classList.remove('logo-handoff-locked', 'logo-handoff-entering');
-      handoffLocked = false;
+      // phones: the rail is a still grid — clear the hand-off once, then idle
+      if (!wasReduced) {
+        chapter.classList.remove('logo-handoff-active');
+        if (nextSection) nextSection.classList.remove('logo-handoff-locked', 'logo-handoff-entering');
+        handoffLocked = false;
+        wasReduced = true;
+      }
       return;
     }
+    wasReduced = false;
     const stickyTop = parseFloat(window.getComputedStyle(pane).top) || 0;
     const travel = Math.max(1, stage.offsetHeight - pane.offsetHeight);
     const distance = stickyTop - stage.getBoundingClientRect().top;
@@ -258,16 +264,22 @@ function initCardStack(stack, cardSelector, off) {
   let frame = 0;
   let activeIndex = -1;
   let headingShift = 0;
+  let isList = false;
 
   function updateStack() {
     frame = 0;
     if (reduced.matches) {
-      cards.forEach(function (card) { card.classList.remove('is-active', 'is-past'); });
-      heading.style.removeProperty('--brochure-heading-shift');
-      headingShift = 0;
-      activeIndex = -1;
+      // plain list here — clear the stack state once, then do nothing per scroll
+      if (!isList) {
+        cards.forEach(function (card) { card.classList.remove('is-active', 'is-past'); });
+        heading.style.removeProperty('--brochure-heading-shift');
+        headingShift = 0;
+        activeIndex = -1;
+        isList = true;
+      }
       return;
     }
+    isList = false;
 
     let nextIndex = 0;
     cards.forEach(function (card, index) {
@@ -281,8 +293,11 @@ function initCardStack(stack, cardSelector, off) {
       return card.getBoundingClientRect().top;
     }));
     const unshiftedHeadingBottom = heading.getBoundingClientRect().bottom - headingShift;
-    headingShift = Math.min(0, firstCardTop - unshiftedHeadingBottom - 28);
-    heading.style.setProperty('--brochure-heading-shift', headingShift + 'px');
+    const nextShift = Math.round(Math.min(0, firstCardTop - unshiftedHeadingBottom - 28));
+    if (nextShift !== headingShift) {
+      headingShift = nextShift;
+      heading.style.setProperty('--brochure-heading-shift', headingShift + 'px');
+    }
 
     if (nextIndex === activeIndex) return;
     activeIndex = nextIndex;
@@ -308,71 +323,40 @@ document.addEventListener('DOMContentLoaded', function () {
     '(prefers-reduced-motion: reduce), (min-width: 651px), (max-height: 520px)');
 });
 
-/* Outdoor Media 3D street — scroll position becomes a camera dolly down the
-   road; the camera also sways toward whichever side the next board stands on. */
+/* Videos fetch nothing at page load (preload="none"). When one comes within
+   about a screen of view, ask for its first frame so the tile has a picture. */
 document.addEventListener('DOMContentLoaded', function () {
-  const stage = document.querySelector('[data-billboards]');
-  if (!stage) return;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  // phones and short screens show the plain gallery instead (see the CSS)
-  const flat = window.matchMedia('(max-width: 650px), (max-height: 520px)');
-  const sticky = stage.querySelector('.ob-sticky');
-  const world = stage.querySelector('.ob-world');
-  const boards = Array.from(stage.querySelectorAll('.ob-board'));
-  const count = stage.querySelector('.ob-count');
-  const title = stage.querySelector('.ob-title');
-  const sub = stage.querySelector('.ob-sub');
-  const last = boards.length - 1;
-  let frame = 0, shown = -1;
-
-  function px(name) {
-    const probe = document.createElement('div');
-    probe.style.position = 'absolute';
-    probe.style.width = 'var(' + name + ')';
-    stage.appendChild(probe);
-    const v = probe.getBoundingClientRect().width;
-    probe.remove();
-    return v;
+  const videos = Array.from(document.querySelectorAll('video[data-lazy-video]'));
+  if (!videos.length) return;
+  function wake(video) {
+    video.removeAttribute('data-lazy-video');
+    video.preload = 'metadata';
+    video.load();
   }
-  let gap = 900, sideX = 0;
-  function measure() { gap = px('--gap'); sideX = px('--board-x'); }
-
-  function update() {
-    frame = 0;
-    if (flat.matches) return;
-    const top = parseFloat(getComputedStyle(sticky).top) || 0;
-    const travel = Math.max(1, stage.offsetHeight - sticky.offsetHeight);
-    const p = Math.max(0, Math.min(1, (top - stage.getBoundingClientRect().top) / travel));
-    const t = p * last;
-    const focus = gap * 0.55;
-    const i0 = Math.floor(t), f = t - i0;
-    const side = n => (n % 2 === 0 ? -1 : 1);
-    const ease = f * f * (3 - 2 * f);
-    const swayTo = i0 >= last ? side(last) : side(i0) * (1 - ease) + side(i0 + 1) * ease;
-    world.style.setProperty('--cam-z', (t * gap - focus) + 'px');
-    world.style.setProperty('--cam-x', (-swayTo * sideX * 0.55) + 'px');
-
-    boards.forEach(function (b, i) {
-      const ahead = i * gap - (t * gap - focus);          // distance in front of the camera
-      const passed = ahead < 120 ? Math.max(0, Math.min(1, ahead / 120)) : 1;
-      const fog = Math.max(.15, Math.min(1, 1 - (ahead - focus) / (gap * 3)));
-      b.style.setProperty('--o', String(Math.min(passed, fog)));
-      b.style.setProperty('--lit', String(Math.abs(i - t) < .5 ? 1 : .7));
+  if (!('IntersectionObserver' in window)) { videos.forEach(wake); return; }
+  const io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      io.unobserve(entry.target);
+      wake(entry.target);
     });
+  }, { rootMargin: '800px 0px' });
+  videos.forEach(function (video) { io.observe(video); });
+});
 
-    const now = Math.min(last, Math.round(t));
-    if (now !== shown) {
-      shown = now;
-      const b = boards[now];
-      count.textContent = String(now + 1).padStart(2, '0') + ' / ' + String(boards.length).padStart(2, '0');
-      title.textContent = b.dataset.title;
-      sub.textContent = b.dataset.sub;
-    }
-  }
-  const queue = function () { if (!frame) frame = requestAnimationFrame(update); };
-  measure();
-  window.addEventListener('scroll', queue, { passive: true });
-  window.addEventListener('resize', function () { measure(); queue(); }, { passive: true });
-  flat.addEventListener('change', function () { measure(); queue(); });
-  update();
+/* The event slider's images wait until the slider is near the screen, then
+   load all at once — slides 2 and 3 sit off to the side, so on their own they
+   would only start loading as they slid in and appear blank for a moment. */
+document.addEventListener('DOMContentLoaded', function () {
+  const slider = document.getElementById('eventSlider');
+  if (!slider) return;
+  const imgs = Array.from(slider.querySelectorAll('img[loading="lazy"]'));
+  const wake = function () { imgs.forEach(function (img) { img.loading = 'eager'; }); };
+  if (!('IntersectionObserver' in window)) { wake(); return; }
+  const io = new IntersectionObserver(function (entries) {
+    if (!entries[0].isIntersecting) return;
+    io.disconnect();
+    wake();
+  }, { rootMargin: '1000px 0px' });
+  io.observe(slider);
 });

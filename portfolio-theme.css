@@ -449,8 +449,10 @@ body.edit-on .scroll-reveal {
    Same scene, title, brief and choices as the cover visitors land on. */
 .meadow-hero {
   position: relative;
+  /* svh, not dvh: dvh grows and shrinks as the phone's address bar hides and
+     returns mid-scroll, which shoved every section below it — the scroll jerk */
   height: 100vh;
-  height: 100dvh;
+  height: 100svh;
   min-height: 560px;
   overflow: hidden;
   background: #6d9d3b;
@@ -640,136 +642,6 @@ body .meadow-hero .meadow-welcome { color: #fff; }
   #packaging-label .pk-paper { padding: 14% 5% 5%; aspect-ratio: 4 / 3; }
 }
 
-/* Outdoor Media — a 3D street. The stage is tall; its sticky view holds a
-   perspective scene whose world slides toward the camera as you scroll.
-   --cam-z / --cam-x come from the script; --gap spaces boards down the road. */
-#outdoor-media .ob-stage {
-  --gap: 900px;
-  --board-w: min(60vw, 860px);
-  --board-x: 30vw;
-  --sticky-top: 160px;
-  position: relative;
-  height: calc(var(--n) * 80vh + 60vh);
-  margin-top: 8px;
-}
-#outdoor-media .ob-sticky {
-  position: sticky;
-  top: var(--sticky-top);
-  height: calc(100vh - var(--sticky-top) - 24px);
-  min-height: 420px;
-  overflow: hidden;
-  border-radius: 28px;
-  background:
-    radial-gradient(120% 70% at 50% 62%, rgba(255, 139, 124, .28), transparent 60%),
-    linear-gradient(180deg, #0b0c12 0%, #171826 52%, #2a1f2a 64%, #0d0d10 100%);
-  isolation: isolate;
-}
-#outdoor-media .ob-view {
-  position: absolute;
-  inset: 0;
-  perspective: 1200px;
-  perspective-origin: 50% 42%;
-}
-#outdoor-media .ob-world {
-  position: absolute;
-  inset: 0;
-  transform-style: preserve-3d;
-  transform: translate3d(var(--cam-x, 0px), 0, var(--cam-z, 0px));
-  will-change: transform;
-}
-#outdoor-media .ob-floor {
-  position: absolute;
-  left: 50%;
-  top: 74%;
-  width: 400vw;
-  height: calc((var(--n) + 4) * var(--gap));
-  margin-left: -200vw;
-  transform-origin: 50% 0;
-  transform: rotateX(-90deg);
-  background:
-    linear-gradient(rgba(255, 255, 255, .08) 1px, transparent 1px) 0 0 / 120px 120px,
-    linear-gradient(90deg, rgba(255, 255, 255, .08) 1px, transparent 1px) 0 0 / 120px 120px;
-  -webkit-mask-image: linear-gradient(0deg, transparent 0%, #000 10%, #000 70%, transparent 100%);
-  mask-image: linear-gradient(0deg, transparent 0%, #000 10%, #000 70%, transparent 100%);
-}
-#outdoor-media .ob-board {
-  position: absolute;
-  left: 50%;
-  top: 44%;
-  width: var(--board-w);
-  margin: 0;
-  transform:
-    translate(-50%, -50%)
-    translate3d(calc(var(--side) * var(--board-x)), 0, calc(var(--i) * var(--gap) * -1))
-    rotateY(calc(var(--side) * -14deg));
-  opacity: var(--o, 1);
-  filter: brightness(var(--lit, 1));
-  transition: filter 300ms ease;
-}
-#outdoor-media .ob-board img { display: block; width: 100%; height: auto; }
-/* flat artwork stand-ins get a panel frame and two legs; PNG mockups don't need it */
-#outdoor-media .ob-flat img {
-  border: 6px solid #1c1c20;
-  border-radius: 4px;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, .55);
-}
-#outdoor-media .ob-flat::after {
-  content: '';
-  position: absolute;
-  left: 22%;
-  right: 22%;
-  top: 100%;
-  height: 46%;
-  background: linear-gradient(90deg,
-    transparent 0 14%, #24242a 14% 18%, transparent 18% 82%, #24242a 82% 86%, transparent 86%);
-}
-
-/* not a billboard (e.g. wall branding): no frame or legs, faces the camera square */
-#outdoor-media .ob-plain {
-  transform:
-    translate(-50%, -50%)
-    translate3d(calc(var(--side) * var(--board-x)), 0, calc(var(--i) * var(--gap) * -1));
-}
-#outdoor-media .ob-plain img { border-radius: 6px; box-shadow: 0 30px 60px rgba(0, 0, 0, .5); }
-
-#outdoor-media .ob-hud {
-  position: absolute;
-  left: 0; right: 0; bottom: 0;
-  z-index: 2;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 16px;
-  padding: clamp(18px, 3vw, 32px);
-  color: #fff;
-  pointer-events: none;
-}
-#outdoor-media .ob-hud * { text-align: left; }
-#outdoor-media .ob-now { display: grid; gap: 4px; }
-#outdoor-media .ob-count { font-size: 12px; letter-spacing: .12em; opacity: .7; font-variant-numeric: tabular-nums; }
-#outdoor-media .ob-title { font-size: clamp(18px, 2vw, 26px); font-weight: 600; letter-spacing: -.03em; }
-#outdoor-media .ob-sub { font-size: 13px; opacity: .7; }
-#outdoor-media .ob-hint {
-  padding: 7px 14px;
-  border: 1.5px solid #1d1d1f;
-  border-radius: 999px;
-  background: #fff;
-  color: #1d1d1f;
-  font-size: 12px;
-  font-weight: 600;
-  box-shadow: 3px 3px 0 var(--accent-orange);
-}
-#outdoor-media .ob-fallback { display: none; }
-
-@media (max-width: 900px) {
-  #outdoor-media .ob-stage { --board-w: 78vw; --board-x: 12vw; --gap: 700px; --sticky-top: 140px; }
-  #outdoor-media .ob-sticky { border-radius: 20px; }
-  #outdoor-media .ob-hint { display: none; }
-}
-@media (prefers-reduced-motion: reduce), (max-width: 650px), (max-height: 520px) {
-  #outdoor-media .ob-stage { display: none; }
-  #outdoor-media .ob-fallback { display: block; }
-}
 
 /* Phone polish — shorter scrolls, two-up grids, no decorative motion. */
 @media (max-width: 650px) {
@@ -893,3 +765,55 @@ body .meadow-hero .meadow-welcome { color: #fff; }
     box-shadow: 0 28px 66px rgba(18, 18, 20, .19), 0 6px 18px rgba(18, 18, 20, .10);
   }
 }
+
+/* Print Media — a label on each card saying what the piece is, styled like
+   the Packaging tags so it reads clearly over any artwork. */
+#print-media .brochure-tag {
+  position: absolute;
+  top: clamp(12px, 1.6vw, 20px);
+  left: clamp(12px, 1.6vw, 20px);
+  z-index: 2;
+  padding: 7px 15px;
+  border: 1.5px solid #1d1d1f;
+  border-radius: 999px;
+  background: #fff;
+  color: #1d1d1f;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
+  box-shadow: 3px 3px 0 var(--accent-orange);
+  pointer-events: none;
+  transition: opacity 260ms ease;
+}
+/* only the card in front keeps its label in the stack */
+#print-media .brochure-card.is-past .brochure-tag { opacity: 0; }
+@media (max-width: 650px) {
+  #print-media .brochure-tag { padding: 5px 11px; font-size: 12px; }
+}
+
+/* Smooth scrolling on phones and tablets. Background blur on anything that
+   moves past during a scroll makes the phone re-blur that area every frame,
+   which is what stutters. Every one of these already has a solid or
+   near-solid fill, so they look the same without it. */
+@media (max-width: 900px) {
+  body :is(nav, nav.scrolled), body.meadow-open nav, body.meadow-open nav.scrolled {
+    backdrop-filter: none; -webkit-backdrop-filter: none;
+  }
+  .meadow-hero .entry-choice {
+    backdrop-filter: none; -webkit-backdrop-filter: none;
+    background: rgba(10, 31, 26, .55);
+  }
+  .cap-card, .sl-btn,
+  .frame.is-play .frame-box::before,
+  .frame.is-play .frame-runtime {
+    backdrop-filter: none; -webkit-backdrop-filter: none;
+  }
+  .frame.is-play .frame-box::before, .sl-btn { background: rgba(10, 9, 8, .5); }
+  #showcase .fp-index-track {
+    backdrop-filter: none; -webkit-backdrop-filter: none;
+    background: color-mix(in srgb, var(--bg) 94%, transparent);
+  }
+}
+/* the wind moves the flowers from script every frame — give each its own
+   layer so that is a cheap move, not a repaint of the whole meadow */
+.meadow .flower { will-change: transform; }
