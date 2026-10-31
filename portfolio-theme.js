@@ -245,15 +245,16 @@ document.addEventListener('DOMContentLoaded', function () {
   updateRail();
 });
 
-/* Mark the brochure spread currently at the front of the sticky stack. */
-document.addEventListener('DOMContentLoaded', function () {
-  const stack = document.querySelector('#print-media .brochure-stack');
+/* Sticky card stacks: mark the card at the front and keep the heading above
+   the stack. Print uses it on web; Social Media Creatives uses the same motion
+   on phones. `off` is the media query that turns the stack into a plain list. */
+function initCardStack(stack, cardSelector, off) {
   if (!stack) return;
 
-  const chapter = stack.closest('#print-media');
+  const chapter = stack.closest('.chapter');
   const heading = chapter.querySelector('.chapter-head');
-  const cards = Array.from(stack.querySelectorAll('.brochure-card'));
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce), (max-width: 650px), (max-height: 520px)');
+  const cards = Array.from(stack.querySelectorAll(cardSelector));
+  const reduced = window.matchMedia(off);
   let frame = 0;
   let activeIndex = -1;
   let headingShift = 0;
@@ -299,6 +300,12 @@ document.addEventListener('DOMContentLoaded', function () {
   window.addEventListener('resize', queueStackUpdate, { passive: true });
   reduced.addEventListener('change', updateStack);
   updateStack();
+}
+document.addEventListener('DOMContentLoaded', function () {
+  initCardStack(document.querySelector('#print-media .brochure-stack'), '.brochure-card',
+    '(prefers-reduced-motion: reduce), (max-width: 650px), (max-height: 520px)');
+  initCardStack(document.querySelector('#social-campaigns .gal-3'), ':scope > .frame',
+    '(prefers-reduced-motion: reduce), (min-width: 651px), (max-height: 520px)');
 });
 
 /* Outdoor Media 3D street — scroll position becomes a camera dolly down the
