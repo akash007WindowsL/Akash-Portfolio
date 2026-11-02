@@ -513,8 +513,10 @@
 /* brand system → campaign */
 #showcase .fp-system {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--fp-gap);
+  max-width: 620px;
+  margin: 0 auto;
 }
 #showcase .fp-system .fp-tile { aspect-ratio: 1; padding: 22px; display: flex; flex-direction: column; justify-content: space-between; }
 #showcase .fp-system .fp-tile h5 { font-size: 13px; font-weight: 500; color: var(--text-dim); }
@@ -524,15 +526,24 @@
 #showcase .fp-gridmark { flex: 1; margin-top: 14px; border-radius: 12px; background:
   linear-gradient(var(--border) 1px, transparent 1px) 0 0 / 100% 33.333%,
   linear-gradient(90deg, var(--border) 1px, transparent 1px) 0 0 / 33.333% 100%; border: 1px solid var(--border); }
-#showcase .fp-feed {
+/* one creative per row: two 3:4 feed posts and a 9:16 story, all the same height
+   (a 9:16 frame as tall as a 3:4 one is 3/4 as wide, hence 4fr 4fr 3fr) */
+#showcase .fp-mocks {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
-  max-width: 760px;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 4fr) minmax(0, 3fr);
+  gap: 10px;
+  max-width: 860px;
   margin: 0 auto;
 }
-#showcase .fp-feed .fp-tile { aspect-ratio: 4 / 5; border-radius: 14px; }
-#showcase .fp-feed .fp-ph span { font-size: 11px; padding: 6px 10px; }
+#showcase .fp-mocks + .fp-mocks { margin-top: 36px; }
+#showcase .fp-mocks-label { grid-column: 1 / -1; margin-bottom: 4px; font-size: 13px; font-weight: 500; color: var(--text-dim); }
+#showcase .fp-mock-feed { aspect-ratio: 3 / 4; border-radius: 14px; }
+#showcase .fp-mock-story { aspect-ratio: 9 / 16; border-radius: 14px; }
+#showcase .fp-mocks .fp-ph span { font-size: 11px; padding: 6px 10px; white-space: normal; max-width: 90%; }
+@media (max-width: 620px) {
+  #showcase .fp-mocks { gap: 6px; }
+  #showcase .fp-mocks .fp-ph span { font-size: 10px; padding: 5px 7px; }
+}
 
 /* raw → final for video */
 #showcase .fp-rawfinal {

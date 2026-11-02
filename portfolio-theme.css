@@ -567,20 +567,16 @@ body .meadow-hero .meadow-welcome { color: #fff; }
   display: grid;
   place-items: center;
   aspect-ratio: 16 / 10;
-  padding: 11% 6% 6%;
+  overflow: hidden;
   border-radius: 22px;
-  background:
-    linear-gradient(rgba(29, 29, 31, .06) 1px, transparent 1px) 0 0 / 24px 24px,
-    linear-gradient(90deg, rgba(29, 29, 31, .06) 1px, transparent 1px) 0 0 / 24px 24px,
-    #f4f3ee;
+  background: #f4f3ee;
   box-shadow: inset 0 0 0 1px rgba(29, 29, 31, .08);
 }
+/* a plain frame: the JPEG fills it edge to edge (export at 16:10, 4:3 on phones) */
 #packaging-label .pk-paper img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  border-radius: 4px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, .10);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 #packaging-label .pk-slot {
   padding: 10px 16px;
@@ -640,7 +636,7 @@ body .meadow-hero .meadow-welcome { color: #fff; }
 }
 @media (max-width: 560px) {
   #packaging-label .pk-meta { font-size: 12px; }
-  #packaging-label .pk-paper { padding: 14% 5% 5%; aspect-ratio: 4 / 3; }
+  #packaging-label .pk-paper { aspect-ratio: 4 / 3; }
 }
 
 
