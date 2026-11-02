@@ -454,6 +454,7 @@ body.edit-on .scroll-reveal {
   height: 100vh;
   height: 100svh;
   min-height: 560px;
+  padding: 0;            /* same layout box as the entrance, so the text sits at the same height */
   overflow: hidden;
   background: #6d9d3b;
   color: #fff;
