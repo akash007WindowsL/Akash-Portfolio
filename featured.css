@@ -128,7 +128,9 @@
   background: #111;
   clip-path: inset(var(--iy) var(--ix) round calc((1 - var(--p)) * 32px));
 }
-#showcase .fp-cover-media > img {
+#showcase .fp-cover-media > picture { display: contents; }
+#showcase .fp-cover-media > img,
+#showcase .fp-cover-media > picture > img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -255,6 +257,7 @@
   opacity: .9;
   filter: brightness(.8);
 }
+#showcase .fp-phone-art { display: none; }
 #showcase .fp-cover--dark .fp-cover-media::after { background: linear-gradient(180deg, transparent 60%, rgba(0, 0, 0, .5)); }
 
 /* media tiles */
@@ -616,8 +619,26 @@ body.edit-on #showcase .fp-rise { opacity: 1; transform: none; }
   #showcase .fp-sticker { width: 104px; top: calc(var(--iy) + 92px); padding: 8px 8px 10px; border-radius: 16px; }
   #showcase .fp-sticker figcaption { font-size: 10px; }
   #showcase .fp-sticker--note b { font-size: 28px; }
-  #showcase .fp-stage--green { place-items: center; padding: 0 0 28%; }
-  #showcase .fp-float { width: 90%; }
+  /* phones show the ready-made PNG over the green; the two floating spreads are hidden */
+  #showcase .fp-stage--green { padding: 0; }
+  #showcase .fp-stage--green .fp-float { display: none; }
+  #showcase .fp-phone-art {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: translateY(calc((1 - var(--p)) * 30px));
+  }
+  /* dark fade at the bottom so the title stays readable over the collage */
+  #showcase .fp-stage--green::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(180deg, transparent 38%, rgba(10, 20, 14, .55) 58%, rgba(10, 20, 14, .92) 82%);
+  }
   #showcase .fp-phone { height: 64%; border-width: 6px; border-radius: 26px; }
   #showcase.fp { --fp-w: calc(100% - 32px); --fp-radius: 20px; }
   #showcase .fp-index { top: 72px; }
@@ -627,8 +648,8 @@ body.edit-on #showcase .fp-rise { opacity: 1; transform: none; }
   #showcase .fp-mosaic .fp-tile { aspect-ratio: 16 / 10; }
   #showcase .fp-mosaic .fp-tile:first-child { grid-row: auto; }
   #showcase .fp-pair { grid-template-columns: 1fr; }
-  #showcase .fp-spread { flex-basis: 100%; aspect-ratio: 4 / 3; }
-  #showcase .fp-spread img { object-position: 30% 50%; }
+  /* whole spread, nothing cropped (the files are 8:3) */
+  #showcase .fp-spread { flex-basis: 100%; }
   #showcase .fp-book-tabs button span { display: none; }
   #showcase .fp-result strong { font-size: 28px; }
   #showcase .fp-result { padding-right: 10px; }

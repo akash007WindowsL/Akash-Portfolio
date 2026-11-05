@@ -1807,7 +1807,7 @@ html:not(.featured-seen) .entry-choice.is-featured { animation: featuredGlow 2.4
   .entry-choice:hover { transform: none; }
 }
 </style>
-<link rel="stylesheet" href="portfolio-theme.css?v=pk1"><link rel="stylesheet" href="featured.css?v=13"><script src="featured.js?v=10" defer></script><script src="portfolio-theme.js?v=perf2"></script></head>
+<link rel="stylesheet" href="portfolio-theme.css?v=pk1"><link rel="stylesheet" href="featured.css?v=16"><script src="featured.js?v=10" defer></script><script src="portfolio-theme.js?v=perf2"></script></head>
 <body class="meadow-open">
 
 <nav>
@@ -1981,15 +1981,12 @@ html:not(.featured-seen) .entry-choice.is-featured { animation: featuredGlow 2.4
   <!-- 01 — BRAND IDENTITY -->
   <article class="fp-case" id="fp-identity">
     <div class="fp-cover" data-cover>
-      <div class="fp-cover-media"><img decoding="async" loading="lazy" src="images/featured/potdar-signage.jpg" alt="Potdar Glazetech logo on building signage"></div>
+      <!-- phones (620px and narrower) load the portrait potdar-cover-phone.jpg; everything wider loads the 16:9 image -->
+      <div class="fp-cover-media"><picture><source media="(max-width: 620px)" srcset="images/uploads/potdar-cover-phone.jpg"><img decoding="async" loading="lazy" src="images/uploads/artboard-1.jpg" alt="Potdar Glazetech logo on building signage"></picture></div>
       <div class="fp-cover-text">
         <p class="fp-cover-label">01 · Brand Identity</p>
         <h3 class="fp-cover-title">Potdar Glazetech</h3>
       </div>
-      <figure class="fp-sticker" style="--r:-6deg">
-        <img decoding="async" loading="lazy" src="images/featured/potdar-mark-sticker.jpg" alt="Potdar Glazetech mark">
-        <figcaption>One mark, three Vastu rules</figcaption>
-      </figure>
     </div>
 
     <div class="fp-block">
@@ -2023,7 +2020,7 @@ html:not(.featured-seen) .entry-choice.is-featured { animation: featuredGlow 2.4
           <p class="fp-cap"><b>Built on a grid.</b> Every angle snaps to the hexagon, so the mark stays crisp from a visiting card to a three-metre sign.</p>
         </div>
         <div class="fp-rise" style="--d:2">
-          <figure class="fp-tile fp-ph"><span>Process image</span></figure>
+          <figure class="fp-tile"><img src="images/uploads/untitled-1-17.jpg" alt="Process image" loading="lazy"></figure>
           <p class="fp-cap"><b>[Step title.]</b> [One line on this step.]</p>
         </div>
         <div class="fp-wide fp-rise">
@@ -2037,8 +2034,8 @@ html:not(.featured-seen) .entry-choice.is-featured { animation: featuredGlow 2.4
       <div class="fp-block-head fp-rise"><span class="fp-step-no">03</span><h4>The outcome</h4></div>
       <div class="fp-mosaic fp-rise">
         <figure class="fp-tile"><img src="images/featured/potdar-lockup.jpg" alt="Potdar Glazetech primary lockup" loading="lazy"></figure>
-        <figure class="fp-tile"><img src="images/featured/potdar-stationery.jpg" alt="Letterhead and visiting cards" loading="lazy"></figure>
-        <figure class="fp-tile"><img src="images/featured/potdar-brochure.jpg" alt="Company brochure spread" loading="lazy"></figure>
+        <figure class="fp-tile"><img src="images/uploads/880640.jpg" alt="Letterhead and visiting cards" loading="lazy"></figure>
+        <figure class="fp-tile"><img src="images/uploads/potdarbag.jpg" alt="Company brochure spread" loading="lazy"></figure>
       </div>
     </div>
   </article>
@@ -2046,15 +2043,11 @@ html:not(.featured-seen) .entry-choice.is-featured { animation: featuredGlow 2.4
   <!-- 02 — PRINT -->
   <article class="fp-case" id="fp-print">
     <div class="fp-cover" data-cover>
-      <div class="fp-cover-media"><div class="fp-stage fp-stage--green"><img decoding="async" loading="lazy" class="fp-float fp-float--back" src="images/featured/greendeck-aura.jpg" alt=""><img decoding="async" loading="lazy" class="fp-float" src="images/featured/greendeck-nova.jpg" alt="Nova collection spread from the deco by Greendeck catalogue"></div></div>
+      <div class="fp-cover-media"><div class="fp-stage fp-stage--green"><img decoding="async" loading="lazy" class="fp-float fp-float--back" src="images/featured/greendeck-aura.jpg" alt=""><img decoding="async" loading="lazy" class="fp-float" src="images/featured/greendeck-nova.jpg" alt="Nova collection spread from the deco by Greendeck catalogue"><!-- phones (620px and narrower) show this PNG instead of the two spreads; the green stays behind it --><img decoding="async" loading="lazy" class="fp-phone-art" src="images/uploads/print-cover-phone.png" alt="Spreads from the deco by Greendeck catalogue"></div></div>
       <div class="fp-cover-text">
         <p class="fp-cover-label">02 · Print Media</p>
         <h3 class="fp-cover-title">deco by Greendeck</h3>
       </div>
-      <figure class="fp-sticker" style="--r:5deg">
-        <img decoding="async" loading="lazy" src="images/featured/greendeck-sticker.jpg" alt="Nova planter product shot">
-        <figcaption>Cut-out in, living room out</figcaption>
-      </figure>
     </div>
     <p class="fp-case-line fp-rise">A planter catalogue that sells the setting, not just the pot: every collection shown in a real room, then broken down into sizes, codes and where it belongs.</p>
 
@@ -2109,10 +2102,6 @@ html:not(.featured-seen) .entry-choice.is-featured { animation: featuredGlow 2.4
         <p class="fp-cover-label">03 · Social Campaign</p>
         <h3 class="fp-cover-title">[Campaign name]</h3>
       </div>
-      <figure class="fp-sticker fp-sticker--note" style="--r:-4deg">
-        <b>[N] posts</b>
-        <figcaption>One brand system</figcaption>
-      </figure>
     </div>
     <p class="fp-case-line fp-rise">A month of posts that look like one brand, because they start from the brand’s own rules.</p>
 
