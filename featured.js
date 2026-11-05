@@ -78,28 +78,39 @@
   // catalogue reader — tabs, arrows and progress follow the spread in view
   root.querySelectorAll('[data-book]').forEach(book => {
     const track = book.querySelector('.fp-book-track');
-    const spreads = [...track.children];
+    // the track holds 2-page spreads (wide screens) and single pages (phones);
+    // CSS hides one set, so the slides are whichever children are showing
+    const all = [...track.children];
     const tabs = [...book.querySelectorAll('[data-go]')];
     const prev = book.querySelector('[data-step="-1"]');
     const next = book.querySelector('[data-step="1"]');
     const bar = book.querySelector('.fp-book-progress i');
+    let spreads = all;
     let index = 0;
 
-    bar.style.width = (100 / spreads.length) + '%';
     const go = i => {
       i = Math.max(0, Math.min(spreads.length - 1, i));
       track.scrollTo({ left: spreads[i].offsetLeft - track.offsetLeft, behavior: reduced ? 'auto' : 'smooth' });
     };
     const mark = i => {
+      i = Math.max(0, Math.min(spreads.length - 1, i));
       index = i;
-      spreads.forEach((s, n) => s.classList.toggle('is-current', n === i));
-      tabs.forEach((t, n) => { t.classList.toggle('is-active', n === i); t.setAttribute('aria-selected', n === i); });
+      const c = spreads[i] ? spreads[i].dataset.c : '0';
+      all.forEach(s => s.classList.toggle('is-current', s === spreads[i]));
+      tabs.forEach((t, n) => { const on = String(n) === c; t.classList.toggle('is-active', on); t.setAttribute('aria-selected', on); });
       prev.disabled = i === 0;
       next.disabled = i === spreads.length - 1;
       bar.style.transform = 'translateX(' + (i * 100) + '%)';
     };
+    const refresh = () => {
+      spreads = all.filter(s => getComputedStyle(s).display !== 'none');
+      bar.style.width = (100 / spreads.length) + '%';
+      track.scrollLeft = 0;
+      mark(0);
+    };
+    window.matchMedia('(max-width: 620px)').addEventListener('change', refresh);
 
-    tabs.forEach((t, n) => t.addEventListener('click', () => go(n)));
+    tabs.forEach((t, n) => t.addEventListener('click', () => go(spreads.findIndex(s => s.dataset.c === String(n)))));
     prev.addEventListener('click', () => go(index - 1));
     next.addEventListener('click', () => go(index + 1));
     track.addEventListener('keydown', e => {
@@ -111,6 +122,6 @@
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => mark(Math.round(track.scrollLeft / (spreads[1] ? spreads[1].offsetLeft - spreads[0].offsetLeft : 1))));
     }, { passive: true });
-    mark(0);
+    refresh();
   });
 })();

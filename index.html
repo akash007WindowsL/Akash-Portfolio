@@ -1807,7 +1807,7 @@ html:not(.featured-seen) .entry-choice.is-featured { animation: featuredGlow 2.4
   .entry-choice:hover { transform: none; }
 }
 </style>
-<link rel="stylesheet" href="portfolio-theme.css?v=pk1"><link rel="stylesheet" href="featured.css?v=16"><script src="featured.js?v=10" defer></script><script src="portfolio-theme.js?v=perf2"></script></head>
+<link rel="stylesheet" href="portfolio-theme.css?v=pk1"><link rel="stylesheet" href="featured.css?v=17"><script src="featured.js?v=11" defer></script><script src="portfolio-theme.js?v=perf2"></script></head>
 <body class="meadow-open">
 
 <nav>
@@ -2054,19 +2054,28 @@ html:not(.featured-seen) .entry-choice.is-featured { animation: featuredGlow 2.4
     <div class="fp-block">
       <div class="fp-block-head fp-rise"><span class="fp-step-no">01</span><h4>Read the catalogue</h4></div>
       <div class="fp-book fp-rise" data-book>
+        <!-- phones (620px and narrower) show the single pages (fp-page) instead of the 2-page spreads -->
         <div class="fp-book-track" tabindex="0" aria-label="Catalogue spreads, scroll sideways">
-          <figure class="fp-spread" id="fp-spread-aura" aria-label="Aura collection, pages 01–02">
+          <figure class="fp-spread" data-c="0" id="fp-spread-aura" aria-label="Aura collection, pages 01–02">
             <img src="images/featured/greendeck-aura.jpg" alt="Aura collection catalogue spread" loading="lazy">
           </figure>
-          <figure class="fp-spread" id="fp-spread-orchid" aria-label="Orchid collection, pages 03–04">
+          <figure class="fp-page fp-page--left" data-c="0" aria-label="Aura collection, page 01"><img src="images/featured/greendeck-aura.jpg" alt="Aura collection, page 01" loading="lazy"></figure>
+          <figure class="fp-page fp-page--right" data-c="0" aria-label="Aura collection, page 02"><img src="images/featured/greendeck-aura.jpg" alt="Aura collection, page 02" loading="lazy"></figure>
+          <figure class="fp-spread" data-c="1" id="fp-spread-orchid" aria-label="Orchid collection, pages 03–04">
             <img src="images/featured/greendeck-orchid.jpg" alt="Orchid collection catalogue spread" loading="lazy">
           </figure>
-          <figure class="fp-spread" id="fp-spread-lotus" aria-label="Lotus collection, pages 05–06">
+          <figure class="fp-page fp-page--left" data-c="1" aria-label="Orchid collection, page 03"><img src="images/featured/greendeck-orchid.jpg" alt="Orchid collection, page 03" loading="lazy"></figure>
+          <figure class="fp-page fp-page--right" data-c="1" aria-label="Orchid collection, page 04"><img src="images/featured/greendeck-orchid.jpg" alt="Orchid collection, page 04" loading="lazy"></figure>
+          <figure class="fp-spread" data-c="2" id="fp-spread-lotus" aria-label="Lotus collection, pages 05–06">
             <img src="images/featured/greendeck-lotus.jpg" alt="Lotus collection catalogue spread" loading="lazy">
           </figure>
-          <figure class="fp-spread" id="fp-spread-nova" aria-label="Nova collection, pages 09–10">
+          <figure class="fp-page fp-page--left" data-c="2" aria-label="Lotus collection, page 05"><img src="images/featured/greendeck-lotus.jpg" alt="Lotus collection, page 05" loading="lazy"></figure>
+          <figure class="fp-page fp-page--right" data-c="2" aria-label="Lotus collection, page 06"><img src="images/featured/greendeck-lotus.jpg" alt="Lotus collection, page 06" loading="lazy"></figure>
+          <figure class="fp-spread" data-c="3" id="fp-spread-nova" aria-label="Nova collection, pages 09–10">
             <img src="images/featured/greendeck-nova.jpg" alt="Nova collection catalogue spread" loading="lazy">
           </figure>
+          <figure class="fp-page fp-page--left" data-c="3" aria-label="Nova collection, page 09"><img src="images/featured/greendeck-nova.jpg" alt="Nova collection, page 09" loading="lazy"></figure>
+          <figure class="fp-page fp-page--right" data-c="3" aria-label="Nova collection, page 10"><img src="images/featured/greendeck-nova.jpg" alt="Nova collection, page 10" loading="lazy"></figure>
         </div>
         <div class="fp-book-bar">
           <div class="fp-book-tabs" role="tablist" aria-label="Collections">
@@ -2088,8 +2097,8 @@ html:not(.featured-seen) .entry-choice.is-featured { animation: featuredGlow 2.4
     <div class="fp-block">
       <div class="fp-block-head fp-rise"><span class="fp-step-no">02</span><h4>In print</h4></div>
       <div class="fp-pair">
-        <figure class="fp-tile fp-ph fp-rise"><span>Catalogue mockup 1</span></figure>
-        <figure class="fp-tile fp-ph fp-rise" style="--d:1"><span>Catalogue mockup 2</span></figure>
+        <figure class="fp-tile fp-rise"><img src="images/uploads/1-2.jpg" alt="Catalogue mockup 1" loading="lazy"></figure>
+        <figure class="fp-tile fp-rise" style="--d:1"><img src="images/uploads/2-2.jpg" alt="Catalogue mockup 2" loading="lazy"></figure>
       </div>
     </div>
   </article>
