@@ -258,6 +258,37 @@
   filter: brightness(.8);
 }
 #showcase .fp-phone-art { display: none; }
+/* social cover: transparent phone-mockup PNG on a deep brand red; phones sit right, the title keeps the left */
+#showcase .fp-stage--campaign {
+  background:
+    radial-gradient(ellipse 55% 75% at 74% 52%, #5e1515, transparent 72%),
+    radial-gradient(ellipse 60% 60% at 10% 100%, #2b0e0e, transparent 70%),
+    #150a0a;
+}
+#showcase .fp-campaign-art {
+  position: absolute;
+  top: 6%;
+  right: 2%;
+  width: 98%;
+  height: 94%;
+  object-fit: contain;
+  object-position: right bottom;
+  transform: translateY(calc((1 - var(--p)) * 40px));
+}
+/* phones and portrait tablets: the image is enlarged so its three phones fill the space
+   above the title (they sit at 42–97.5% of the image width, so it is centred on 69.75%) */
+@media (max-width: 620px), (orientation: portrait) and (max-width: 1100px) {
+  #showcase .fp-campaign-art {
+    top: auto;
+    right: auto;
+    left: 50%;
+    bottom: 200px;
+    width: auto;
+    height: min(calc(100% - 240px), 620px, calc(100vw - 30px));
+    max-width: none;
+    translate: -69.75% 0;
+  }
+}
 #showcase .fp-cover--dark .fp-cover-media::after { background: linear-gradient(180deg, transparent 60%, rgba(0, 0, 0, .5)); }
 
 /* media tiles */
@@ -532,6 +563,17 @@
 #showcase .fp-system .fp-tile h5 { font-size: 13px; font-weight: 500; color: var(--text-dim); }
 #showcase .fp-swatches { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
 #showcase .fp-swatches i { aspect-ratio: 1.6; border-radius: 12px; background: var(--c); border: 1px solid var(--hairline); }
+/* social brief: one small card per brand, with a row of colour chips */
+#showcase .fp-briefs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; max-width: 760px; margin: 0 auto; }
+#showcase .fp-brief { display: block; padding: 22px 24px; text-align: left; }
+#showcase .fp-brief h5 { font-size: 15px; font-weight: 600; color: var(--text); text-align: left; }
+#showcase .fp-brief p { margin-top: 8px; font-size: 14px; line-height: 1.5; color: var(--text-dim); text-align: left; }
+#showcase .fp-chips { display: flex; gap: 6px; margin-top: 16px; }
+#showcase .fp-chips i { width: 26px; height: 26px; border-radius: 7px; background: var(--c); border: 1px solid var(--hairline); }
+@media (max-width: 620px) {
+  #showcase .fp-briefs { grid-template-columns: 1fr; gap: 10px; }
+  #showcase .fp-brief { padding: 18px 20px; }
+}
 #showcase .fp-type { font-size: clamp(64px, 7vw, 104px); font-weight: 600; letter-spacing: -.05em; line-height: .9; }
 #showcase .fp-gridmark { flex: 1; margin-top: 14px; border-radius: 12px; background:
   linear-gradient(var(--border) 1px, transparent 1px) 0 0 / 100% 33.333%,
