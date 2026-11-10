@@ -275,9 +275,10 @@
   object-position: right bottom;
   transform: translateY(calc((1 - var(--p)) * 40px));
 }
-/* phones and portrait tablets: the image is enlarged so its three phones fill the space
+#showcase .fp-stage--campaign picture { display: contents; }
+/* portrait tablets: the wide image is enlarged so its three phones fill the space
    above the title (they sit at 42–97.5% of the image width, so it is centred on 69.75%) */
-@media (max-width: 620px), (orientation: portrait) and (max-width: 1100px) {
+@media (min-width: 621px) and (orientation: portrait) and (max-width: 1100px) {
   #showcase .fp-campaign-art {
     top: auto;
     right: auto;
@@ -287,6 +288,24 @@
     height: min(calc(100% - 240px), 620px, calc(100vw - 30px));
     max-width: none;
     translate: -69.75% 0;
+  }
+}
+/* phones: the portrait image fills the cover, with a red-black fade so the title stays readable */
+@media (max-width: 620px) {
+  #showcase .fp-campaign-art {
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+  #showcase .fp-stage--campaign::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(180deg, transparent 40%, rgba(21, 10, 10, .6) 60%, rgba(21, 10, 10, .94) 84%);
   }
 }
 #showcase .fp-cover--dark .fp-cover-media::after { background: linear-gradient(180deg, transparent 60%, rgba(0, 0, 0, .5)); }
