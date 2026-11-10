@@ -645,6 +645,23 @@
   height: 100%;
   object-fit: cover;
 }
+/* muted looping player over the thumbnail; clicks pass through to the tile.
+   Zoomed in so the buttons YouTube draws along the edges of a Short
+   (channel name, Like/Share, logo) fall outside the tile */
+#showcase [data-youtube] > .yt-loop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  transform: scale(var(--yt-zoom, 1.45));
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 600ms ease;
+}
+#showcase [data-youtube] > .yt-loop.is-on { opacity: 1; }
+#showcase [data-youtube]:has(.yt-loop.is-on) .fp-play { opacity: 0; }
+#showcase [data-youtube]:hover .fp-play { opacity: 1; }
 #showcase [data-youtube]:focus-visible { outline: 2px solid var(--accent-orange); outline-offset: 4px; }
 #showcase .fp-play {
   --s: 64px;

@@ -1818,7 +1818,7 @@ html:not(.featured-seen) .entry-choice.is-featured { animation: featuredGlow 2.4
   .entry-choice:hover { transform: none; }
 }
 </style>
-<link rel="stylesheet" href="portfolio-theme.css?v=pk3"><link rel="stylesheet" href="featured.css?v=28"><script src="featured.js?v=11" defer></script><script src="portfolio-theme.js?v=perf2"></script></head>
+<link rel="stylesheet" href="portfolio-theme.css?v=pk3"><link rel="stylesheet" href="featured.css?v=30"><script src="featured.js?v=11" defer></script><script src="portfolio-theme.js?v=perf2"></script></head>
 <body class="meadow-open">
 
 <nav>
@@ -2060,6 +2060,10 @@ html:not(.featured-seen) .entry-choice.is-featured { animation: featuredGlow 2.4
         <p class="fp-cover-label">02 · Print Media</p>
         <h3 class="fp-cover-title">Planter Catalogue</h3>
       </div>
+      <figure class="fp-sticker fp-sticker--note" style="--r:-5deg">
+        <b>48h</b>
+        <figcaption>Delivered in under 48 hours</figcaption>
+      </figure>
     </div>
     <p class="fp-case-line fp-rise">A planter catalogue that sells the setting, not just the pot: every collection shown in a real room, then broken down into sizes, codes and where it belongs.</p>
 
@@ -2158,42 +2162,43 @@ html:not(.featured-seen) .entry-choice.is-featured { animation: featuredGlow 2.4
         <div class="fp-mock"><figure class="fp-tile fp-mock-story"><img src="images/uploads/artboard-1-2.jpg" alt="Instagram story · 9:16" loading="lazy"></figure><p class="fp-mock-cap">Instagram story · 9:16</p></div>
       </div>
     </div>
+
+    <div class="fp-block">
+      <div class="fp-block-head fp-rise"><span class="fp-step-no">03</span><h4>The results</h4></div>
+      <p class="fp-cap fp-rise"><b>Four Fountains spa ads.</b> Six creatives run on Meta in November.</p>
+      <div class="fp-results fp-rise">
+        <div class="fp-result"><strong>13.9K</strong><span>People reached</span></div>
+        <div class="fp-result"><strong>98</strong><span>Customer conversations started</span></div>
+        <div class="fp-result"><strong>₹29</strong><span>Cost per conversation</span></div>
+      </div>
+    </div>
   </article>
 
   <!-- 04 — VIDEO -->
   <article class="fp-case" id="fp-video">
     <div class="fp-cover fp-cover--dark" data-cover>
-      <div class="fp-cover-media"><div class="fp-stage"><div class="fp-phone fp-ph"><span>Final reel</span></div></div></div>
+      <div class="fp-cover-media"><div class="fp-stage"><div class="fp-phone" data-youtube="https://youtube.com/shorts/KstQ77dxhts" data-portrait aria-label="Play the final reel"><i class="fp-play" aria-hidden="true"></i></div></div></div>
       <div class="fp-cover-text">
         <p class="fp-cover-label">04 · Video Editing</p>
-        <h3 class="fp-cover-title">[Reel name]</h3>
+        <h3 class="fp-cover-title">Gym Edit</h3>
       </div>
       <figure class="fp-sticker fp-sticker--note" style="--r:6deg">
-        <b>00K</b>
-        <figcaption>Views on the final cut</figcaption>
+        <b>3K+</b>
+        <figcaption>Views, from an account with under 1K followers</figcaption>
       </figure>
     </div>
-    <p class="fp-case-line fp-rise">Hours of raw footage in, a reel built to stop the scroll out, and the numbers to prove it.</p>
+    <p class="fp-case-line fp-rise">Raw gym footage in, a reel built to stop the scroll out: 3K+ views from an account with under 1K followers.</p>
 
     <div class="fp-block">
       <div class="fp-block-head fp-rise"><span class="fp-step-no">01</span><h4>Raw to final</h4></div>
       <div class="fp-rawfinal">
         <div class="fp-raw fp-rise">
-          <figure class="fp-tile fp-ph"><span>Raw clip 1</span></figure>
-          <figure class="fp-tile fp-ph"><span>Raw clip 2</span></figure>
-          <figure class="fp-tile fp-ph"><span>Raw clip 3</span></figure>
+          <figure class="fp-tile" data-youtube="https://youtube.com/shorts/RexgdApIQH0" data-portrait aria-label="Play raw clip 1"><i class="fp-play" aria-hidden="true"></i></figure>
+          <figure class="fp-tile" data-youtube="https://youtube.com/shorts/NRNura6C1ko" data-portrait aria-label="Play raw clip 2"><i class="fp-play" aria-hidden="true"></i></figure>
+          <figure class="fp-tile" data-youtube="https://youtube.com/shorts/p1WAXF2xtKI" data-portrait aria-label="Play raw clip 3"><i class="fp-play" aria-hidden="true"></i></figure>
         </div>
         <svg class="fp-arrow fp-rise" style="--d:1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg>
-        <figure class="fp-tile fp-final fp-ph fp-rise" style="--d:2"><span>Final reel</span></figure>
-      </div>
-    </div>
-
-    <div class="fp-block">
-      <div class="fp-block-head fp-rise"><span class="fp-step-no">02</span><h4>The reach</h4></div>
-      <div class="fp-results fp-rise">
-        <div class="fp-result"><strong>00K</strong><span>Views</span></div>
-        <div class="fp-result"><strong>00K</strong><span>Accounts reached</span></div>
-        <div class="fp-result"><strong>000</strong><span>Shares &amp; saves</span></div>
+        <figure class="fp-tile fp-final fp-rise" style="--d:2" data-youtube="https://youtube.com/shorts/KstQ77dxhts" data-portrait aria-label="Play the final reel"><i class="fp-play" aria-hidden="true"></i></figure>
       </div>
     </div>
   </article>
@@ -3016,6 +3021,36 @@ document.querySelectorAll('.marquee-track').forEach(t => {
   }
   window.ytPosters = () => document.querySelectorAll('[data-youtube]').forEach(ytPoster);
   window.ytPosters();
+
+  /* Featured video case only: its YouTube tiles play on their own, muted and
+     looping, while on screen. The thumbnail stays underneath until the player
+     is ready; the player is removed off screen so it costs nothing. A click
+     still opens the full player with sound. */
+  const loopTiles = document.querySelectorAll('#fp-video [data-youtube]');
+  if (loopTiles.length && 'IntersectionObserver' in window &&
+      !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const io = new IntersectionObserver(entries => entries.forEach(en => {
+      const tile = en.target;
+      const live = tile.querySelector('.yt-loop');
+      if (en.isIntersecting && !live) {
+        const id = ytId(tile.getAttribute('data-youtube'));
+        if (!id) return;
+        const f = document.createElement('iframe');
+        f.className = 'yt-loop';
+        f.src = 'https://www.youtube-nocookie.com/embed/' + id +
+          '?autoplay=1&mute=1&loop=1&playlist=' + id +
+          '&controls=0&playsinline=1&rel=0&iv_load_policy=3&disablekb=1';
+        f.allow = 'autoplay; encrypted-media';
+        f.tabIndex = -1;
+        f.setAttribute('aria-hidden', 'true');
+        f.addEventListener('load', () => setTimeout(() => f.classList.add('is-on'), 600));
+        tile.appendChild(f);
+      } else if (!en.isIntersecting && live) {
+        live.remove();
+      }
+    }), { rootMargin: '200px 0px' });
+    loopTiles.forEach(t => io.observe(t));
+  }
 })();
 
 /* ---------- CAPABILITIES: fill the glass tabs on first sight ----------
