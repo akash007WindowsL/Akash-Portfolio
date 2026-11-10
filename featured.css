@@ -440,10 +440,12 @@
 /* process steps */
 #showcase .fp-steps {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--fp-gap);
 }
 #showcase .fp-steps .fp-tile { aspect-ratio: 4 / 3.4; }
+/* the final-mark diagram is 800 × 680 (4:3.4): show it whole, never cropped */
+#showcase .fp-steps .fp-tile.fp-whole { aspect-ratio: 4 / 3.4; background: #fff; }
 #showcase .fp-steps .fp-wide { grid-column: 1 / -1; }
 #showcase .fp-steps .fp-wide .fp-tile { aspect-ratio: 3 / 1; }
 
@@ -675,6 +677,7 @@ body.edit-on #showcase .fp-rise { opacity: 1; transform: none; }
   #showcase .fp-brief { grid-template-columns: 1fr; }
   #showcase .fp-steps { grid-template-columns: 1fr; }
   #showcase .fp-steps .fp-tile { aspect-ratio: 16 / 10; }
+  #showcase .fp-steps .fp-tile.fp-whole { aspect-ratio: 4 / 3.4; }
   #showcase .fp-steps .fp-wide .fp-tile { aspect-ratio: 16 / 9; }
   #showcase .fp-system { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   #showcase .fp-rawfinal { grid-template-columns: 1fr; justify-items: center; }
