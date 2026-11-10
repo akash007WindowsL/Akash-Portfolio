@@ -52,6 +52,7 @@ nav.scrolled {
   border-bottom: 1px solid var(--border);
   transition: background 0.35s ease;
 }
+nav .nav-right { display: flex; align-items: center; gap: 32px; }
 nav ul { display: flex; gap: 32px; list-style: none; font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; }
 nav ul li a { transition: opacity 0.3s; }
 nav ul li a:hover { opacity: 0.5; }
@@ -1821,21 +1822,22 @@ html:not(.featured-seen) .entry-choice.is-featured { animation: featuredGlow 2.4
 <body class="meadow-open">
 
 <nav>
-  <a href="#" class="logo" aria-label="Back to top">Akash Namdev<span>.</span></a>
-  <ul>
-    <li><a href="#work">Work</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">Dark mode</button>
-  <div class="menu-toggle" id="menuToggle" role="button" tabindex="0" aria-controls="mobileMenu" aria-expanded="false">MENU</div>
+  <a href="#whats-inside" class="logo" aria-label="Back to What’s Inside">Akash Namdev<span>.</span></a>
+  <div class="nav-right">
+    <div class="menu-toggle" id="menuToggle" role="button" tabindex="0" aria-controls="mobileMenu" aria-expanded="false">MENU</div>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">Dark mode</button>
+  </div>
 </nav>
 
 <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
   <button class="mm-close" id="mmClose" aria-label="Close menu">CLOSE ✕</button>
-  <a href="#moments">Moments</a>
-  <a href="#showcase">Featured</a>
   <a href="#work">Work</a>
+  <a href="#showcase">Featured</a>
+  <a href="#moments">Moments</a>
   <a href="#about">About</a>
   <a href="#contact">Contact</a>
   <span class="mm-foot">Bhopal · Open for collaboration</span>
@@ -2315,6 +2317,9 @@ html:not(.featured-seen) .entry-choice.is-featured { animation: featuredGlow 2.4
         <a class="frame" href="#"><div class="frame-box r-4x5"><img decoding="async" loading="lazy" class="frame-media" src="images/uploads/untitled-1-9.jpg" alt="SISTec Business School placement results creative"></div></a>
         <a class="frame" href="#"><div class="frame-box r-4x5"><img decoding="async" loading="lazy" class="frame-media" src="images/uploads/untitled-1-10.jpg" alt="Color Angle episode promo creative"></div></a>
         <a class="frame" href="#"><div class="frame-box r-4x5"><img decoding="async" loading="lazy" class="frame-media" src="images/uploads/untitled-1-11.jpg" alt="Koncept Philosophy social creative"></div></a>
+        <div class="frame" role="img" aria-label="Empty social creative slot"><div class="frame-box r-4x5"><div class="frame-media" data-ph="Creative — 4:5"></div></div></div>
+        <div class="frame" role="img" aria-label="Empty social creative slot"><div class="frame-box r-4x5"><div class="frame-media" data-ph="Creative — 4:5"></div></div></div>
+        <div class="frame" role="img" aria-label="Empty social creative slot"><div class="frame-box r-4x5"><div class="frame-media" data-ph="Creative — 4:5"></div></div></div>
       </div>
     </div>
 
@@ -2702,20 +2707,23 @@ html:not(.featured-seen) .entry-choice.is-featured { animation: featuredGlow 2.4
     });
   });
 
-  // Clicking the name reopens the Meadow entrance instead of jumping to top.
-  function reopen() {
-    entering = false;
-    entry.hidden = false;
-    entry.classList.remove('is-leaving');
-    document.body.classList.remove('portfolio-entered');
-    document.body.classList.add('meadow-open');
-    const prev = document.documentElement.style.scrollBehavior;
-    document.documentElement.style.scrollBehavior = 'auto';
-    window.scrollTo(0, 0);
-    document.documentElement.style.scrollBehavior = prev;
-  }
+  // Clicking the name scrolls to the What's Inside section.
   const logo = document.querySelector('nav a.logo');
-  if (logo) logo.addEventListener('click', e => { e.preventDefault(); reopen(); });
+  if (logo) logo.addEventListener('click', e => {
+    const inside = document.getElementById('whats-inside');
+    if (!inside) return;                 // let the href work if the section is gone
+    e.preventDefault();
+    // if the Meadow entrance is still up, step inside first so the page can scroll
+    if (document.body.classList.contains('meadow-open')) {
+      entering = false;
+      entry.hidden = true;
+      entry.classList.add('is-leaving');
+      document.body.classList.remove('meadow-open');
+      document.body.classList.add('portfolio-entered');
+    }
+    const navOffset = window.innerWidth <= 900 ? 158 : 176;
+    window.scrollTo({ top: Math.max(0, inside.getBoundingClientRect().top + window.scrollY - navOffset), behavior: reduceMotion ? 'auto' : 'smooth' });
+  });
 })();
 
 // Scroll reveal — rootMargin so very tall chapters still trigger
