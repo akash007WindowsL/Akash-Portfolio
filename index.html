@@ -977,10 +977,9 @@ section { padding: 120px 40px; }
 #video-editing .video-reels .frame-cap b { color: #171513; }
 #video-editing .video-reels .frame-cap span { color: rgba(23, 21, 19, 0.62); }
 
-/* Motion Graphics now has the same four-slot desktop rhythm. Its fourth slot
-   is intentionally blank and keeps its native video-card treatment. */
+/* Motion Graphics runs three vertical reels, centred. */
 #motion-graphics .motion-reels {
-  grid-template-columns: repeat(4, minmax(0, 280px));
+  grid-template-columns: repeat(3, minmax(0, 280px));
   justify-content: center;
 }
 #motion-graphics .motion-reels .frame-box { border-radius: 20px; }
@@ -1515,8 +1514,8 @@ body.edit-on .drop-hot .drop-hint { opacity: 1; border-color: var(--accent-orang
   /* no square tile left beside it to set the row height, so pin a ratio */
   .frame.span-3 { grid-column: span 2; }
   .frame.span-3 .frame-box { flex: none; aspect-ratio: 2.1/1; }
-  #video-editing .video-reels,
-  #motion-graphics .motion-reels { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  #video-editing .video-reels { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  #motion-graphics .motion-reels { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 @media (max-width: 900px) {
@@ -2469,10 +2468,9 @@ html:not(.featured-seen) .entry-choice.is-featured { animation: featuredGlow 2.4
         </div>
       </div>
       <div class="gal gal-vert motion-reels">
-        <a class="frame is-play" href="videos/motion-01.mp4" data-video="videos/motion-01.mp4"><div class="frame-box r-9x16"><video class="frame-media" src="videos/motion-01.mp4#t=0.1" preload="none" data-lazy-video muted playsinline aria-hidden="true"></video><i class="play-tri"></i><span class="frame-runtime">00:25</span></div><div class="frame-cap"><b>Koncept — logo sting</b><span>Reveal</span></div></a>
-        <a class="frame is-play" href="videos/motion-02.mp4" data-video="videos/motion-02.mp4"><div class="frame-box r-9x16"><video class="frame-media" src="videos/motion-02.mp4#t=0.1" preload="none" data-lazy-video muted playsinline aria-hidden="true"></video><i class="play-tri"></i><span class="frame-runtime">00:14</span></div><div class="frame-cap"><b>Summit — LED opener</b><span>Titles</span></div></a>
-        <a class="frame is-play" href="videos/motion-03.mp4" data-video="videos/motion-03.mp4"><div class="frame-box r-9x16"><video class="frame-media" src="videos/motion-03.mp4#t=0.1" preload="none" data-lazy-video muted playsinline aria-hidden="true"></video><i class="play-tri"></i><span class="frame-runtime">00:19</span></div><div class="frame-cap"><b>Product explainer</b><span>Infographic</span></div></a>
-        <div class="frame motion-empty" role="img" aria-label="Empty fourth motion graphics slot"><div class="frame-box r-9x16"><span class="motion-empty-surface" aria-hidden="true"></span></div></div>
+        <div class="frame is-play" data-youtube="https://youtube.com/shorts/k3WO9Ev2_-o" aria-label="Play motion graphic 1"><div class="frame-box r-9x16"><i class="play-tri"></i></div></div>
+        <div class="frame is-play" data-youtube="https://youtube.com/shorts/co_OczRnJu4" aria-label="Play motion graphic 2"><div class="frame-box r-9x16"><i class="play-tri"></i></div></div>
+        <div class="frame is-play" data-youtube="https://youtube.com/shorts/WxP2lhIEvSo" aria-label="Play motion graphic 3"><div class="frame-box r-9x16"><i class="play-tri"></i></div></div>
       </div>
     </div>
 
