@@ -682,9 +682,9 @@ body .meadow-hero .meadow-welcome { color: #fff; }
 
 /* every icon is scaled so its larger side matches the Logo Design mark, about
    its own centre (--s, --cx, --cy are set on each svg) */
-.inside-thumb > g { transform: scale(var(--s, 1)); transform-origin: var(--cx, 205px) var(--cy, 270px); }
+.inside-thumb > g { transform: scale(calc(var(--s, 1) * .85)); transform-origin: var(--cx, 205px) var(--cy, 270px); }
 @media (max-width: 650px) {
-  .inside-thumb > g { transform: scale(calc(var(--s, 1) * 1.5)); }
+  .inside-thumb > g { transform: scale(calc(var(--s, 1) * 1.5 * .85)); }
 }
 
 /* Overlapping row (web): the tiles are all dark, so give each card its own
