@@ -635,6 +635,47 @@
 #showcase .fp-arrow { width: 28px; color: var(--text-dim); }
 #showcase .fp-final { aspect-ratio: 9 / 16; border-radius: 24px; }
 
+/* YouTube tiles: index.html pulls in the thumbnail YouTube shows and plays the
+   video in the on-page player; a frosted play button sits on top */
+#showcase [data-youtube] { position: relative; cursor: pointer; }
+#showcase [data-youtube] > .yt-thumb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+#showcase [data-youtube]:focus-visible { outline: 2px solid var(--accent-orange); outline-offset: 4px; }
+#showcase .fp-play {
+  --s: 64px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  width: var(--s);
+  height: var(--s);
+  translate: -50% -50%;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, .45);
+  background: rgba(10, 10, 12, .38);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  pointer-events: none;
+  transition: scale 400ms var(--fp-ease), background-color 400ms;
+}
+#showcase .fp-play::before {
+  content: '';
+  position: absolute;
+  left: 54%;
+  top: 50%;
+  translate: -50% -50%;
+  border-style: solid;
+  border-color: transparent transparent transparent #fff;
+  border-width: calc(var(--s) * .16) 0 calc(var(--s) * .16) calc(var(--s) * .26);
+}
+#showcase [data-youtube]:hover .fp-play { scale: 1.08; background-color: rgba(10, 10, 12, .58); }
+#showcase .fp-raw .fp-play { --s: 40px; }
+
 /* closing */
 #showcase .fp-outro {
   width: var(--fp-w);
@@ -713,6 +754,8 @@ body.edit-on #showcase .fp-rise { opacity: 1; transform: none; }
     background: linear-gradient(180deg, transparent 38%, rgba(10, 20, 14, .55) 58%, rgba(10, 20, 14, .92) 82%);
   }
   #showcase .fp-phone { height: 64%; border-width: 6px; border-radius: 26px; }
+  #showcase .fp-play { --s: 52px; }
+  #showcase .fp-raw .fp-play { --s: 32px; }
   #showcase.fp { --fp-w: calc(100% - 32px); --fp-radius: 20px; }
   #showcase .fp-index { top: 72px; }
   #showcase .fp-index a { padding: 8px 12px; font-size: 12px; }

@@ -992,9 +992,14 @@ section { padding: 120px 40px; }
 }
 #motion-graphics .motion-empty { cursor: default; }
 
+/* YouTube tiles are plain blocks, not links, so nothing can send a visitor to
+   YouTube; they still take a click, a tap or Enter/Space from the keyboard */
+.frame[data-youtube] { cursor: pointer; }
+.frame[data-youtube]:focus-visible { outline: 2px solid var(--accent-orange); outline-offset: 4px; }
+
 @media (hover: hover) {
-  #video-editing .video-reels > a.frame:hover { transform: translateY(-5px); }
-  #video-editing .video-reels > a.frame:hover .frame-box {
+  #video-editing .video-reels > .frame.is-play:hover { transform: translateY(-5px); }
+  #video-editing .video-reels > .frame.is-play:hover .frame-box {
     box-shadow: 0 18px 32px rgba(10, 8, 6, 0.30);
   }
 }
@@ -1067,8 +1072,14 @@ section { padding: 120px 40px; }
 /* an iframe has no intrinsic size the way a <video> does, so the ratio has to
    be declared — .portrait is set from the tile that opened it */
 .vbox iframe { width: min(100%, 1180px); aspect-ratio: 16 / 9; }
-.vbox.portrait iframe { width: auto; height: min(100%, 880px); aspect-ratio: 9 / 16; }
+/* the height also follows the width, so a narrow screen keeps a true 9:16
+   player instead of a taller box with black bars */
+.vbox.portrait iframe { width: auto; height: min(100%, 880px, calc((100vw - 80px) * 16 / 9)); aspect-ratio: 9 / 16; }
 .vbox.portrait video { border-radius: 28px; }
+@media (max-width: 620px) {
+  .vbox { padding: 76px 16px 24px; }
+  .vbox.portrait iframe { height: min(100%, calc((100vw - 32px) * 16 / 9)); }
+}
 .vbox-close {
   position: absolute;
   top: 20px; right: 24px;
@@ -1807,7 +1818,7 @@ html:not(.featured-seen) .entry-choice.is-featured { animation: featuredGlow 2.4
   .entry-choice:hover { transform: none; }
 }
 </style>
-<link rel="stylesheet" href="portfolio-theme.css?v=pk2"><link rel="stylesheet" href="featured.css?v=27"><script src="featured.js?v=11" defer></script><script src="portfolio-theme.js?v=perf2"></script></head>
+<link rel="stylesheet" href="portfolio-theme.css?v=pk2"><link rel="stylesheet" href="featured.css?v=28"><script src="featured.js?v=11" defer></script><script src="portfolio-theme.js?v=perf2"></script></head>
 <body class="meadow-open">
 
 <nav>
@@ -2414,38 +2425,36 @@ html:not(.featured-seen) .entry-choice.is-featured { animation: featuredGlow 2.4
       <div class="chapter-head">
         <div>
 
-          <h3 class="chapter-title">Video <span class="heading-accent">Editing</span></h3>
+          <h3 class="chapter-title">Video Editing &amp; <span class="heading-accent">Generative AI</span></h3>
         </div>
       </div>
-      <!-- To publish a real cut, replace the placeholder div with a poster image
-           and point the link at the video. Nothing loads until the tile is
-           clicked, so none of these cost anything on page load.
+      <!-- Each tile plays in the on-page player; the video itself only loads
+           when the tile is clicked.
 
-           Self-hosted:
-           <a class="frame is-play" href="videos/horizontal-01.mp4"
-              data-video="videos/horizontal-01.mp4">
-
-           YouTube (the video must be UNLISTED — private videos will not embed):
-           <a class="frame is-play" href="https://youtu.be/VIDEO_ID"
-              data-youtube="VIDEO_ID">
-
-           …either way the inside of the tile is the same:
+           YouTube (UNLISTED — private videos will not embed). Paste the link
+           as it is; the thumbnail is fetched from YouTube, so it always
+           matches what YouTube shows. A plain div, not a link, so nothing
+           ever sends a visitor off to YouTube:
+           <div class="frame is-play" data-youtube="https://youtu.be/VIDEO_ID">
              <div class="frame-box r-16x9">
-               <img class="frame-media" src="images/poster-horizontal-01.jpg"
-                    alt="Beyond the Surface brand film" loading="lazy">
                <i class="play-tri"></i><span class="frame-runtime">02:14</span>
              </div>
              <div class="frame-cap"><b>…</b><span>…</span></div>
-           </a>                                                              -->
+           </div>
+           Vertical reels use r-9x16 and keep the reel-frame-overlay img.
+
+           Self-hosted file:
+           <a class="frame is-play" href="videos/horizontal-01.mp4"
+              data-video="videos/horizontal-01.mp4"> …same inside… </a>      -->
+      <div class="gal gal-vert video-reels">
+        <a class="frame is-play" href="videos/vertical-01.mp4" data-video="videos/vertical-01.mp4"><div class="frame-box r-9x16"><video class="frame-media" src="videos/vertical-01.mp4#t=0.1" preload="none" data-lazy-video muted playsinline aria-hidden="true"></video><i class="play-tri"></i><span class="frame-runtime">00:32</span><img class="reel-frame-overlay" src="images/reel-frame.svg?v=rounded-2" alt="" aria-hidden="true" draggable="false"></div></a>
+        <div class="frame is-play" data-youtube="https://youtube.com/shorts/JcE9bwH1i_Y" aria-label="Play reel 2"><div class="frame-box r-9x16"><i class="play-tri"></i><img class="reel-frame-overlay" src="images/reel-frame.svg?v=rounded-2" alt="" aria-hidden="true" draggable="false"></div></div>
+        <div class="frame is-play" data-youtube="https://youtube.com/shorts/KMeg6kJvOIA" aria-label="Play reel 3"><div class="frame-box r-9x16"><i class="play-tri"></i><img class="reel-frame-overlay" src="images/reel-frame.svg?v=rounded-2" alt="" aria-hidden="true" draggable="false"></div></div>
+        <div class="frame is-play" data-youtube="https://youtube.com/shorts/V_YhRwejtcw" aria-label="Play reel 4"><div class="frame-box r-9x16"><i class="play-tri"></i><img class="reel-frame-overlay" src="images/reel-frame.svg?v=rounded-2" alt="" aria-hidden="true" draggable="false"></div></div>
+      </div>
       <div class="gal gal-2">
         <a class="frame is-play" href="videos/horizontal-01.mp4" data-video="videos/horizontal-01.mp4"><div class="frame-box r-16x9"><video class="frame-media" src="videos/horizontal-01.mp4#t=0.1" preload="none" data-lazy-video muted playsinline aria-hidden="true"></video><i class="play-tri"></i><span class="frame-runtime">00:16</span></div><div class="frame-cap"><b>Beyond the Surface — brand film</b><span>Edit · Grade</span></div></a>
         <a class="frame is-play" href="videos/horizontal-02.mp4" data-video="videos/horizontal-02.mp4"><div class="frame-box r-16x9"><video class="frame-media" src="videos/horizontal-02.mp4#t=0.1" preload="none" data-lazy-video muted playsinline aria-hidden="true"></video><i class="play-tri"></i><span class="frame-runtime">00:12</span></div><div class="frame-cap"><b>Power Cook — unboxing series</b><span>Edit · Sound</span></div></a>
-      </div>
-      <div class="gal gal-vert video-reels">
-        <a class="frame is-play" href="videos/vertical-01.mp4" data-video="videos/vertical-01.mp4"><div class="frame-box r-9x16"><video class="frame-media" src="videos/vertical-01.mp4#t=0.1" preload="none" data-lazy-video muted playsinline aria-hidden="true"></video><i class="play-tri"></i><span class="frame-runtime">00:32</span><img class="reel-frame-overlay" src="images/reel-frame.svg?v=rounded-2" alt="" aria-hidden="true" draggable="false"></div></a>
-        <a class="frame is-play" href="videos/vertical-02.mp4" data-video="videos/vertical-02.mp4"><div class="frame-box r-9x16"><video class="frame-media" src="videos/vertical-02.mp4#t=0.1" preload="none" data-lazy-video muted playsinline aria-hidden="true"></video><i class="play-tri"></i><span class="frame-runtime">00:20</span><img class="reel-frame-overlay" src="images/reel-frame.svg?v=rounded-2" alt="" aria-hidden="true" draggable="false"></div></a>
-        <a class="frame is-play" href="videos/vertical-03.mp4" data-video="videos/vertical-03.mp4"><div class="frame-box r-9x16"><video class="frame-media" src="videos/vertical-03.mp4#t=0.1" preload="none" data-lazy-video muted playsinline aria-hidden="true"></video><i class="play-tri"></i><span class="frame-runtime">00:30</span><img class="reel-frame-overlay" src="images/reel-frame.svg?v=rounded-2" alt="" aria-hidden="true" draggable="false"></div></a>
-        <div class="frame reel-empty" role="img" aria-label="Empty fourth vertical reel slot"><div class="frame-box r-9x16"><span class="reel-empty-surface" aria-hidden="true"></span><img class="reel-frame-overlay" src="images/reel-frame.svg?v=rounded-2" alt="" aria-hidden="true" draggable="false"></div></div>
       </div>
     </div>
 
@@ -2900,13 +2909,42 @@ document.querySelectorAll('.marquee-track').forEach(t => {
   function youtube(id, portrait) {
     const f = document.createElement('iframe');
     /* -nocookie holds back YouTube's tracking cookies until playback actually
-       starts, which keeps the page clear of a consent banner */
+       starts, which keeps the page clear of a consent banner. enablejsapi lets
+       the page hear when the video ends (see the message listener below). */
     f.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(id) +
-            '?autoplay=1&rel=0&playsinline=1';
+            '?autoplay=1&rel=0&playsinline=1&iv_load_policy=3&enablejsapi=1' +
+            '&origin=' + encodeURIComponent(location.origin);
     f.allow = 'accelerometer; autoplay; encrypted-media; picture-in-picture; fullscreen';
     f.allowFullscreen = true;
     f.title = 'Video player';
+    // ask the player to report its state, so the end of the video is known
+    f.addEventListener('load', () => {
+      f.contentWindow.postMessage(JSON.stringify({ event: 'listening', id: 1, channel: 'widget' }), '*');
+    });
     show(f, portrait);
+  }
+
+  /* when a YouTube video finishes, close the player instead of leaving
+     YouTube's end screen up — its suggestions would lead visitors off the site */
+  window.addEventListener('message', e => {
+    if (!/^https:\/\/www\.youtube(-nocookie)?\.com$/.test(e.origin)) return;
+    if (!node || node.tagName !== 'IFRAME' || e.source !== node.contentWindow) return;
+    let d;
+    try { d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data; } catch (err) { return; }
+    if (!d) return;
+    const state = d.event === 'onStateChange' ? d.info
+                : d.event === 'infoDelivery' && d.info ? d.info.playerState : undefined;
+    if (state === 0) close();
+  });
+
+  const isPortrait = tile => !!tile.querySelector('.r-9x16') || tile.hasAttribute('data-portrait');
+
+  /* data-youtube takes the bare video ID or any link to it: youtu.be/ID,
+     youtube.com/watch?v=ID, youtube.com/shorts/ID, /embed/ID or /live/ID */
+  function ytId(v) {
+    v = (v || '').trim();
+    const m = v.match(/(?:youtu\.be\/|[?&]v=|\/(?:shorts|embed|live)\/)([\w-]{11})/);
+    return m ? m[1] : (/^[\w-]{11}$/.test(v) ? v : '');
   }
 
   document.addEventListener('click', e => {
@@ -2914,16 +2952,62 @@ document.querySelectorAll('.marquee-track').forEach(t => {
     if (tile) {
       if (document.body.classList.contains('edit-on')) return;
       e.preventDefault();
-      const portrait = !!tile.querySelector('.r-9x16');
-      const yt = tile.getAttribute('data-youtube');
-      if (yt) youtube(yt, portrait);
-      else file(tile.getAttribute('data-video'), portrait);
+      const yt = ytId(tile.getAttribute('data-youtube'));
+      if (yt) youtube(yt, isPortrait(tile));
+      else if (tile.hasAttribute('data-video')) file(tile.getAttribute('data-video'), isPortrait(tile));
       return;
     }
     // backdrop or the close button
     if (e.target === box || e.target.closest('.vbox-close')) close();
   });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { close(); return; }
+    // YouTube tiles that are not links still open from the keyboard
+    const tile = (e.key === 'Enter' || e.key === ' ') && e.target.closest && e.target.closest('[data-youtube]');
+    if (tile && tile.tagName !== 'A') { e.preventDefault(); tile.click(); }
+  });
+
+  /* ---- YouTube thumbnails ----
+     A tile with data-youtube="VIDEO_ID" gets the same thumbnail YouTube shows,
+     straight from YouTube, so a custom thumbnail set there appears here too.
+     Vertical tiles (.r-9x16 inside, or data-portrait) try the vertical Shorts
+     cover first; otherwise the widest 16:9 image YouTube has for the video.
+     A missing size comes back as a 120 px grey placeholder, so anything that
+     small (or the wrong shape) falls through to the next size. */
+  function ytPoster(tile) {
+    const id = ytId(tile.getAttribute('data-youtube'));
+    if (!id || tile.querySelector('.yt-thumb')) return;
+    const portrait = isPortrait(tile);
+    const sizes = portrait ? ['oardefault', 'oar2', 'maxresdefault', 'hqdefault']
+                           : ['maxresdefault', 'sddefault', 'hqdefault'];
+    const img = document.createElement('img');
+    img.className = 'frame-media yt-thumb';
+    const cap = tile.querySelector('.frame-cap b');
+    img.alt = tile.getAttribute('aria-label') || (cap ? cap.textContent : '');
+    img.decoding = 'async';
+    img.loading = 'lazy';
+    let i = 0;
+    const next = () => {
+      if (i >= sizes.length) return;
+      img.src = 'https://i.ytimg.com/vi/' + encodeURIComponent(id) + '/' + sizes[i++] + '.jpg';
+    };
+    img.addEventListener('error', next);
+    img.addEventListener('load', () => {
+      const tooSmall = img.naturalWidth <= 120;
+      const wrongShape = /^oar/.test(sizes[i - 1]) && img.naturalHeight <= img.naturalWidth;
+      if (tooSmall || wrongShape) next();
+    });
+    next();
+    const mount = tile.querySelector('.frame-box') || tile;
+    mount.insertBefore(img, mount.firstChild);
+    if (tile.tagName !== 'A' && !tile.hasAttribute('tabindex')) {
+      tile.tabIndex = 0;
+      tile.setAttribute('role', 'button');
+      tile.setAttribute('data-yt-kb', '');
+    }
+  }
+  window.ytPosters = () => document.querySelectorAll('[data-youtube]').forEach(ytPoster);
+  window.ytPosters();
 })();
 
 /* ---------- CAPABILITIES: fill the glass tabs on first sight ----------
@@ -3569,6 +3653,13 @@ window.PortfolioReel = (function () {
     });
     clone.querySelectorAll('.slide.is-active').forEach(n => n.classList.remove('is-active'));
     clone.querySelectorAll('.cat-chip.on, .sl-dot.on').forEach(n => n.classList.remove('on'));
+    // YouTube thumbnails and tile keyboard hooks are added at runtime
+    clone.querySelectorAll('.yt-thumb').forEach(n => n.remove());
+    clone.querySelectorAll('[data-yt-kb]').forEach(n => {
+      n.removeAttribute('tabindex');
+      n.removeAttribute('role');
+      n.removeAttribute('data-yt-kb');
+    });
     clone.querySelectorAll('.marquee-track').forEach(t => {
       t.classList.remove('no-anim');
       t.removeAttribute('data-orig');
