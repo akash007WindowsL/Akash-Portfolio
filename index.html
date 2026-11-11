@@ -1817,6 +1817,28 @@ html:not(.featured-seen) .entry-choice.is-featured { animation: featuredGlow 2.4
   .entry-choice, .entry-choice svg { transition: none; }
   .entry-choice:hover { transform: none; }
 }
+
+/* Websites */
+.web-case{display:grid;grid-template-columns:1.5fr 1fr;gap:48px;align-items:center;margin:40px 0 72px}
+.web-case:nth-of-type(even){grid-template-columns:1fr 1.5fr}
+.web-case:nth-of-type(even) .web-shots{order:2}
+.web-shots{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.web-shot{position:relative;aspect-ratio:16/10;border-radius:14px;overflow:hidden;border:1px solid var(--border,rgba(255,255,255,.12));background:rgba(127,127,127,.08);display:grid;place-items:center;text-align:center;font-size:13px;opacity:.9;padding-top:22px}
+.web-shot::before{content:"";position:absolute;top:0;left:0;right:0;height:22px;background:rgba(127,127,127,.14);border-bottom:1px solid var(--border,rgba(255,255,255,.1))}
+.web-shot::after{content:"";position:absolute;top:8px;left:10px;width:6px;height:6px;border-radius:50%;background:#ff5f57;box-shadow:10px 0 #febc2e,20px 0 #28c840}
+.web-shot.web-main{grid-column:1/-1}
+.web-shot img{position:absolute;inset:22px 0 0;width:100%;height:calc(100% - 22px);object-fit:cover;object-position:top}
+.web-shot small{opacity:.6}
+#vibe-coded-websites .web-info,#vibe-coded-websites .web-info *{text-align:left}
+#vibe-coded-websites .web-tags{justify-content:flex-start}
+.web-num{font-size:13px;letter-spacing:.12em;opacity:.55}
+.web-info h4{font-size:clamp(26px,3vw,40px);margin:8px 0 6px;line-height:1.1}
+.web-role{font-size:13px;text-transform:uppercase;letter-spacing:.1em;opacity:.65;margin:0 0 16px}
+.web-info p{line-height:1.6}
+.web-tags{list-style:none;padding:0;margin:18px 0 24px;display:flex;flex-wrap:wrap;gap:8px}
+.web-tags li{font-size:12px;padding:6px 12px;border-radius:99px;border:1px solid var(--border,rgba(127,127,127,.3))}
+.web-link{display:inline-block;font-weight:600;border-bottom:1px solid currentColor;padding-bottom:2px;color:inherit;text-decoration:none}
+@media (max-width:900px){.web-case,.web-case:nth-of-type(even){grid-template-columns:1fr;gap:24px;margin:24px 0 48px}.web-case:nth-of-type(even) .web-shots{order:0}}
 </style>
 <link rel="stylesheet" href="portfolio-theme.css?v=pk3"><link rel="stylesheet" href="featured.css?v=30"><script src="featured.js?v=11" defer></script><script src="portfolio-theme.js?v=perf2"></script></head>
 <body class="meadow-open">
@@ -2322,9 +2344,9 @@ html:not(.featured-seen) .entry-choice.is-featured { animation: featuredGlow 2.4
         <a class="frame" href="#"><div class="frame-box r-4x5"><img decoding="async" loading="lazy" class="frame-media" src="images/uploads/untitled-1-9.jpg" alt="SISTec Business School placement results creative"></div></a>
         <a class="frame" href="#"><div class="frame-box r-4x5"><img decoding="async" loading="lazy" class="frame-media" src="images/uploads/untitled-1-10.jpg" alt="Color Angle episode promo creative"></div></a>
         <a class="frame" href="#"><div class="frame-box r-4x5"><img decoding="async" loading="lazy" class="frame-media" src="images/uploads/untitled-1-11.jpg" alt="Koncept Philosophy social creative"></div></a>
-        <div class="frame" role="img" aria-label="Empty social creative slot"><div class="frame-box r-4x5"><div class="frame-media" data-ph="Creative — 4:5"></div></div></div>
-        <div class="frame" role="img" aria-label="Empty social creative slot"><div class="frame-box r-4x5"><div class="frame-media" data-ph="Creative — 4:5"></div></div></div>
-        <div class="frame" role="img" aria-label="Empty social creative slot"><div class="frame-box r-4x5"><div class="frame-media" data-ph="Creative — 4:5"></div></div></div>
+        <a class="frame" href="#"><div class="frame-box r-4x5"><img decoding="async" loading="lazy" class="frame-media" src="images/uploads/social-anar-video-editor.jpg" alt="Anar the video editor, a Diwali social creative"></div></a>
+        <a class="frame" href="#"><div class="frame-box r-4x5"><img decoding="async" loading="lazy" class="frame-media" src="images/uploads/social-flyme-janmashtami.jpg" alt="Fly Me Holidays Janmashtami creative"></div></a>
+        <a class="frame" href="#"><div class="frame-box r-4x5"><img decoding="async" loading="lazy" class="frame-media" src="images/uploads/social-spa-back-neck.jpg" alt="Four Fountains spa back and neck pain creative"></div></a>
       </div>
     </div>
 
@@ -2488,6 +2510,30 @@ html:not(.featured-seen) .entry-choice.is-featured { animation: featuredGlow 2.4
       <div class="chapter-head">
         <div><h3 class="chapter-title"><span class="heading-accent">Websites</span></h3></div>
       </div>
+      <!-- Screenshot slots: replace each <span>…</span> with
+           <img src="images/uploads/web-….jpg" alt="…" loading="lazy"> -->
+      <article class="web-case">
+        <div class="web-shots"><div class="web-shot web-main"><img src="images/uploads/web-bts-1.jpg" alt="BTS website hero with the 3D car" loading="lazy"></div><div class="web-shot"><img src="images/uploads/web-bts-2.jpg" alt="3D car model, side view" loading="lazy"></div><div class="web-shot"><img src="images/uploads/web-bts-3.jpg" alt="3D car model, top view" loading="lazy"></div></div>
+        <div class="web-info">
+          <span class="web-num">01</span>
+          <h4>3D Model Website</h4>
+          <p class="web-role">Design + Development</p>
+          <p>A website built around an interactive 3D model. The hero loads the model in the browser and it reacts as you move, so the first screen feels like a product, not a page.</p>
+          <ul class="web-tags"><li>3D / WebGL</li><li>Responsive</li><li>Hosted on Vercel</li></ul>
+          <a class="web-link" href="https://bts-website-ttoy.vercel.app/" target="_blank" rel="noopener">Visit live site ↗</a>
+        </div>
+      </article>
+      <article class="web-case">
+        <div class="web-shots"><div class="web-shot web-main"><img src="images/uploads/web-admin-1.jpg" alt="PixelPill admin dashboard" loading="lazy"></div><div class="web-shot"><img src="images/uploads/web-admin-2.jpg" alt="Add new client form" loading="lazy"></div><div class="web-shot"><img src="images/uploads/web-admin-3.jpg" alt="Onboard new employee form" loading="lazy"></div></div>
+        <div class="web-info">
+          <span class="web-num">02</span>
+          <h4>Agency Admin Panel</h4>
+          <p class="web-role">Design + Development + Hosting</p>
+          <p>The complete admin panel for PixelPill, a design agency. One place to run the agency: clients and plans, payments, projects, the content calendar, team assignments and employee onboarding.</p>
+          <ul class="web-tags"><li>Dashboard</li><li>Clients &amp; payments</li><li>HR &amp; team portal</li></ul>
+          <a class="web-link" href="https://www.pixelpill.in/" target="_blank" rel="noopener">Visit pixelpill.in ↗</a>
+        </div>
+      </article>
     </div>
 
   </div>
