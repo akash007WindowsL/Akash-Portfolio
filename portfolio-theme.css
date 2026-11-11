@@ -31,9 +31,9 @@ body :is(.logo,.foot-logo) span { font-family: inherit; }
 body :is(h1,h2,h3,h4,.h-display,.chapter-title,.meadow-title,.cta h2) {
   font-weight: 600; letter-spacing: -.045em; line-height: 1.08; text-wrap: balance;
 }
-body :is(.h-display,.chapter-title) { font-size: clamp(34px,4.8vw,68px); }
+body .chapter-title { font-size: clamp(34px,4.8vw,68px); }
+body :is(.h-display,.cta h2) { font-size: var(--h-section, clamp(38px, 5.6vw, 76px)); line-height: 1.06; }
 body .meadow-title { font-size: clamp(42px,6.5vw,88px); }
-body .cta h2 { font-size: clamp(40px,6.5vw,88px); }
 .heading-accent { color: var(--accent-orange); }
 body :is(.section-label,.chapter-index,.cat-chip,.frame-cap span,.show-cap span,.cf-field label,nav ul,.menu-toggle,.mm-foot) {
   font-size: 12px; letter-spacing: .025em; text-transform: none;
@@ -267,7 +267,6 @@ body .inside-showcase {
   min-height: 650px;
 }
 body .inside-showcase .work-intro { margin: 0 0 42px; width: 100%; }
-body .inside-showcase .h-display { font-size: clamp(46px, 7vw, 100px); }
 .inside-deck { position: relative; height: 355px; }
 .inside-card {
   position: absolute; left: 50%; top: 15px;
@@ -304,7 +303,6 @@ body .inside-showcase .h-display { font-size: clamp(46px, 7vw, 100px); }
 @media (max-width: 650px) {
   body .inside-showcase { min-height: 0; padding: 64px 0 56px; overflow: visible; }
   body .inside-showcase .work-intro { margin-bottom: 24px; }
-  body .inside-showcase .h-display { font-size: clamp(40px, 12vw, 56px); }
   .inside-deck {
     height: auto;
     display: grid;
@@ -485,7 +483,7 @@ body .meadow-hero .meadow-welcome { color: #fff; }
   --mr-accent: #ff8b7c;
   --mr-line: rgba(245, 245, 247, .12);
   background: var(--mr-bg);
-  padding: clamp(72px, 10vw, 128px) 24px;
+  padding: var(--section-y, 120px) 24px;
 }
 :root[data-theme="dark"] .must-read-band {
   --mr-bg: #ecebe6;
@@ -654,7 +652,7 @@ body .meadow-hero .meadow-welcome { color: #fff; }
   .cap-fill { transition: none; }
   .cap-card:hover { transform: none; }
   /* contact: the desktop's 180px padding left a screen of empty space */
-  body .cta { padding: 88px 20px; }
+  body .cta { padding: var(--section-y, 80px) 20px; }
   body .cta h2 { margin-bottom: 36px; }
   /* touch screens have no hover — keep artwork still when tapped */
   #packaging-label .pk-final:hover .pk-photo img { transform: none; }

@@ -5,7 +5,7 @@
   --fp-radius: 28px;
   --fp-gap: clamp(12px, 1.6vw, 20px);
   --fp-ease: cubic-bezier(.2, .7, .2, 1);
-  padding: clamp(96px, 12vw, 168px) 0 clamp(80px, 10vw, 140px);
+  padding: var(--section-y, 120px) 0;
   border-top: 1px solid var(--hairline);
 }
 #showcase.fp, #showcase.fp * { text-align: left; }
@@ -23,10 +23,10 @@
 #showcase .fp-title {
   max-width: 900px;
   margin: 14px auto 0;
-  font-size: clamp(38px, 5.6vw, 76px);
+  font-size: var(--h-section, clamp(38px, 5.6vw, 76px));
   font-weight: 600;
   letter-spacing: -.045em;
-  line-height: 1.04;
+  line-height: 1.06;
 }
 #showcase .fp-dim { color: var(--text-dim); }
 
@@ -586,14 +586,14 @@
 #showcase .fp-swatches i { aspect-ratio: 1.6; border-radius: 12px; background: var(--c); border: 1px solid var(--hairline); }
 /* social brief: one small card per brand, with a row of colour chips */
 #showcase .fp-briefs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; max-width: 760px; margin: 0 auto; }
-#showcase .fp-brief { display: block; padding: 22px 24px; text-align: left; }
-#showcase .fp-brief h5 { font-size: 15px; font-weight: 600; color: var(--text); text-align: left; }
-#showcase .fp-brief p { margin-top: 8px; font-size: 14px; line-height: 1.5; color: var(--text-dim); text-align: left; }
+#showcase .fp-briefs .fp-brief { display: block; padding: 22px 24px; text-align: left; }
+#showcase .fp-briefs .fp-brief h5 { font-size: 15px; font-weight: 600; color: var(--text); text-align: left; }
+#showcase .fp-briefs .fp-brief p { margin-top: 8px; font-size: 14px; line-height: 1.5; color: var(--text-dim); text-align: left; }
 #showcase .fp-chips { display: flex; gap: 6px; margin-top: 16px; }
 #showcase .fp-chips i { width: 26px; height: 26px; border-radius: 7px; background: var(--c); border: 1px solid var(--hairline); }
 @media (max-width: 620px) {
   #showcase .fp-briefs { grid-template-columns: 1fr; gap: 10px; }
-  #showcase .fp-brief { padding: 18px 20px; }
+  #showcase .fp-briefs .fp-brief { padding: 18px 20px; }
 }
 #showcase .fp-type { font-size: clamp(64px, 7vw, 104px); font-weight: 600; letter-spacing: -.05em; line-height: .9; }
 #showcase .fp-gridmark { flex: 1; margin-top: 14px; border-radius: 12px; background:
@@ -748,7 +748,7 @@ body.edit-on #showcase .fp-rise { opacity: 1; transform: none; }
   #showcase .fp-cover-title { font-size: clamp(38px, 11vw, 56px); }
   #showcase .fp-tag { left: calc(var(--ix) + var(--pad)); right: auto; }
   #showcase .fp-sticker { width: 104px; top: calc(var(--iy) + 92px); padding: 8px 8px 10px; border-radius: 16px; }
-  #showcase .fp-sticker figcaption { font-size: 10px; }
+  #showcase .fp-sticker figcaption { font-size: 11px; }
   #showcase .fp-sticker--note b { font-size: 28px; }
   /* phones show the ready-made PNG over the green; the two floating spreads are hidden */
   #showcase .fp-stage--green { padding: 0; }
