@@ -33,7 +33,6 @@ body :is(h1,h2,h3,h4,.h-display,.chapter-title,.meadow-title,.cta h2) {
 }
 body .chapter-title { font-size: clamp(34px,4.8vw,68px); }
 body :is(.h-display,.cta h2) { font-size: var(--h-section, clamp(38px, 5.6vw, 76px)); line-height: 1.06; }
-body .meadow-title { font-size: clamp(42px,6.5vw,88px); }
 .heading-accent { color: var(--accent-orange); }
 body :is(.section-label,.chapter-index,.cat-chip,.frame-cap span,.show-cap span,.cf-field label,nav ul,.menu-toggle,.mm-foot) {
   font-size: 12px; letter-spacing: .025em; text-transform: none;
@@ -336,9 +335,6 @@ body :is(.frame-cap b,.show-cap b) { font-size: 15px; font-weight: 500; }
 body .about-grid { grid-template-columns: 1fr; justify-items: center; }
 body .about-quote { max-width: 760px; font-size: clamp(18px,2vw,24px); line-height: 1.6; }
 body .foot-nav { justify-content: center; align-items: center; }
-body .entry-choice { text-align: center; justify-content: center; align-items: center; }
-body .entry-choice span { font-weight: 500; letter-spacing: -.025em; }
-body .entry-choice span { text-align: center; }
 body .foot-contact, body .foot-nav, body .cf-field input, body .cf-field textarea { text-align: center; }
 body .contact-form { text-align: center; }
 body :is(nav,nav.scrolled), body.meadow-open nav, body.meadow-open nav.scrolled {
@@ -377,8 +373,6 @@ body :is(button,a,input,textarea,[role="button"]):focus-visible { outline: 2px s
 body .slide-caption, body .slide-caption h3, body .frame-runtime { color: #fff; }
 body .slide-caption p { color: #eee; }
 body #editBar { background: var(--nav-surface); color: var(--text); }
-/* Keep image-backed intro text legible, including the accent word. */
-body .meadow-title .heading-accent { color: #ffd5b5; }
 
 /* Soft, quick scroll reveals inspired by Apple's restrained page motion. */
 body .reveal {
@@ -454,26 +448,7 @@ body.edit-on .scroll-reveal {
   min-height: 560px;
   padding: 0;            /* same layout box as the entrance, so the text sits at the same height */
   overflow: hidden;
-  background: #6d9d3b;
-  color: #fff;
 }
-.meadow-hero .meadow {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-  aspect-ratio: auto;
-}
-.meadow-hero::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background: linear-gradient(180deg, rgba(5, 22, 32, 0.12), transparent 34%, rgba(7, 18, 13, 0.25));
-}
-body .meadow-hero .meadow-welcome { color: #fff; }
 
 /* Must read — a reversed band: off-white in dark mode, near-black in light */
 .must-read-band {
@@ -742,10 +717,6 @@ body .meadow-hero .meadow-welcome { color: #fff; }
   body :is(nav, nav.scrolled), body.meadow-open nav, body.meadow-open nav.scrolled {
     backdrop-filter: none; -webkit-backdrop-filter: none;
   }
-  .meadow-hero .entry-choice {
-    backdrop-filter: none; -webkit-backdrop-filter: none;
-    background: rgba(10, 31, 26, .55);
-  }
   .cap-card, .sl-btn,
   .frame.is-play .frame-box::before,
   .frame.is-play .frame-runtime {
@@ -757,6 +728,3 @@ body .meadow-hero .meadow-welcome { color: #fff; }
     background: color-mix(in srgb, var(--bg) 94%, transparent);
   }
 }
-/* the wind moves the flowers from script every frame — give each its own
-   layer so that is a cheap move, not a repaint of the whole meadow */
-.meadow .flower { will-change: transform; }

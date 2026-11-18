@@ -19,7 +19,7 @@
 <title>Akash Namdev — Independent Creative Practice</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="meadow.css">
 <style>
 :root {
@@ -1650,195 +1650,280 @@ body.meadow-open nav.scrolled {
   min-height: 0;
   padding: 0;
   overflow: hidden;
-  background: #6d9d3b;
   transform: translate3d(0, 0, 0);
   transition: transform 880ms cubic-bezier(.76, 0, .24, 1);
   will-change: transform;
 }
 .meadow-entry.is-leaving { transform: translate3d(0, -100%, 0); }
-.meadow-entry .meadow {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-  padding: 0;
-  aspect-ratio: auto;
-}
-.meadow-entry::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background: linear-gradient(180deg, rgba(5, 22, 32, 0.12), transparent 34%, rgba(7, 18, 13, 0.25));
-}
-.meadow-welcome {
-  position: relative;
-  z-index: 2;
-  width: min(1120px, calc(100% - 40px));
-  height: 100%;
-  margin: 0 auto;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  text-align: center;
-  color: #fff;
-}
-/* The buttons rest on the line where the hills meet the sky, 57% down the
-   scene. ::after is the 43% below that line; ::before keeps the text clear of
-   the nav, so on short screens the block stops there instead. */
-.meadow-welcome::before { content: ''; flex: 0 0 150px; }
-.meadow-welcome::after { content: ''; flex: 0 1 42.9%; }
-.meadow-welcome > :first-child { margin-top: auto; }
-.meadow-eyebrow {
-  margin-bottom: 15px;
+/* ============ OPENING SCREEN — studio portrait ============
+   A soft grey studio wall, the name huge and white behind Akash, the title
+   under it, two glass cards either side (about, and where to go first) and the
+   tools in a dock at the bottom. The same in light and dark mode: it is a
+   photograph, like the meadow it replaced. */
+.studio {
+  --st-ink: #1d1d1f;
+  --st-nf: clamp(56px, 10.6vw, 190px);      /* the giant name */
+  /* the nav bar is 93px; the capitals rise about .08em above the line box */
+  --st-top: calc(108px + var(--st-nf) * .08);
+  background: radial-gradient(120% 92% at 50% 30%, #e6e7e9 0%, #d3d4d7 48%, #b4b6ba 100%);
+  color: var(--st-ink);
   font-family: 'Inter', sans-serif;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  text-shadow: 0 2px 16px rgba(4, 27, 25, 0.55);
 }
-.meadow-title {
-  max-width: 760px;
-  font-family: 'Inter', sans-serif;
-  font-size: clamp(48px, 7vw, 98px);
-  font-style: italic;
-  font-weight: 350;
-  line-height: 0.94;
-  letter-spacing: -0.045em;
-  text-wrap: balance;
-  text-shadow: 0 2px 4px rgba(4, 22, 36, 0.35), 0 4px 28px rgba(4, 31, 31, 0.6);
+.st-stage { position: relative; width: 100%; height: 100%; max-width: 1600px; margin: 0 auto; }
+
+.st-name {
+  position: absolute; z-index: 1; left: 0; right: 0; top: var(--st-top);
+  margin: 0; text-align: center; white-space: nowrap;
+  font: 800 var(--st-nf)/.8 'Inter', sans-serif;
+  letter-spacing: -.045em; text-transform: uppercase; color: #fff;
+  text-shadow: 0 2px 34px rgba(40, 42, 50, .07);
 }
-.meadow-brief {
-  max-width: 700px;
-  margin-top: 20px;
-  font-family: 'Inter', sans-serif;
-  font-size: clamp(18px, calc(1.25vw + 4px), 21px);
-  font-weight: 500;
-  line-height: 1.38;
-  text-wrap: balance;
-  text-shadow: 0 1px 3px rgba(4, 22, 36, 0.55), 0 2px 18px rgba(4, 27, 25, 0.7);
+/* beats the site-wide heading rule (weight 600, looser lines) */
+body .studio .st-name { font-weight: 800; line-height: .8; letter-spacing: -.045em; text-wrap: nowrap; }
+.st-sub {
+  position: absolute; z-index: 1; left: 50%; translate: -50% 0;
+  top: calc(var(--st-top) + var(--st-nf) * .8 + clamp(8px, 1.6vh, 18px));
+  width: min(calc(var(--st-nf) * 7.5), 100% - 40px);
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 20px;
+  color: #fff; text-transform: uppercase;
 }
-/* Featured Projects sits alone on the top row; the other three share the row below */
-.entry-choices {
-  --gap: 14px;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--gap);
-  width: min(840px, 100%);
-  margin-top: clamp(30px, 4.5vh, 50px);
+.st-sub p { margin: 0; font-weight: 300; line-height: 1.02; text-shadow: 0 1px 24px rgba(40, 42, 50, .1); }
+/* the title in the accent orange of the Featured star, so it reads as the highlight */
+.st-sub .st-title { color: #ff5f2e; font-weight: 500; text-shadow: none; font-size: clamp(18px, calc(var(--st-nf) * .25), 46px); letter-spacing: .005em; text-align: left; }
+.st-year { font-size: clamp(14px, calc(var(--st-nf) * .19), 34px); text-align: right; letter-spacing: .02em; }
+
+/* Akash stands in front of the name, as the person does in a magazine cover */
+.st-photo {
+  position: absolute; z-index: 2; margin: 0;
+  left: 50%; translate: -50% 0;
+  top: calc(var(--st-top) + var(--st-nf) * .44);
+  bottom: clamp(26px, 5.5vh, 60px);
 }
-.entry-choice {
-  min-height: 84px;
-  padding: 16px 20px;
-  border: 1px solid rgba(255, 255, 255, 0.78);
-  border-radius: 16px;
-  background: rgba(10, 31, 26, 0.38);
-  color: #fff;
-  box-shadow: 0 14px 34px rgba(8, 29, 22, 0.24);
-  backdrop-filter: blur(12px) saturate(115%);
-  -webkit-backdrop-filter: blur(12px) saturate(115%);
-  font: inherit;
-  text-align: left;
+.st-photo img { display: block; height: 100%; width: auto; max-width: none; user-select: none; }
+/* where the stool meets the floor */
+.st-photo::after {
+  content: ''; position: absolute; z-index: -1;
+  left: -16%; right: -16%; bottom: -12px; height: 34px;
+  background: radial-gradient(closest-side, rgba(28, 30, 36, .3), rgba(28, 30, 36, 0));
+}
+
+.st-card {
+  position: absolute; z-index: 3;
+  width: clamp(236px, 22vw, 316px);
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, .78);
+  border-radius: 22px;
+  background: rgba(244, 244, 246, .62);
+  box-shadow: 0 24px 60px rgba(28, 30, 38, .14), 0 2px 8px rgba(28, 30, 38, .06);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  backdrop-filter: blur(18px) saturate(150%);
+  color: var(--st-ink); text-align: left;
+}
+.st-about { right: calc(50% + clamp(60px, 6.2vw, 106px)); top: 51%; animation: stFloat 7s ease-in-out infinite; }
+.st-work  { left: calc(50% + clamp(76px, 7.6vw, 128px));
+            /* just below "Portfolio 2026", never over it */
+            top: calc(var(--st-top) + var(--st-nf) * .8 + clamp(8px, 1.6vh, 18px) + clamp(14px, calc(var(--st-nf) * .19), 34px) * 2.04 + 16px);
+            width: clamp(260px, 25vw, 352px); padding: 18px;
+            display: flex; flex-direction: column; gap: 9px;
+            animation: stWiggle 1.6s 1s ease-in-out infinite; }
+/* a short wiggle, then a one-second rest, on repeat: a nudge that these are
+   the buttons to press. It stops while the pointer or keyboard is on the box. */
+@keyframes stWiggle {
+  0%, 36%, 100% { rotate: 0deg; }
+  6%  { rotate: -2.4deg; }
+  12% { rotate: 2.2deg; }
+  18% { rotate: -1.6deg; }
+  24% { rotate: 1.1deg; }
+  30% { rotate: -.4deg; }
+}
+.st-work:hover, .st-work:focus-within { animation: none; }
+@keyframes stFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+
+/* the heading looks selected, handles and all */
+.st-hl { margin: 2px 0 11px; text-align: center; }
+.st-hl span {
+  position: relative; display: inline-block; padding: 1px 5px;
+  background: rgba(10, 132, 255, .2);
+  font-size: 15px; font-weight: 600; letter-spacing: -.01em;
+}
+.st-hl span::before, .st-hl span::after {
+  content: ''; position: absolute; width: 10px; height: calc(100% + 9px);
+  background:
+    linear-gradient(#0a84ff, #0a84ff) 50% var(--bar-y) / 2px calc(100% - 7px) no-repeat,
+    radial-gradient(circle, #0a84ff 4px, transparent 4.6px) 50% var(--dot-y) / 10px 10px no-repeat;
+}
+.st-hl span::before { left: -6px; top: -2px; --bar-y: 0; --dot-y: 100%; }
+.st-hl span::after { right: -6px; bottom: -2px; --bar-y: 100%; --dot-y: 0; }
+.st-brief { margin: 0 0 13px; font-size: 14px; line-height: 1.45; color: #2c2c30; }
+.st-more {
+  display: block; padding: 11px 12px; border-radius: 999px;
+  background: rgba(20, 20, 26, .07); color: #0a6cdf;
+  font-size: 14px; font-weight: 500; text-align: center; text-decoration: none;
+  transition: background 220ms ease;
+}
+.st-more:hover { background: rgba(20, 20, 26, .12); }
+
+.st-card-title { margin: 2px 0 4px; text-align: center; font-size: 14px; font-weight: 600; }
+.st-work .st-card-title { font-size: 16px; }
+.st-work .st-pill { min-height: 48px; font-size: 16px; }
+.st-work .st-pill.is-featured { min-height: 56px; font-size: 17px; }
+.st-pill {
+  position: relative; display: flex; align-items: center; justify-content: center; gap: 7px;
+  width: 100%; min-height: 44px; padding: 8px 14px;
+  border: 1px solid rgba(20, 20, 26, .05); border-radius: 999px;
+  background: rgba(20, 20, 26, .07); color: var(--st-ink);
+  font: 500 15px/1.15 'Inter', sans-serif; letter-spacing: -.01em;
   cursor: pointer;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 18px;
-  transition: transform 320ms cubic-bezier(.2,.7,.2,1), background 320ms ease, box-shadow 320ms ease, border-color 320ms ease;
+  transition: transform 260ms cubic-bezier(.2, .7, .2, 1), background 220ms ease, box-shadow 220ms ease;
 }
-.entry-choice span {
-  font-family: 'Inter', sans-serif;
-  font-size: clamp(20px, 1.8vw, 26px);
-  font-weight: 500;
-  text-wrap: balance;
-  text-shadow: 0 2px 12px rgba(4, 27, 25, 0.45);
-  line-height: 1.02;
-  letter-spacing: -0.025em;
+.st-star { font-size: 12px; line-height: 1; }
+.st-pill:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(28, 30, 38, .12); }
+.st-pill:focus-visible { outline: 3px solid #0a84ff; outline-offset: 3px; }
+/* Featured Projects is the suggested first stop */
+.st-pill.is-featured {
+  min-height: 52px; margin-top: 6px; background: #1d1d1f; color: #fff; font-weight: 600;
+  box-shadow: 0 8px 22px rgba(20, 20, 24, .26);
 }
-.entry-choice svg { width: 21px; flex: 0 0 auto; transition: transform 320ms cubic-bezier(.2,.7,.2,1); }
-.entry-choice:hover {
-  transform: translateY(-4px) scale(1.012);
-  border-color: #fff;
-  background: rgba(10, 31, 26, 0.50);
-  box-shadow: 0 20px 42px rgba(8, 29, 22, 0.22);
+.st-pill.is-featured:hover { background: #000; }
+.st-pill.is-featured .st-star { color: #ff6a3d; font-size: 14px; }
+.st-tag {
+  position: absolute; top: -9px; right: 14px;
+  padding: 3px 8px; border-radius: 999px; background: #ff6a3d; color: #fff;
+  font-size: 10.5px; font-weight: 600; letter-spacing: .01em; white-space: nowrap;
 }
-.entry-choice:hover svg { transform: translate(2px, -2px); }
-.entry-choice:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
+@keyframes stFeatured {
+  0%, 100% { box-shadow: 0 8px 22px rgba(20, 20, 24, .26), 0 0 0 0 rgba(255, 106, 61, 0); }
+  50%      { box-shadow: 0 8px 22px rgba(20, 20, 24, .26), 0 0 0 8px rgba(255, 106, 61, .3); }
+}
+html:not(.featured-seen) .st-pill.is-featured { animation: stFeatured 2.2s 1.2s ease-in-out 3; }
 
-/* Featured Projects is the suggested first stop: the same glass as the others,
-   plus a small note on its top edge and, on a first visit, one soft glow
-   rising from its bottom edge about a second after the page opens. */
-.entry-choice.is-featured {
-  --featured-glow: 255 210 80;   /* sunlight gold, from the meadow's dandelions */
-  position: relative;
-  grid-column: 1 / -1;
-  justify-self: center;
-  /* a little wider than one of the three below, and never narrower than its note */
-  width: max(calc((100% - 2 * var(--gap)) / 3 * 1.3), 200px);
+.st-dock {
+  position: absolute; z-index: 4; left: 50%; translate: -50% 0; bottom: clamp(12px, 3vh, 28px);
+  display: flex; gap: 4px; margin: 0; padding: 9px 10px 7px; list-style: none;
+  border: 1px solid rgba(255, 255, 255, .78); border-radius: 22px;
+  background: rgba(244, 244, 246, .5);
+  box-shadow: 0 18px 44px rgba(28, 30, 38, .16);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  backdrop-filter: blur(18px) saturate(150%);
 }
-body .entry-choice.is-featured .entry-tag {
-  position: absolute;
-  top: -12px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 4px 11px;
-  border: 1px solid rgba(255, 213, 181, 0.55);
-  border-radius: 999px;
-  background: #14261f;
-  color: #ffd5b5;
-  font: 600 11.5px/1.2 'Inter', sans-serif;
-  letter-spacing: 0.01em;
-  white-space: nowrap;
-  text-shadow: none;
+.st-dock li { width: 66px; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+.st-app {
+  width: 48px; height: 48px; border-radius: 12px;
+  display: grid; place-items: center;
+  background: var(--bg); color: var(--fg);
+  font: 600 21px/1 'Inter', sans-serif; letter-spacing: -.02em;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .2);
+  transition: transform 260ms cubic-bezier(.2, .7, .2, 1);
 }
-@keyframes featuredGlow {
-  0%   { box-shadow: 0 14px 34px rgba(8, 29, 22, 0.24), inset 0 -22px 28px -16px rgb(var(--featured-glow) / 0), 0 0 40px rgb(var(--featured-glow) / 0); }
-  40%  { box-shadow: 0 14px 34px rgba(8, 29, 22, 0.24), inset 0 -32px 36px -16px rgb(var(--featured-glow) / 0.9), 0 0 40px rgb(var(--featured-glow) / 0.32); }
-  100% { box-shadow: 0 14px 34px rgba(8, 29, 22, 0.24), inset 0 -22px 28px -16px rgb(var(--featured-glow) / 0.6), 0 0 40px rgb(var(--featured-glow) / 0); }
-}
-html:not(.featured-seen) .entry-choice.is-featured { animation: featuredGlow 2.4s 1s cubic-bezier(.3, .6, .3, 1) both; }
+.st-figma { background: #1e1e1e; }
+.st-figma svg { width: 19px; height: 28px; }
+.st-canva { background: radial-gradient(circle at 18% 14%, #00c4cc 0%, #3f8cff 46%, #7d2ae8 100%); color: #fff; }
+.st-canva i { display: inline-block; transform: skewX(-9deg); font: 600 12.5px/1 'Inter', sans-serif; letter-spacing: -.03em; }
+.st-dock li:hover .st-app { transform: translateY(-7px) scale(1.14); }
+.st-app-name { font-size: 10.5px; font-weight: 500; line-height: 1.1; color: #36363a; white-space: nowrap; }
 
-@media (max-width: 620px) {
-  /* everything has to fit one phone screen below the nav bar */
-  .meadow-welcome { width: min(100% - 32px, 480px); }
-  .meadow-welcome::before { flex-basis: 100px; }
-  .meadow-title { font-size: clamp(40px, 12vw, 56px); }
-  .meadow-brief { max-width: 320px; margin-top: 12px; font-size: 14px; font-weight: 400; line-height: 1.35; }
-  .entry-choices { --gap: 8px; width: min(100%, 340px); row-gap: 14px; margin-top: 36px; }
-  .entry-choice { min-height: 46px; padding: 6px; border-radius: 12px; }
-  .entry-choice span { font-size: 13px; line-height: 1.15; letter-spacing: -0.01em; }
-  .entry-choice.is-featured { min-height: 52px; padding: 6px 10px; }
-  .entry-choice.is-featured span { font-size: 15.5px; }
+/* short laptop screens: a compact box so it stays clear of the dock */
+@media (min-width: 761px) and (max-height: 740px) {
+  .st-work { padding: 14px; gap: 7px; }
+  .st-work .st-card-title { display: none; }
+  .st-work .st-pill { min-height: 40px; font-size: 15px; }
+  .st-work .st-pill.is-featured { min-height: 46px; font-size: 16px; }
 }
-@media (prefers-reduced-motion: reduce), (max-width: 650px) {
-  /* no animation: the glow simply rests under the button */
-  html:not(.featured-seen) .entry-choice.is-featured {
-    animation: none;
-    box-shadow: 0 14px 34px rgba(8, 29, 22, 0.24), inset 0 -22px 28px -16px rgb(var(--featured-glow) / 0.6);
+/* Phones, and tablets held upright: one column — name, title, photo, about,
+   the four choices, the dock. The cover scrolls inside itself if a very short
+   screen cannot fit it all. */
+@media (max-width: 760px), (max-width: 1024px) and (orientation: portrait) {
+  .studio { --st-nf: min(21.5vw, 120px); }
+  .st-stage {
+    display: flex; flex-direction: column; align-items: center;
+    padding: calc(var(--nav-h, 64px) + 14px + var(--st-nf) * .08) 16px 14px; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain;
   }
+  .st-name, .st-sub, .st-photo, .st-card, .st-dock { position: relative; inset: auto; translate: none; }
+  .st-name { line-height: .8; flex: none; }
+  .st-name span { display: block; }
+  /* the title moves under the photo so Akash can stand in front of the name */
+  .st-sub { order: 3; width: 100%; max-width: 560px; margin-top: 4px; flex: none; align-items: flex-end;
+            color: #6a6b70; }
+  .st-sub p { text-shadow: none; }
+  .st-sub .st-title { font-size: clamp(15px, 4.6vw, 26px); font-weight: 600; }
+  .st-year { font-size: clamp(11px, 3.2vw, 18px); }
+  .st-photo { order: 2; flex: 1 1 0; min-height: 200px; width: 100%; margin-top: calc(var(--st-nf) * -.4);
+              display: flex; justify-content: center; }
+  .st-photo::after { left: 22%; right: 22%; }
+  .st-card { width: 100%; max-width: 560px; animation: none; flex: none;
+             -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(248, 248, 250, .88); }
+  .st-work { animation: stWiggle 1.6s 1s ease-in-out infinite; }
+  .st-about { order: 4; margin-top: 10px; padding: 12px 14px; }
+  .st-work { order: 5; } .st-dock { order: 6; }
+  .st-hl { margin-bottom: 7px; }
+  .st-brief { margin: 0; font-size: 13.5px; line-height: 1.4; text-align: center; }
+  .st-more, .st-card-title { display: none; }
+  .st-work {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px;
+    margin-top: 10px; padding: 0; border: 0; background: none; box-shadow: none;
+  }
+  .st-work .st-pill { min-height: 46px; padding: 6px 8px; border-radius: 14px; font-size: 13.5px; }
+  .st-work .st-pill:not(.is-featured) { background: rgba(248, 248, 250, .82); }
+  .st-pill:not(.is-featured) .st-star { display: none; }
+  .st-work .st-pill.is-featured { grid-column: 1 / -1; min-height: 52px; font-size: 16px; }
+  .st-dock { flex: none; margin-top: 10px; padding: 7px 6px 5px; border-radius: 18px;
+             -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(248, 248, 250, .72); }
+  .st-dock { gap: 2px; }
+  .st-dock li { width: 52px; gap: 4px; }
+  .st-app { width: 40px; height: 40px; border-radius: 10px; font-size: 17px; }
+  .st-figma svg { width: 16px; height: 24px; }
+  .st-app-name { font-size: 9px; white-space: normal; text-align: center; }
+  .st-canva i { font-size: 10.5px; }
+  /* the copy in the page grows with its content instead of scrolling inside */
+  .meadow-hero.studio { height: auto; min-height: 100svh; }
+  .meadow-hero .st-stage { overflow: visible; }
+  .meadow-hero .st-photo { flex: none; height: clamp(240px, 44svh, 460px); }
 }
-@media (max-height: 520px) {
-  /* landscape phones */
-  .meadow-welcome { padding-top: 72px; padding-bottom: 16px; justify-content: center; }
-  .meadow-welcome::before, .meadow-welcome::after { display: none; }
-  .meadow-welcome > :first-child { margin-top: 0; }
-  .meadow-title { font-size: 36px; }
-  .meadow-brief { margin-top: 8px; font-size: 14px; max-width: 640px; }
-  /* too short for two rows: all four share one row, Featured first */
-  .entry-choices { --gap: 10px; grid-template-columns: repeat(4, minmax(0, 1fr)); width: min(1080px, 100%); margin-top: 22px; }
-  .entry-choice.is-featured { grid-column: auto; justify-self: stretch; width: auto; }
-  .entry-choice, .entry-choice.is-featured { min-height: 48px; padding: 8px; }
-  .entry-choice span, .entry-choice.is-featured span { font-size: 15px; }
+/* short phones (iPhone SE, in-app browsers with their own bars): a little tighter */
+@media (max-width: 760px) and (max-height: 740px) {
+  .studio { --st-nf: min(19vw, 120px); }
+  .st-photo { min-height: 150px; }
+  .st-about { margin-top: 8px; padding: 10px 12px; }
+  .st-hl { margin-bottom: 5px; }
+  .st-hl span { font-size: 14px; }
+  .st-brief { font-size: 12.5px; }
+  .st-work { margin-top: 8px; }
+  .st-work .st-pill { min-height: 42px; }
+  .st-work .st-pill.is-featured { min-height: 48px; }
+  .st-dock { margin-top: 8px; }
+  .st-app-name { display: none; }
+}
+/* Landscape phones: too short for the photo — name, title, cards and dock */
+@media (max-height: 520px) and (orientation: landscape) {
+  .studio { --st-nf: 52px; }
+  .st-stage {
+    display: flex; flex-wrap: wrap; justify-content: center; align-content: flex-start; gap: 10px 14px;
+    padding: 72px 20px 14px; overflow-y: auto; overscroll-behavior: contain;
+  }
+  .st-name, .st-sub, .st-photo, .st-card, .st-dock { position: relative; inset: auto; translate: none; }
+  .st-name { flex: 0 0 100%; }
+  .st-sub { flex: 0 0 auto; width: min(100%, 640px); }
+  .st-sub br { display: none; }
+  .st-sub .st-title { font-size: 17px; } .st-year { font-size: 13px; }
+  .st-photo { display: none; }
+  .st-card { animation: none; width: min(46%, 340px); -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(248, 248, 250, .88); }
+  .st-work { padding: 14px; animation: stWiggle 1.6s 1s ease-in-out infinite; }
+  .st-about { padding: 12px 14px; }
+  .st-brief { margin-bottom: 10px; font-size: 13px; }
+  .st-more { padding: 8px 10px; }
+  .st-work { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+  .st-card-title { display: none; }
+  .st-work .st-pill { min-height: 40px; padding: 6px 8px; font-size: 13.5px; }
+  .st-work .st-pill.is-featured { grid-column: 1 / -1; margin-top: 6px; min-height: 44px; font-size: 15px; }
+  .st-dock li { width: 60px; }
+  .st-dock { flex: 0 0 auto; -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .meadow-hero.studio { height: auto; min-height: 100svh; }
 }
 @media (prefers-reduced-motion: reduce) {
   .meadow-entry { transition-duration: 140ms; }
-  .entry-choice, .entry-choice svg { transition: none; }
-  .entry-choice:hover { transform: none; }
+  .st-card, html:not(.featured-seen) .st-pill.is-featured { animation: none; }
+  .st-pill, .st-app { transition: none; }
+  .st-pill:hover, .st-dock li:hover .st-app { transform: none; }
 }
 
 /* Websites */
@@ -1970,7 +2055,7 @@ html:not(.featured-seen) .entry-choice.is-featured { animation: featuredGlow 2.4
   document.addEventListener('DOMContentLoaded', function () { mo.disconnect(); scan(document); });
   if (net.addEventListener) net.addEventListener('change', function () { scan(document); });
 })();
-</script><link rel="stylesheet" href="portfolio-theme.css?v=pk6"><link rel="stylesheet" href="featured.css?v=33"><script src="featured.js?v=11" defer></script><script src="portfolio-theme.js?v=perf3"></script></head>
+</script><link rel="stylesheet" href="portfolio-theme.css?v=pk7"><link rel="stylesheet" href="featured.css?v=33"><script src="featured.js?v=11" defer></script><script src="portfolio-theme.js?v=perf3"></script></head>
 <body class="meadow-open">
 
 <nav>
@@ -1995,64 +2080,67 @@ html:not(.featured-seen) .entry-choice.is-featured { animation: featuredGlow 2.4
   <span class="mm-foot">Bhopal · Open for collaboration</span>
 </div>
 
-<!-- MEADOW ENTRANCE -->
-<section class="meadow-entry" id="meadowEntry" aria-labelledby="meadowTitle">
-  <div class="meadow" aria-hidden="true">
-    <div class="meadow-scene">
-      <img class="meadow-background" src="images/meadow/background.jpg" width="6264" height="2688" alt="" fetchpriority="high" draggable="false" srcset="images/_resp/meadow/background-400.webp 400w, images/_resp/meadow/background-800.webp 800w, images/_resp/meadow/background-1200.webp 1200w, images/_resp/meadow/background-1600.webp 1600w, images/_resp/meadow/background-2400.webp 2400w, images/_resp/meadow/background-3200.webp 3200w, images/meadow/background.jpg 4176w" sizes="(max-width: 620px) 505vw, (max-width: 1100px) 505vw, 215vw" style="--ph:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABIMDRANCxIQDhAUExIVGywdGxgYGzYnKSAsQDlEQz85Pj1HUGZXR0thTT0+WXlaYWltcnNyRVV9hnxvhWZwcm7/2wBDARMUFBsXGzQdHTRuST5Jbm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm7/wAARCAAKABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwBQbeVVxGIjtGQBU0MEZ5EgwPUGsMM28DccfWp0dg4AYgZ9axjj6sI2VjnlRhJ3ZtNdw2gVoXWU5+dSdoH+NFYwYl+SelFY1MXUk7s1ioxVkj//2Q==)">
-      <img class="cloud cloud-top" src="images/meadow/cloud-top.webp" width="255" height="49" alt="" draggable="false" srcset="images/meadow/cloud-top.webp 255w" sizes="(max-width: 620px) 134vw, (max-width: 1100px) 134vw, 57vw">
-      <img class="flower depth-left" src="images/meadow/depth-left.webp" width="410" height="281" alt="" draggable="false" srcset="images/meadow/depth-left.webp 410w" sizes="(max-width: 620px) 108vw, (max-width: 1100px) 108vw, 46vw">
-      <img class="flower depth-middle" src="images/meadow/depth-middle.webp" width="589" height="218" alt="" draggable="false" srcset="images/_resp/meadow/depth-middle-400.webp 400w, images/meadow/depth-middle.webp 589w" sizes="(max-width: 620px) 155vw, (max-width: 1100px) 155vw, 66vw">
-      <img class="flower depth-right" src="images/meadow/depth-right.webp" width="421" height="212" alt="" draggable="false" srcset="images/meadow/depth-right.webp 421w" sizes="(max-width: 620px) 111vw, (max-width: 1100px) 111vw, 47vw">
-      <img class="flower foreground-left" src="images/meadow/left.webp" width="438" height="260" alt="" draggable="false" srcset="images/_resp/meadow/left-400.webp 400w, images/meadow/left.webp 438w" sizes="(max-width: 620px) 115vw, (max-width: 1100px) 115vw, 50vw">
-      <img class="flower foreground-middle" src="images/meadow/middle.webp" width="990" height="245" alt="" draggable="false" srcset="images/_resp/meadow/middle-400.webp 400w, images/_resp/meadow/middle-800.webp 800w, images/meadow/middle.webp 990w" sizes="(max-width: 620px) 261vw, (max-width: 1100px) 261vw, 111vw">
-      <img class="flower foreground-right" src="images/meadow/right.webp" width="562" height="257" alt="" draggable="false" srcset="images/_resp/meadow/right-400.webp 400w, images/meadow/right.webp 562w" sizes="(max-width: 620px) 148vw, (max-width: 1100px) 148vw, 63vw">
+<!-- OPENING SCREEN — a studio portrait: giant name behind, glass cards beside, tools in a dock -->
+<section class="meadow-entry studio" id="meadowEntry" aria-labelledby="meadowTitle">
+  <div class="st-stage">
+    <h1 class="st-name" id="meadowTitle"><span>Akash</span> <span>Namdev</span></h1>
+    <div class="st-sub">
+      <p class="st-title">Multidisciplinary <br>Designer</p>
+      <p class="st-year">Portfolio <br>2026</p>
     </div>
-  </div>
-  <div class="meadow-welcome">
-    <h1 class="meadow-title" id="meadowTitle">Akash <span class="heading-accent">Namdev</span></h1>
-    <p class="meadow-brief">Hi, I’m Akash — a multidisciplinary designer who moves fluidly between brand design, digital and print media, video editing, motion graphics, and UI. My toolkit includes Illustrator, Photoshop, Premiere Pro, After Effects, and Figma.</p>
-    <div class="entry-choices" aria-label="Choose which work to explore first">
-      <button class="entry-choice is-featured" type="button" data-entry="featured">
-        <span>Featured Projects</span>
-        <span class="entry-tag">4 case studies · brief to final</span>
-      </button>
-      <button class="entry-choice" type="button" data-entry="graphic">
-        <span>Graphic Designing</span>
-      </button>
-      <button class="entry-choice" type="button" data-entry="video">
-        <span>Video Editing</span>
-      </button>
-      <button class="entry-choice" type="button" data-entry="websites">
-        <span>Websites</span>
-      </button>
+    <figure class="st-photo"><img src="images/uploads/akash-studio.webp" alt="Akash Namdev sitting on a wooden stool" width="677" height="1629" fetchpriority="high" draggable="false" srcset="images/_resp/uploads/akash-studio-400.webp 400w, images/uploads/akash-studio.webp 677w" sizes="(max-width: 760px) 40vw, 22vw"></figure>
+    <div class="st-card st-about">
+      <p class="st-hl"><span>Hi, I’m Akash</span></p>
+      <p class="st-brief">I move fluidly between brand design, digital and print media, video editing, motion graphics and UI, taking every idea from brief to final.</p>
+      <a class="st-more" href="#about">More about me</a>
     </div>
+    <div class="st-card st-work" role="group" aria-label="Choose which work to explore first">
+      <p class="st-card-title">Explore my work</p>
+      <button class="st-pill is-featured" type="button" data-entry="featured"><span class="st-star" aria-hidden="true">★</span><span class="st-pill-text">Featured Projects</span><span class="st-tag">4 case studies</span></button>
+      <button class="st-pill" type="button" data-entry="graphic"><span class="st-star" aria-hidden="true">★</span><span class="st-pill-text">Graphic Designing</span></button>
+      <button class="st-pill" type="button" data-entry="video"><span class="st-star" aria-hidden="true">★</span><span class="st-pill-text">Video Editing</span></button>
+      <button class="st-pill" type="button" data-entry="websites"><span class="st-star" aria-hidden="true">★</span><span class="st-pill-text">Websites</span></button>
+    </div>
+    <ul class="st-dock" aria-label="Tools I work with">
+      <li><span class="st-app" style="--fg:#31a8ff;--bg:#001e36" aria-hidden="true">Ps</span><span class="st-app-name">Photoshop</span></li>
+      <li><span class="st-app" style="--fg:#ff9a00;--bg:#330000" aria-hidden="true">Ai</span><span class="st-app-name">Illustrator</span></li>
+      <li><span class="st-app" style="--fg:#9999ff;--bg:#00005b" aria-hidden="true">Pr</span><span class="st-app-name">Premiere Pro</span></li>
+      <li><span class="st-app" style="--fg:#9999ff;--bg:#00005b" aria-hidden="true">Ae</span><span class="st-app-name">After Effects</span></li>
+      <li><span class="st-app st-figma" aria-hidden="true"><svg viewBox="0 0 38 57" aria-hidden="true"><path fill="#1abcfe" d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z"/><path fill="#0acf83" d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z"/><path fill="#ff7262" d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z"/><path fill="#f24e1e" d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z"/><path fill="#a259ff" d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z"/></svg></span><span class="st-app-name">Figma</span></li>
+      <li><span class="st-app st-canva" aria-hidden="true"><i>Canva</i></span><span class="st-app-name">Canva</span></li>
+    </ul>
   </div>
 </section>
 
-<!-- MEADOW HERO — the entrance scene again, in the page, above Must read -->
-<section class="meadow-hero" id="home" aria-labelledby="meadowHeroTitle">
-  <div class="meadow" aria-hidden="true">
-    <div class="meadow-scene">
-      <img class="meadow-background" src="images/meadow/background.jpg" width="6264" height="2688" alt="" loading="lazy" draggable="false" srcset="images/_resp/meadow/background-400.webp 400w, images/_resp/meadow/background-800.webp 800w, images/_resp/meadow/background-1200.webp 1200w, images/_resp/meadow/background-1600.webp 1600w, images/_resp/meadow/background-2400.webp 2400w, images/_resp/meadow/background-3200.webp 3200w, images/meadow/background.jpg 4176w" sizes="(max-width: 620px) 505vw, (max-width: 1100px) 505vw, 215vw" style="--ph:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABIMDRANCxIQDhAUExIVGywdGxgYGzYnKSAsQDlEQz85Pj1HUGZXR0thTT0+WXlaYWltcnNyRVV9hnxvhWZwcm7/2wBDARMUFBsXGzQdHTRuST5Jbm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm7/wAARCAAKABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwBQbeVVxGIjtGQBU0MEZ5EgwPUGsMM28DccfWp0dg4AYgZ9axjj6sI2VjnlRhJ3ZtNdw2gVoXWU5+dSdoH+NFYwYl+SelFY1MXUk7s1ioxVkj//2Q==)">
-      <img decoding="async" loading="lazy" class="cloud cloud-top" src="images/meadow/cloud-top.webp" width="255" height="49" alt="" draggable="false" srcset="images/meadow/cloud-top.webp 255w" sizes="(max-width: 620px) 134vw, (max-width: 1100px) 134vw, 57vw">
-      <img decoding="async" loading="lazy" class="flower depth-left" src="images/meadow/depth-left.webp" width="410" height="281" alt="" draggable="false" srcset="images/meadow/depth-left.webp 410w" sizes="(max-width: 620px) 108vw, (max-width: 1100px) 108vw, 46vw">
-      <img decoding="async" loading="lazy" class="flower depth-middle" src="images/meadow/depth-middle.webp" width="589" height="218" alt="" draggable="false" srcset="images/_resp/meadow/depth-middle-400.webp 400w, images/meadow/depth-middle.webp 589w" sizes="(max-width: 620px) 155vw, (max-width: 1100px) 155vw, 66vw">
-      <img decoding="async" loading="lazy" class="flower depth-right" src="images/meadow/depth-right.webp" width="421" height="212" alt="" draggable="false" srcset="images/meadow/depth-right.webp 421w" sizes="(max-width: 620px) 111vw, (max-width: 1100px) 111vw, 47vw">
-      <img decoding="async" loading="lazy" class="flower foreground-left" src="images/meadow/left.webp" width="438" height="260" alt="" draggable="false" srcset="images/_resp/meadow/left-400.webp 400w, images/meadow/left.webp 438w" sizes="(max-width: 620px) 115vw, (max-width: 1100px) 115vw, 50vw">
-      <img decoding="async" loading="lazy" class="flower foreground-middle" src="images/meadow/middle.webp" width="990" height="245" alt="" draggable="false" srcset="images/_resp/meadow/middle-400.webp 400w, images/_resp/meadow/middle-800.webp 800w, images/meadow/middle.webp 990w" sizes="(max-width: 620px) 261vw, (max-width: 1100px) 261vw, 111vw">
-      <img decoding="async" loading="lazy" class="flower foreground-right" src="images/meadow/right.webp" width="562" height="257" alt="" draggable="false" srcset="images/_resp/meadow/right-400.webp 400w, images/meadow/right.webp 562w" sizes="(max-width: 620px) 148vw, (max-width: 1100px) 148vw, 63vw">
+<!-- THE SAME SCENE IN THE PAGE, above Must read -->
+<section class="meadow-hero studio" id="home" aria-labelledby="meadowHeroTitle">
+  <div class="st-stage">
+    <h2 class="st-name" id="meadowHeroTitle"><span>Akash</span> <span>Namdev</span></h2>
+    <div class="st-sub">
+      <p class="st-title">Multidisciplinary <br>Designer</p>
+      <p class="st-year">Portfolio <br>2026</p>
     </div>
-  </div>
-  <div class="meadow-welcome">
-    <h2 class="meadow-title" id="meadowHeroTitle">Akash <span class="heading-accent">Namdev</span></h2>
-    <p class="meadow-brief">Hi, I’m Akash — a multidisciplinary designer who moves fluidly between brand design, digital and print media, video editing, motion graphics, and UI. My toolkit includes Illustrator, Photoshop, Premiere Pro, After Effects, and Figma.</p>
-    <div class="entry-choices" aria-label="Jump to work">
-      <button class="entry-choice is-featured" type="button" data-hero-go="featured"><span>Featured Projects</span><span class="entry-tag">4 case studies · brief to final</span></button>
-      <button class="entry-choice" type="button" data-hero-go="graphic"><span>Graphic Designing</span></button>
-      <button class="entry-choice" type="button" data-hero-go="video"><span>Video Editing</span></button>
-      <button class="entry-choice" type="button" data-hero-go="websites"><span>Websites</span></button>
+    <figure class="st-photo"><img src="images/uploads/akash-studio.webp" alt="Akash Namdev sitting on a wooden stool" width="677" height="1629" loading="lazy" decoding="async" draggable="false" srcset="images/_resp/uploads/akash-studio-400.webp 400w, images/uploads/akash-studio.webp 677w" sizes="(max-width: 760px) 40vw, 22vw"></figure>
+    <div class="st-card st-about">
+      <p class="st-hl"><span>Hi, I’m Akash</span></p>
+      <p class="st-brief">I move fluidly between brand design, digital and print media, video editing, motion graphics and UI, taking every idea from brief to final.</p>
+      <a class="st-more" href="#about">More about me</a>
     </div>
+    <div class="st-card st-work" role="group" aria-label="Jump to work">
+      <p class="st-card-title">Explore my work</p>
+      <button class="st-pill is-featured" type="button" data-hero-go="featured"><span class="st-star" aria-hidden="true">★</span><span class="st-pill-text">Featured Projects</span><span class="st-tag">4 case studies</span></button>
+      <button class="st-pill" type="button" data-hero-go="graphic"><span class="st-star" aria-hidden="true">★</span><span class="st-pill-text">Graphic Designing</span></button>
+      <button class="st-pill" type="button" data-hero-go="video"><span class="st-star" aria-hidden="true">★</span><span class="st-pill-text">Video Editing</span></button>
+      <button class="st-pill" type="button" data-hero-go="websites"><span class="st-star" aria-hidden="true">★</span><span class="st-pill-text">Websites</span></button>
+    </div>
+    <ul class="st-dock" aria-label="Tools I work with">
+      <li><span class="st-app" style="--fg:#31a8ff;--bg:#001e36" aria-hidden="true">Ps</span><span class="st-app-name">Photoshop</span></li>
+      <li><span class="st-app" style="--fg:#ff9a00;--bg:#330000" aria-hidden="true">Ai</span><span class="st-app-name">Illustrator</span></li>
+      <li><span class="st-app" style="--fg:#9999ff;--bg:#00005b" aria-hidden="true">Pr</span><span class="st-app-name">Premiere Pro</span></li>
+      <li><span class="st-app" style="--fg:#9999ff;--bg:#00005b" aria-hidden="true">Ae</span><span class="st-app-name">After Effects</span></li>
+      <li><span class="st-app st-figma" aria-hidden="true"><svg viewBox="0 0 38 57" aria-hidden="true"><path fill="#1abcfe" d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z"/><path fill="#0acf83" d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z"/><path fill="#ff7262" d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z"/><path fill="#f24e1e" d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z"/><path fill="#a259ff" d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z"/></svg></span><span class="st-app-name">Figma</span></li>
+      <li><span class="st-app st-canva" aria-hidden="true"><i>Canva</i></span><span class="st-app-name">Canva</span></li>
+    </ul>
   </div>
 </section>
 
@@ -2893,7 +2981,7 @@ html:not(.featured-seen) .entry-choice.is-featured { animation: featuredGlow 2.4
 
   // Navigation remains useful while the Meadow is open. Work opens the
   // graphic route; About/Contact/feature links reveal their exact section.
-  document.querySelectorAll('nav a[href^="#"], .mobile-menu a[href^="#"]').forEach(link => {
+  document.querySelectorAll('nav a[href^="#"], .mobile-menu a[href^="#"], #meadowEntry .st-more').forEach(link => {
     link.addEventListener('click', e => {
       if (!document.body.classList.contains('meadow-open')) return;
       const id = link.hash.slice(1);
@@ -3702,7 +3790,7 @@ window.PortfolioReel = (function () {
    "Download HTML" writes a clean copy with your changes baked in.        */
 (function () {
   const EDITABLE = [
-    'nav .logo', '.hero-mark', '.hero-tagline', '.meadow-title', '.meadow-eyebrow', '.entry-choice span',
+    'nav .logo', '.hero-mark', '.hero-tagline', '.st-name span', '.st-title', '.st-year', '.st-hl span', '.st-brief', '.st-more', '.st-card-title', '.st-pill-text', '.st-tag', '.st-app-name',
     '.section-label', '.h-display', '.ev-sub', '.show-cap b', '.show-cap span',
     '.slide-kicker', '.slide-caption h3', '.slide-caption p',
     '.cap-card h3', '.cap-card > p', '.cap-tools-label',
@@ -3988,55 +4076,5 @@ window.PortfolioReel = (function () {
 })();
 </script>
 
-<script>
-// Random wind: smooth value-noise with random knots, so the sway never settles
-// into a repeating pattern. One shared gust field plus a private one per flower.
-(function () {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const rnd = (a, b) => a + Math.random() * (b - a);
-  const noise = rate => {
-    const knots = [rnd(-1, 1)];
-    const off = rnd(0, 50);
-    return t => {
-      const x = (t + off) * rate;
-      const i = Math.floor(x), f = x - i;
-      while (knots.length <= i + 1) knots.push(rnd(-1, 1));
-      const s = f * f * (3 - 2 * f);
-      return knots[i] + (knots[i + 1] - knots[i]) * s;
-    };
-  };
-  const wind = noise(.16), swell = noise(.05);
-  const flowers = [...document.querySelectorAll('.meadow .flower')].map(el => {
-    const cs = getComputedStyle(el);
-    el.style.animation = 'none';
-    const speed = 1.4 / parseFloat(cs.getPropertyValue('--duration')) * rnd(.8, 1.2);
-    return {
-      el,
-      angle: parseFloat(cs.getPropertyValue('--angle')),
-      drift: parseFloat(cs.getPropertyValue('--drift')),
-      own: noise(speed), fine: noise(speed * 2.3)
-    };
-  });
-  // only sway a scene while it is on screen
-  const onScreen = new Set();
-  if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? onScreen.add(e.target) : onScreen.delete(e.target)));
-    document.querySelectorAll('.meadow').forEach(m => io.observe(m));
-    flowers.forEach(f => { f.scene = f.el.closest('.meadow'); });
-  }
-  const start = performance.now();
-  (function frame(now) {
-    const t = (now - start) / 1000;
-    const gust = .55 + .45 * (swell(t) * .5 + .5);
-    const shared = wind(t);
-    flowers.forEach(f => {
-      if (f.scene && !onScreen.has(f.scene)) return;
-      const w = (shared * .45 + f.own(t) * .45 + f.fine(t) * .1) * gust;
-      f.el.style.transform = 'translateX(' + (f.drift * .8 * w).toFixed(3) + 'px) rotate(' + (f.angle * .8 * w).toFixed(3) + 'deg)';
-    });
-    requestAnimationFrame(frame);
-  })(start);
-})();
-</script>
 </body>
 </html>
