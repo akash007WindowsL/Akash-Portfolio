@@ -2801,21 +2801,66 @@ html:not(.featured-seen) .entry-choice.is-featured { animation: featuredGlow 2.4
     });
   }
 
+  // Clear both the fixed navigation and the sticky category rail. Reveal
+  // elements begin 40px lower and settle upward, so the extra room also
+  // prevents their final position from slipping beneath the rail.
+  const navOffsetNow = () => window.innerWidth <= 900 ? 158 : 176;
+
+  function jumpTo(target) {
+    const root = document.documentElement;
+    const oldBehavior = root.style.scrollBehavior;
+    root.style.scrollBehavior = 'auto';
+    window.scrollTo(0, Math.max(0, target.getBoundingClientRect().top + window.scrollY - navOffsetNow()));
+    root.style.scrollBehavior = oldBehavior;
+  }
+
+  /* In-app browsers (LinkedIn, Instagram, Facebook) resize the page while it
+     settles: their own toolbar hides, so everything sized to the screen height
+     above the target grows or shrinks, and unlike Chrome and Safari they do
+     not keep the scroll position in step. After a jump, keep the target in
+     place for a few seconds, and stop as soon as the visitor scrolls. */
+  let settleStop = null;
+  function keepInPlace(target, ms) {
+    if (settleStop) settleStop();
+    let frame = 0;
+    const until = performance.now() + (ms || 2500);
+    const check = () => {
+      frame = 0;
+      if (performance.now() > until) return stop();
+      if (Math.abs(target.getBoundingClientRect().top - navOffsetNow()) > 3) jumpTo(target);
+    };
+    const queue = () => { if (!frame) frame = requestAnimationFrame(check); };
+    const timer = setInterval(queue, 120);
+    const ro = 'ResizeObserver' in window ? new ResizeObserver(queue) : null;
+    if (ro) ro.observe(document.body);
+    const userMoved = ['touchstart', 'wheel', 'keydown', 'mousedown'];
+    function stop() {
+      clearInterval(timer);
+      if (frame) cancelAnimationFrame(frame);
+      if (ro) ro.disconnect();
+      window.removeEventListener('resize', queue);
+      userMoved.forEach(t => window.removeEventListener(t, stop, true));
+      settleStop = null;
+    }
+    window.addEventListener('resize', queue);
+    userMoved.forEach(t => window.addEventListener(t, stop, { capture: true, passive: true }));
+    settleStop = stop;
+    queue();
+  }
+
   function positionUnderCover(target) {
-    const oldBehavior = document.documentElement.style.scrollBehavior;
-    document.documentElement.style.scrollBehavior = 'auto';
-    // Clear both the fixed navigation and the sticky category rail. Reveal
-    // elements begin 40px lower and settle upward, so the extra room also
-    // prevents their final position from slipping beneath the rail.
-    const navOffset = window.innerWidth <= 900 ? 158 : 176;
-    window.scrollTo(0, Math.max(0, target.getBoundingClientRect().top + window.scrollY - navOffset));
-    document.documentElement.style.scrollBehavior = oldBehavior;
+    // the cover is fixed, so the page underneath can be unlocked for the jump;
+    // some in-app browsers ignore a scroll on a locked page
+    document.body.style.overflow = 'visible';
+    jumpTo(target);
+    keepInPlace(target, 3200);
   }
 
   function finish(target) {
     entry.hidden = true;
     entry.classList.remove('is-leaving');
     document.body.classList.remove('meadow-open');
+    document.body.style.overflow = '';
     document.body.classList.add('portfolio-entered');
     target.setAttribute('tabindex', '-1');
     target.focus({ preventScroll: true });
@@ -2865,8 +2910,7 @@ html:not(.featured-seen) .entry-choice.is-featured { animation: featuredGlow 2.4
       const ids = mode === 'video' ? videoOrder : mode === 'websites' ? websiteOrder : graphicOrder;
       arrange(ids);
       const target = document.getElementById(mode === 'featured' ? 'showcase' : ids[0]);
-      const navOffset = window.innerWidth <= 900 ? 158 : 176;
-      window.scrollTo({ top: Math.max(0, target.getBoundingClientRect().top + window.scrollY - navOffset), behavior: reduceMotion ? 'auto' : 'smooth' });
+      glideTo(target);
     });
   });
 
@@ -2884,9 +2928,29 @@ html:not(.featured-seen) .entry-choice.is-featured { animation: featuredGlow 2.4
       document.body.classList.remove('meadow-open');
       document.body.classList.add('portfolio-entered');
     }
-    const navOffset = window.innerWidth <= 900 ? 158 : 176;
-    window.scrollTo({ top: Math.max(0, inside.getBoundingClientRect().top + window.scrollY - navOffset), behavior: reduceMotion ? 'auto' : 'smooth' });
+    glideTo(inside);
   });
+
+  // a smooth scroll can be cut short or land off target in in-app browsers:
+  // once it stops, check the target and hold it in place
+  function glideTo(target) {
+    if (settleStop) settleStop();
+    if (reduceMotion) { jumpTo(target); keepInPlace(target); return; }
+    window.scrollTo({ top: Math.max(0, target.getBoundingClientRect().top + window.scrollY - navOffsetNow()), behavior: 'smooth' });
+    let idle = 0;
+    const userMoved = ['touchstart', 'wheel', 'keydown'];
+    const onScroll = () => { clearTimeout(idle); idle = setTimeout(done, 180); };
+    const cleanup = () => {
+      window.removeEventListener('scroll', onScroll);
+      userMoved.forEach(t => window.removeEventListener(t, cancel, true));
+      clearTimeout(idle);
+    };
+    const done = () => { cleanup(); keepInPlace(target); };
+    const cancel = () => cleanup();   // the visitor took over: leave them be
+    window.addEventListener('scroll', onScroll, { passive: true });
+    userMoved.forEach(t => window.addEventListener(t, cancel, { capture: true, passive: true }));
+    idle = setTimeout(done, 400);   // nothing to scroll: check straight away
+  }
 })();
 
 // Scroll reveal — rootMargin so very tall chapters still trigger
