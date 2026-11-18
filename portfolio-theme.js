@@ -319,8 +319,6 @@ function initCardStack(stack, cardSelector, off) {
 document.addEventListener('DOMContentLoaded', function () {
   initCardStack(document.querySelector('#print-media .brochure-stack'), '.brochure-card',
     '(prefers-reduced-motion: reduce), (max-width: 650px), (max-height: 520px)');
-  initCardStack(document.querySelector('#social-campaigns .gal-3'), ':scope > .frame',
-    '(prefers-reduced-motion: reduce), (min-width: 651px), (max-height: 520px)');
 });
 
 /* Videos fetch nothing at page load (preload="none"). When one comes within
